@@ -1,26 +1,34 @@
 <template>
     <div class="comunidade">
-        <div class="projeto">
-            <Editor borderColor="black" savedCode="" :isActive="!active" height="300px"/>
+        <div v-for="projeto in projetos" :key="projeto.id" class="projeto card">
+            <Editor :borderColor="projeto.cor" :savedCode="projeto.codigo" :isActive="!active" height="300px" />
+            <div class="card__body">
+                <div>{{ projeto.nome }}</div>
+                <p>{{ projeto.descricao }}</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
+import HttpRequest from '../../domain/HttpRequests.js';
+
+var http = new HttpRequest();
 
 export default {
     components: {
         Editor
     },
     data() {
-        //projetos: [];
+        return {
+            projetos: []
+        }
     },
     methods: {
         fetchProjetos() {
-            fetch('http://localhost:3000/api/projetos', {method: 'GET'})
-                .then(res => res.json())
-                .then(data => console.log(data));
+            http.index()
+                .then(data => this.projetos = data.projetos.data);
         }
     },
     mounted() {
@@ -37,7 +45,14 @@ export default {
 }
 
 .projeto {
+    display: flex;
+    flex-direction: column;
     margin: 0 1rem;
     width: 45%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
 }
 </style>

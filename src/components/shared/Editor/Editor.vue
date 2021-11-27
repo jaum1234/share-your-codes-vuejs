@@ -1,8 +1,9 @@
 <template>
-    <pre v-highlightjs="sourcecode" v-show="isActive" class="editor editor--highlight" :style="{height: height, borderColor: borderColor}"><code class="javascript">{{ code ? code : savedCode }}</code></pre>
+    <pre v-highlightjs v-show="isActive" class="editor editor--highlight" :style="{height: height, borderColor: borderColor}"><code class="javascript">{{ code ? code : savedCode }}</code></pre>
     <textarea 
         class="editor"
-        name="editor" 
+        name="codigo" 
+        @input="escreverCodigo"
         id="editor" 
         v-model="code"
         :style="{height: height, borderColor: borderColor}"
@@ -18,12 +19,17 @@ export default {
         'isActive',
         'savedCode'
     ],
+    emits: ["codigo-atualizado"],
     data() {
         return {
             code: '',
         }
     },
-    
+    methods: {
+        escreverCodigo() {
+            this.$emit('codigo-atualizado', this.code);
+        }
+    }
 }
 </script>
 

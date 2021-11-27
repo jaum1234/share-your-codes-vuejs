@@ -1,31 +1,40 @@
 <template>
-    <div class="editor">
+    <form @submit.prevent="salvar" class="editor">
         <div class="projeto__editor">
-            <Editor height="350px" :borderColor="cor" :isActive="active"/>
-            <button class="botao__editor" @click="highlight">Visualizar om highlight</button>
+            <Editor @codigo-atualizado="getCodigo" height="350px" :borderColor="form.cor" :isActive="active"/>
+            <button class="botao__editor" @click.prevent="highlight">Visualizar om highlight</button>
         </div>
         <div class="projeto__info">
             <div class="info descricao">
                 <h3 class="titulo descricao__titulo">SEU PROJETO</h3>
-                <input placeholder="Nome do seu projeto" type="text" class="nome descricao__nome">
-                <textarea placeholder="Descriçao do seu projeto" class="descricao__descricao"></textarea>
+                <input v-model="form.nome" name="nome" placeholder="Nome do seu projeto" type="text" class="nome descricao__nome">
+                <textarea v-model="form.descricao" name="descricao" placeholder="Descriçao do seu projeto" class="descricao__descricao"></textarea>
             </div>
             <div class="info personalizacao">
                 <h3 class="titulo personalizacao__titulo">PERSONALIZAÇAO</h3>
-                <input v-model="cor" type="color" class="cor personalizacao__cor" >
+                <input name="cor" v-model="form.cor" type="color" class="cor personalizacao__cor" >
             </div>
+            <button type="submit" >Salvar projeto</button>
         </div>
-    </div>    
+    </form> 
 </template>
 
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
+import HttpRequests from '../../domain/HttpRequests.js';
+
+var http = new HttpRequests();
 
 export default {
     data() {
         return {
+            form: {
+                codigo: '',
+                nome: '',
+                descricao: '',
+                cor: '#6bd1ff',
+            },
             active: false,
-            cor: '#6bd1ff'
         }
     },
     components: {
@@ -34,9 +43,21 @@ export default {
     methods: {
         highlight() {
             this.active = !this.active;
+            console.log(this.form.codigo);
+
+        },
+        getCodigo(codigo) {
+            this.form.codigo = codigo;
+        },
+        salvar() {
+            http.store(this.form)
+                .then(response => response.json())
+                .then(data => console.log(data))
         }
-    }   
+    },
+   
 }
+
 </script>
 
 <style scoped>
@@ -58,6 +79,9 @@ export default {
 
 }
 
+.botao__salvar {
+    background: #5081FB;
+}
 
 .titulo {
     margin-bottom: 1rem;
