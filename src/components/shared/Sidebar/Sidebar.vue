@@ -5,7 +5,7 @@
             <router-link :to="item.url">
                 <li class="sidebar__item" @click="activeMenu(item.url)">
                     <div class="sidebar__icon" >
-                        <font-awesome-icon :icon="['fas', item.icon]" class="icon" :class="{active: isActive(item.url)}"/>
+                        <font-awesome-icon id="fwi" :icon="['fas', item.icon]" class="icon" :class="{active: isActive(item.url)}"/>
                     </div>
                     <div class="sidebar__label">{{ item.label }}</div>
                 </li>
@@ -28,7 +28,7 @@ export default {
         isActive(menuItemurl) {
             if (menuItemurl === this.$route.path) {
                 return true;
-            }
+            } 
         }
     },
     mounted() {

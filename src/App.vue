@@ -26,6 +26,10 @@ export default {
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
 
+*:not(#fwi) {
+  box-sizing: border-box;
+}
+
 html, body {
   background: #051D3B;
   -webkit-appearance: none;

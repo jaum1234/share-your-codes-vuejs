@@ -8,10 +8,10 @@
                 <div class="navbar__search">
                     <input placeholder="Busque por algo" type="search" v-model="projetos" class="navbar__input">
                 </div>
-                <div class="navbar__login">
-                    <router-link to="/projetos" class="login__text">Login</router-link>
+                <router-link to="/projetos" class="navbar__login">
                     <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                </div>
+                    <div class="login__text">Login</div>
+                </router-link>
             </div>
         </div>
     </nav>
@@ -42,6 +42,7 @@ export default {
 }
 
 .navbar__logo {
+    justify-content: flex-start;
     width: calc(100% - 80%)
 }
 
@@ -62,11 +63,15 @@ export default {
 .navbar__login {
     color: white;
     display: flex;
+    justify-content: flex-end;
+        text-decoration: none;
+
     width: calc(100% - 80%);
 
 }
 
 .login__text {
-    margin-right: 1rem;
+    color: white;
+    margin-left: 1rem;
 }
 </style>
