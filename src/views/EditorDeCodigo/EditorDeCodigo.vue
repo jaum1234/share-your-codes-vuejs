@@ -23,7 +23,7 @@
 
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
-import HttpRequests from '../../domain/HttpRequests.js';
+import HttpRequests from '../../domain/Http/HttpRequests.js';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import Input from '../../components/shared/Form/Input.vue';
 import Textarea from '../../components/shared/Form/Textarea.vue';

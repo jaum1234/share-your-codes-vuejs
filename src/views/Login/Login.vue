@@ -5,14 +5,17 @@
                 <router-link :to="{name: 'Comunidade'}" class="link">Home</router-link>
             </div>
             <h1 class="login__title">Login</h1>
-            <form>
+            <form @submit.prevent="login">
                 <div class="field login__email">
                     <div class="login__label"><label>Email</label></div>
-                    <Input tipo="text"/>
+                    <Input @value="getEmail" tipo="text"/>
                 </div>
                 <div class="field login__password">
                     <div class="login__label"><label>Senha</label></div>
-                    <Input tipo="password"/>
+                    <Input @value="getPassword" tipo="password"/>
+                </div>
+                <div class="login__botao">
+                    <Botao type="submit" label="Fazer login" background="#5081FB"/>
                 </div>
             </form>
         </div>
@@ -21,10 +24,15 @@
 
 <script>
 import Input from '../../components/shared/Form/Input.vue';
+import AuthRequest from '../../domain/Http/AuthRequest';
+import Botao from '../../components/shared/Botao/Botao.vue';
+
+const http = new AuthRequest();
 
 export default {
     components: {
-        Input
+        Input,
+        Botao
     },
     data() {
         return {
@@ -32,6 +40,20 @@ export default {
                 email: '',
                 password: ''
             }
+        }
+    },
+    methods: {
+        getEmail(email) {
+            this.form.email = email;
+        },
+        getPassword(password) {
+            this.form.password = password;
+        },
+
+        login() {
+            http.store(this.form)
+                .then(response => response.json())
+                .then(data => console.log(data));
         }
     }
 }
@@ -61,5 +83,10 @@ h1 {
 
 .field {
     margin-bottom: 2rem;
+}
+
+.login__botao {
+    margin: 0 auto;
+    width: 50%;
 }
 </style>

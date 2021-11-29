@@ -12,7 +12,7 @@
 
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
-import HttpRequest from '../../domain/HttpRequests.js';
+import HttpRequest from '../../domain/Http/HttpRequests.js';
 
 var http = new HttpRequest();
 
