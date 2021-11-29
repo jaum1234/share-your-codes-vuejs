@@ -1,9 +1,27 @@
 <template>
-    <textarea :value="valor" :placeholder="placeholder"></textarea>
+    <textarea :placeholder="placeholder" v-model="value" @input="exportValue()"></textarea>
 </template>
 
 <script>
 export default {
+    props: [
+        'placeholder'
+    ],
+    data() {
+        return {
+            value: ''
+        }
+    },
+    methods: {
+        exportValue() {
+            console.log(this.value)
+            this.$emit('value', this.value);
+        }
+    },
+    mounted() {
+        this.exportValue();
+    }
+    
     
 }
 </script>

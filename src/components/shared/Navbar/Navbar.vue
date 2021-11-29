@@ -8,7 +8,7 @@
                 <div class="navbar__search">
                     <input placeholder="Busque por algo" type="search" v-model="projetos" class="navbar__input">
                 </div>
-                <router-link to="/projetos" class="navbar__login">
+                <router-link to="/login" class="navbar__login">
                     <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
                     <div class="login__text">Login</div>
                 </router-link>

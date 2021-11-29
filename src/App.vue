@@ -1,8 +1,8 @@
 <template>
-  <Nav/>
+  <Nav v-show="isAuth()"/>
   <div class="container">
     <div class="main">
-      <Sidebar/>
+      <Sidebar v-show="isAuth()"/>
       <router-view/>
     </div>
   </div>
@@ -15,8 +15,20 @@ import Sidebar from './components/shared/Sidebar/Sidebar.vue';
 export default {
   components: {
     Nav,
-    Sidebar
-  }
+    Sidebar,
+  },
+  methods: {
+    isAuth() {
+      if (this.$route.name == 'Login') {
+        console.log(this.$route.name)
+        return false;
+      } 
+      return true;
+    }
+  },
+  created() {
+    this.isAuth();
+  },
 }
 </script>
 
@@ -42,6 +54,11 @@ html, body {
 
 .container {
   width: 75%;
+  margin: 0 auto;
+}
+
+.container--small {
+  width: 50%;
   margin: 0 auto;
 }
 

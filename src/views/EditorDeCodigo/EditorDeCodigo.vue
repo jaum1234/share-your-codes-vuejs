@@ -2,18 +2,17 @@
     <form @submit.prevent="salvar" class="editor">
         <div class="projeto__editor">
             <Editor @codigo-atualizado="getCodigo" height="350px" :borderColor="form.cor" :isActive="active"/>
-            <Botao corLabel="white" background="#0B254A" label="Visualizar com highlight" />
+            <Botao @click="highlight" tipo="button" corLabel="white" background="#0B254A" label="Visualizar com highlight" />
         </div>
         <div class="projeto__info">
             <div class="info descricao">
                 <h3 class="titulo descricao__titulo">SEU PROJETO</h3>
-                <Input tipo="text" placeholder="Nome do projeto" v-model="form.nome"/>
-                <Textarea placeholder="Descricao do projeto" v-model="form.descricao"/>
+                <Input @value="getNome" tipo="text" placeholder="Nome do projeto" v-model="form.nome"/>
+                <Textarea @value="getDescricao" placeholder="Descricao do projeto" v-model="form.descricao"/>
             </div>
             <div class="info personalizacao">
                 <h3 class="titulo personalizacao__titulo">PERSONALIZAÇAO</h3>
-                <Input tipo="text" placeholder="Nome do projeto" v-model="form.nome"/>
-                <input name="cor" v-model="form.cor" type="color" class="cor personalizacao__cor" >
+                <ColorInput @color="getColor"/>
             </div>
             <div class="botao__salvar">
                 <Botao background="#5081FB" label="Salvar projeto"/>
@@ -28,6 +27,7 @@ import HttpRequests from '../../domain/HttpRequests.js';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import Input from '../../components/shared/Form/Input.vue';
 import Textarea from '../../components/shared/Form/Textarea.vue';
+import ColorInput from '../../components/shared/Form/ColorInput.vue';
 
 const http = new HttpRequests();
 
@@ -38,7 +38,7 @@ export default {
                 codigo: '',
                 nome: '',
                 descricao: '',
-                cor: '#6bd1ff',
+                cor: '',
             },
             active: false,
         }
@@ -47,16 +47,29 @@ export default {
         Editor,
         Botao,
         Input,
-        Textarea
+        Textarea,
+        ColorInput
     },
     methods: {
         highlight() {
             this.active = !this.active;
-            console.log(this.form.codigo);
+            console.log(this.form.descricao);
 
         },
         getCodigo(codigo) {
             this.form.codigo = codigo;
+        },
+        getColor(color) {
+            console.log(color);
+            this.form.cor = color;
+        },
+        getNome(nome) {
+            console.log(nome);
+            this.form.cor = nome;
+        },
+        getDescricao(descricao) {
+            console.log(descricao);
+            this.form.cor = descricao;
         },
         salvar() {
             http.store(this.form)
@@ -105,51 +118,8 @@ export default {
     letter-spacing: 0.35rem;
 }
 
-
-.nome {
-    background: #2D415B;
-    border-radius: 5px;
-    border-width: 0;
-    color: white;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    width: 100%;
-}
-
-.descricao__descricao {
-    background: #2D415B;
-    border-radius: 5px;
-    border-width: 0;
-    color: white;
-    height: 100px;
-    padding: 1rem;
-    resize: none;
-    width: 100%;
-}
-
 .personalizacao {
     width: 100%;
 }
 
-.personalizacao__cor {
-    -webkit-appearance: none;
-    border-radius: 5px;
-    outline: none;
-    width: 100%;
-    height: 55px;
-}
-
-input[type="color"] {
-	-webkit-appearance: none;
-}
-
-input[type="color"]::-webkit-color-swatch-wrapper {
-    background: #051D3B;
-	padding: 0.5rem;
-    border-radius: 5px;
-}
-input[type="color"]::-webkit-color-swatch {
-	border: none;
-    border-radius: 5px;
-}
 </style>

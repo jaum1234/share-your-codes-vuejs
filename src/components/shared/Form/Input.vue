@@ -1,10 +1,33 @@
 <template>
-    <input :type="tipo" :value="valor" :placeholder="placeholder">
+    <input 
+        :type="tipo" 
+        :placeholder="placeholder" 
+        :name="nome" 
+        v-model="value" 
+        @input="exportValue()">
 </template>
 
 <script>
 export default {
-    
+    props: [
+        'tipo',
+        'placeholder',
+        'nome'
+    ],
+    data() {
+        return {
+            value: ''
+        }
+    },
+    methods: {
+        exportValue() {
+            console.log(this.value)
+            this.$emit('value', this.value);
+        }
+    },
+    mounted() {
+        this.exportValue();
+    }
 }
 </script>
 
