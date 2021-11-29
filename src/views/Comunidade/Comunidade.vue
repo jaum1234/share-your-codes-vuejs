@@ -3,8 +3,8 @@
         <div v-for="projeto in projetos" :key="projeto.id" class="projeto card">
             <Editor :borderColor="projeto.cor" :savedCode="projeto.codigo" :isActive="!active" height="300px" />
             <div class="card__body">
-                <div>{{ projeto.nome }}</div>
-                <p>{{ projeto.descricao }}</p>
+                <div class="projeto__nome">{{ projeto.nome }}</div>
+                <p class="projeto__descricao">{{ projeto.descricao }}</p>
             </div>
         </div>
     </div>
@@ -54,5 +54,21 @@ export default {
 .card {
     display: flex;
     flex-direction: column;
+    margin-bottom: 2rem;
 }
+
+.card__body {
+    background: #041832;
+    padding: 2rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: start;
+}
+
+.projeto__nome {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
 </style>

@@ -8,7 +8,7 @@
         v-model="code"
         :style="{height: height, borderColor: borderColor}"
         v-show="!isActive"
-        ></textarea>   
+        ></textarea>
 </template>
 
 <script>
@@ -41,7 +41,6 @@ export default {
     border-radius: 5px;
     font-size: 1rem;
     padding: 1rem;
-    margin-bottom: 1.5rem;
     resize: none;
     width: 100%;
 }
