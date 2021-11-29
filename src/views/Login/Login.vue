@@ -8,11 +8,13 @@
             <form @submit.prevent="login">
                 <div class="field login__email">
                     <div class="login__label"><label>Email</label></div>
-                    <Input @value="getEmail" tipo="text"/>
+                    <Input textAlign="center" @value="getEmail" tipo="text"/>
+                    <small style="color: red"></small>
                 </div>
                 <div class="field login__password">
                     <div class="login__label"><label>Senha</label></div>
-                    <Input @value="getPassword" tipo="password"/>
+                    <Input textAlign="center" @value="getPassword" tipo="password"/>
+                    <small style="color: red"></small>
                 </div>
                 <div class="login__botao">
                     <Botao type="submit" label="Fazer login" background="#5081FB"/>
@@ -26,6 +28,7 @@
 import Input from '../../components/shared/Form/Input.vue';
 import AuthRequest from '../../domain/Http/AuthRequest';
 import Botao from '../../components/shared/Botao/Botao.vue';
+import Cookie from 'js-cookie';
 
 const http = new AuthRequest();
 
@@ -39,6 +42,10 @@ export default {
             form: {
                 email: '',
                 password: ''
+            },
+            errors: {
+                email: '',
+                password: '' 
             }
         }
     },
@@ -53,7 +60,17 @@ export default {
         login() {
             http.store(this.form)
                 .then(response => response.json())
-                .then(data => console.log(data));
+                .then(data => {
+                    if (data.success === true) {
+                        Cookie.set('_myapp_token', data.access_token);
+                        Cookie.set('user_email', data.user.email);
+                        Cookie.set('user_nickname', data.user.nickname);
+                        
+                        this.$router.push({name: 'EditorDeCodigo'})
+                        return;
+                    }
+                    
+                });
         }
     }
 }

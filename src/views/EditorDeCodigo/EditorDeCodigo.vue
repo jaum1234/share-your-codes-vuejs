@@ -2,12 +2,15 @@
     <form @submit.prevent="salvar" class="editor">
         <div class="projeto__editor">
             <Editor @codigo-atualizado="getCodigo" height="350px" :borderColor="form.cor" :isActive="active"/>
+            <small style="color: red">{{ errors.codigo }}</small>
             <Botao @click="highlight" tipo="button" corLabel="white" background="#0B254A" label="Visualizar com highlight" />
         </div>
         <div class="projeto__info">
             <div class="info descricao">
                 <h3 class="titulo descricao__titulo">SEU PROJETO</h3>
+                <small style="color: red">{{ errors.nome }}</small>
                 <Input @value="getNome" tipo="text" placeholder="Nome do projeto" v-model="form.nome"/>
+                <small style="color: red">{{ errors.descricao }}</small>
                 <Textarea @value="getDescricao" placeholder="Descricao do projeto" v-model="form.descricao"/>
             </div>
             <div class="info personalizacao">
@@ -40,6 +43,11 @@ export default {
                 descricao: '',
                 cor: '',
             },
+            errors: {
+                codigo: '',
+                nome: '',
+                descricao: '',
+            },
             active: false,
         }
     },
@@ -53,28 +61,34 @@ export default {
     methods: {
         highlight() {
             this.active = !this.active;
-            console.log(this.form.descricao);
 
         },
         getCodigo(codigo) {
             this.form.codigo = codigo;
         },
         getColor(color) {
-            console.log(color);
             this.form.cor = color;
         },
         getNome(nome) {
-            console.log(nome);
             this.form.cor = nome;
         },
         getDescricao(descricao) {
-            console.log(descricao);
             this.form.cor = descricao;
         },
         salvar() {
             http.store(this.form)
                 .then(response => response.json())
-                .then(data => console.log(data))
+                .then(data => {
+                    this.errors.nome = data.erros.nome[0];
+                    this.errors.descricao = data.erros.descricao[0];
+                    this.errors.codigo = data.erros.codigo[0];
+
+                    setTimeout(() => {
+                        this.errors.nome = '';
+                        this.errors.descricao = '';
+                        this.errors.codigo = '';
+                    }, 3000);
+                });
         }
     },
    
@@ -90,6 +104,9 @@ export default {
     width: 80%;
 }
 
+small {
+    letter-spacing: 0;
+}
 
 .botao__salvar {
     margin-top: 1.5rem;

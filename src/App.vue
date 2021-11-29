@@ -20,7 +20,6 @@ export default {
   methods: {
     isAuth() {
       if (this.$route.name == 'Login') {
-        console.log(this.$route.name)
         return false;
       } 
       return true;

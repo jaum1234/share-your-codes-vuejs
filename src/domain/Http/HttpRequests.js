@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export default class HttpRequests
 {
     constructor()
@@ -16,7 +18,8 @@ export default class HttpRequests
         return fetch(this.domain + 'projetos', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
             },
             body: JSON.stringify(data)
         });

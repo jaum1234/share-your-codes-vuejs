@@ -11,7 +11,6 @@ export default {
     },
     methods: {
         exportValue() {
-            console.log(this.cor)
             this.$emit('color', this.cor);
         }
     },

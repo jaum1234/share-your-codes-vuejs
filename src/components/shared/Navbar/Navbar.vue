@@ -10,7 +10,11 @@
                 </div>
                 <router-link to="/login" class="navbar__login">
                     <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                    <div class="login__text">Login</div>
+                    <div v-if="isLogged()" class="login__text login__text--logged">
+                        Nome do usuario
+                        <div @click="logout" class="login__logout">Logout</div>
+                    </div>
+                    <div v-else class="login__text login__text--login">Login</div>
                 </router-link>
             </div>
         </div>
@@ -18,12 +22,32 @@
 </template>
 
 <script>
+import Cookie from 'js-cookie';
+
 export default {
     data() {
         return {
             projetos: '',
             logo: require('/static/img/logo.png')
         }
+    },
+    methods: {
+        isLogged() {
+            if (Cookie.get('user_email')) {
+                return true;
+            }
+            return false;
+        },
+        logout() {
+            Cookie.remove('_myapp_token');
+            Cookie.remove('user_email');
+            Cookie.remove('user_nickname');
+
+            this.logged = false;
+        }
+    },
+    created() {
+        this.isLogged();
     }
 }
 </script>
@@ -71,7 +95,16 @@ export default {
 }
 
 .login__text {
-    color: white;
     margin-left: 1rem;
+}
+
+.login__text--login {
+    color: blue;
+    font-weight: bold;
+}
+
+.login__logout {
+    color: red;
+    font-weight: bold;
 }
 </style>

@@ -3,6 +3,7 @@
         :type="tipo" 
         :placeholder="placeholder" 
         :name="nome" 
+        :style="{textAlign: textAlign}"
         v-model="value" 
         @input="exportValue()">
 </template>
@@ -12,7 +13,8 @@ export default {
     props: [
         'tipo',
         'placeholder',
-        'nome'
+        'nome',
+        'textAlign'
     ],
     data() {
         return {
