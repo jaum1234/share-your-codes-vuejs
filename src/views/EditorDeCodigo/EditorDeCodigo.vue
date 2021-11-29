@@ -41,7 +41,7 @@ export default {
                 codigo: '',
                 nome: '',
                 descricao: '',
-                cor: '',
+                cor: '#6BD1FF',
             },
             errors: {
                 codigo: '',
@@ -60,6 +60,7 @@ export default {
     },
     methods: {
         highlight() {
+            console.log(this.form.cor)
             this.active = !this.active;
 
         },
@@ -70,15 +71,19 @@ export default {
             this.form.cor = color;
         },
         getNome(nome) {
-            this.form.cor = nome;
+            this.form.nome = nome;
         },
         getDescricao(descricao) {
-            this.form.cor = descricao;
+            this.form.descricao = descricao;
         },
         salvar() {
             http.store(this.form)
                 .then(response => response.json())
                 .then(data => {
+                    if (data.success === true) {
+                        this.successAlert();
+                        return;
+                    }
                     this.errors.nome = data.erros.nome[0];
                     this.errors.descricao = data.erros.descricao[0];
                     this.errors.codigo = data.erros.codigo[0];
@@ -89,7 +94,14 @@ export default {
                         this.errors.codigo = '';
                     }, 3000);
                 });
+        },
+        successAlert() {
+            this.$swal({
+                title: 'Projeto salvo com sucesso!',
+                icon: 'success'
+            });
         }
+        
     },
    
 }
