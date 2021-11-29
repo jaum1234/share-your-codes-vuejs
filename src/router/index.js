@@ -14,6 +14,11 @@ const routes = [
     component: Comunidade
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  }
+  {
     path: '/:pathMatch(.*)*',
     component: Comunidade
 

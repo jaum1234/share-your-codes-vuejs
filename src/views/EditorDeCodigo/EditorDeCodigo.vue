@@ -2,7 +2,7 @@
     <form @submit.prevent="salvar" class="editor">
         <div class="projeto__editor">
             <Editor @codigo-atualizado="getCodigo" height="350px" :borderColor="form.cor" :isActive="active"/>
-            <button class="botao__editor" @click.prevent="highlight">Visualizar om highlight</button>
+            <Botao corLabel="white" background="#0B254A" label="Visualizar com highlight" />
         </div>
         <div class="projeto__info">
             <div class="info descricao">
@@ -14,7 +14,9 @@
                 <h3 class="titulo personalizacao__titulo">PERSONALIZAÇAO</h3>
                 <input name="cor" v-model="form.cor" type="color" class="cor personalizacao__cor" >
             </div>
-            <button type="submit" >Salvar projeto</button>
+            <div class="botao__salvar">
+                <Botao background="#5081FB" label="Salvar projeto"/>
+            </div>
         </div>
     </form> 
 </template>
@@ -22,8 +24,9 @@
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
 import HttpRequests from '../../domain/HttpRequests.js';
+import Botao from '../../components/shared/Botao/Botao.vue';
 
-var http = new HttpRequests();
+const http = new HttpRequests();
 
 export default {
     data() {
@@ -38,7 +41,8 @@ export default {
         }
     },
     components: {
-        Editor
+        Editor,
+        Botao
     },
     methods: {
         highlight() {
@@ -68,19 +72,10 @@ export default {
     width: 80%;
 }
 
-.botao__editor {
-    background: #0B254A;
-    border-width: 0;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    padding: 1.2rem;
-    width: 100%;
-
-}
 
 .botao__salvar {
-    background: #5081FB;
+    margin-top: 1.5rem;
+    width: 100%;
 }
 
 .titulo {
