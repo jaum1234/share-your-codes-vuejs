@@ -7,11 +7,12 @@
         <div class="projeto__info">
             <div class="info descricao">
                 <h3 class="titulo descricao__titulo">SEU PROJETO</h3>
-                <input v-model="form.nome" name="nome" placeholder="Nome do seu projeto" type="text" class="nome descricao__nome">
-                <textarea v-model="form.descricao" name="descricao" placeholder="Descriçao do seu projeto" class="descricao__descricao"></textarea>
+                <Input tipo="text" placeholder="Nome do projeto" v-model="form.nome"/>
+                <Textarea placeholder="Descricao do projeto" v-model="form.descricao"/>
             </div>
             <div class="info personalizacao">
                 <h3 class="titulo personalizacao__titulo">PERSONALIZAÇAO</h3>
+                <Input tipo="text" placeholder="Nome do projeto" v-model="form.nome"/>
                 <input name="cor" v-model="form.cor" type="color" class="cor personalizacao__cor" >
             </div>
             <div class="botao__salvar">
@@ -25,6 +26,8 @@
 import Editor from '../../components/shared/Editor/Editor.vue';
 import HttpRequests from '../../domain/HttpRequests.js';
 import Botao from '../../components/shared/Botao/Botao.vue';
+import Input from '../../components/shared/Form/Input.vue';
+import Textarea from '../../components/shared/Form/Textarea.vue';
 
 const http = new HttpRequests();
 
@@ -42,7 +45,9 @@ export default {
     },
     components: {
         Editor,
-        Botao
+        Botao,
+        Input,
+        Textarea
     },
     methods: {
         highlight() {

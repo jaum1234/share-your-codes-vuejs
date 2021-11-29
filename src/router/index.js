@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
 import EditorDeCodigo from '../views/EditorDeCodigo/EditorDeCodigo.vue';
 import Comunidade from '../views/Comunidade/Comunidade.vue';
+import Login from '../views/Login/Login.vue';
 
 const routes = [
   {
@@ -17,7 +19,7 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
-  }
+  },
   {
     path: '/:pathMatch(.*)*',
     component: Comunidade
