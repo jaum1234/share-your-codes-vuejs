@@ -8,13 +8,18 @@
                 <div class="navbar__search">
                     <input placeholder="Busque por algo" type="search" v-model="projetos" class="navbar__input">
                 </div>
-                <router-link to="/login" class="navbar__login">
-                    <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                    <div v-if="isLogged()" class="login__text login__text--logged">
-                        Nome do usuario
-                        <div @click="logout" class="login__logout">Logout</div>
-                    </div>
-                    <div v-else class="login__text login__text--login">Login</div>
+                <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
+                <div v-if="isLogged()" class="login__text login__text--logged">
+                    <div>Nome do usuario</div>
+                    <ul>
+                        <li>
+                            <router-link :to="{name: 'MeusProjetos'}">Meus projetos</router-link>
+                        </li>
+                        <li @click="logout" class="login__logout">Logout</li>
+                    </ul>
+                </div>
+                <router-link v-else :to="{name: 'Login'}" class="navbar__login">
+                    <div  class="login__text login__text--login">Login</div>
                 </router-link>
             </div>
         </div>
@@ -44,6 +49,8 @@ export default {
             Cookie.remove('user_nickname');
 
             this.logged = false;
+
+            this.$router.push({name: 'Login'});
         }
     },
     created() {
@@ -105,6 +112,7 @@ export default {
 
 .login__logout {
     color: red;
+    cursor: pointer;
     font-weight: bold;
 }
 </style>

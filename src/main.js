@@ -9,9 +9,9 @@ import VueHighlightJS from 'vue3-highlightjs';
 import 'highlight.js/styles/kimbie.dark.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUser, faCode, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faCode, faUsers, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faUser, faCode, faUsers);
+library.add(faUser, faCode, faUsers, faTrash);
 
 createApp(App).use(VueSweetalert2).use(router).use(VueHighlightJS).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

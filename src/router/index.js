@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import EditorDeCodigo from '../views/EditorDeCodigo/EditorDeCodigo.vue';
 import Comunidade from '../views/Comunidade/Comunidade.vue';
 import Login from '../views/Login/Login.vue';
+import MeusProjetos from '../views/MeusProjetos/MeusProjetos.vue';
 
 const routes = [
   {
@@ -14,6 +15,11 @@ const routes = [
     path: '/comunidade',
     name: 'Comunidade',
     component: Comunidade
+  },
+  {
+    path: '/meusprojetos',
+    name: 'MeusProjetos',
+    component: MeusProjetos
   },
   {
     path: '/login',
