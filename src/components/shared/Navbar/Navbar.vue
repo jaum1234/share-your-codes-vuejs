@@ -8,17 +8,23 @@
                 <div class="navbar__search">
                     <input placeholder="Busque por algo" type="search" v-model="projetos" class="navbar__input">
                 </div>
-                <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                <div v-if="isLogged()" class="login__text login__text--logged">
-                    <div>Nome do usuario</div>
+                <div v-if="isLogged()" >
+                    <div>
+                        <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
+                        <div class="login__text login__text--logged">Nome do usuario</div>
+                    </div>
                     <ul>
                         <li>
                             <router-link :to="{name: 'MeusProjetos'}">Meus projetos</router-link>
+                        </li>
+                        <li>
+                            <router-link :to="{name: 'MeuPerfil'}">Meu Perfil</router-link>
                         </li>
                         <li @click="logout" class="login__logout">Logout</li>
                     </ul>
                 </div>
                 <router-link v-else :to="{name: 'Login'}" class="navbar__login">
+                    <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
                     <div  class="login__text login__text--login">Login</div>
                 </router-link>
             </div>
@@ -38,7 +44,7 @@ export default {
     },
     methods: {
         isLogged() {
-            if (Cookie.get('user_email')) {
+            if (Cookie.get('_myapp_token')) {
                 return true;
             }
             return false;
@@ -95,7 +101,7 @@ export default {
     color: white;
     display: flex;
     justify-content: flex-end;
-        text-decoration: none;
+    text-decoration: none;
 
     width: calc(100% - 80%);
 

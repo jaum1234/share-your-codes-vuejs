@@ -19,7 +19,11 @@ const routes = [
   {
     path: '/meusprojetos',
     name: 'MeusProjetos',
-    component: MeusProjetos
+    component: MeusProjetos,
+  },
+  {
+    path: '/meuperfil',
+    name: 'MeuPerfil', 
   },
   {
     path: '/login',

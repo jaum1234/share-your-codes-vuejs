@@ -8,9 +8,9 @@
 
 <script>
 import CardProjeto from '../../components/shared/Cards/CardProjeto.vue';
-import HttpRequest from '../../domain/Http/HttpRequests.js';
+import ProjectRequests from '../../domain/Http/ProjectRequests.js';
 
-var http = new HttpRequest();
+var http = new ProjectRequests();
 
 export default {
     components: {
@@ -24,7 +24,10 @@ export default {
     methods: {
         fetchProjetos() {
             http.index()
-                .then(data => this.projetos = data.projetos.data);
+                .then(data => {
+                    console.log(data);
+                    this.projetos = data.projetos;
+                });
         }
     },
     mounted() {

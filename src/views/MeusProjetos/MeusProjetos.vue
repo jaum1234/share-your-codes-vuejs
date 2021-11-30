@@ -1,16 +1,17 @@
 <template>
     <div class="projetos">
-        <div v-for="projeto in projetos" :key="projeto.id" class="projeto">
-            <CardProjeto :projeto="projeto"/>
+        <div v-for="(projeto, index) in projetos" :key="projeto.id" class="projeto">
+            <CardProjeto @removed="removeFromList" :projeto="projeto" :index="index"/>
         </div>
     </div>
 </template>
 
 <script>
 import CardProjeto from '../../components/shared/Cards/CardProjeto.vue';
-import HttpRequest from '../../domain/Http/HttpRequests.js';
+import UserRequests from '../../domain/Http/UserRequests.js';
+import Cookies from 'js-cookie';
 
-var http = new HttpRequest();
+var http = new UserRequests();
 
 export default {
     components: {
@@ -23,8 +24,15 @@ export default {
     },
     methods: {
         fetchProjetos() {
-            http.index()
-                .then(data => this.projetos = data.projetos.data);
+            var id = Cookies.get('user_id');
+            http.projetos(id)
+                .then(data => {
+                    console.log(data);
+                    this.projetos = data.projetos
+                });
+        },
+        removeFromList(index) {
+            this.projetos.splice(index, 1);
         }
     },
     mounted() {

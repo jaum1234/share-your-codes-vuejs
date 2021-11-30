@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-
+import router from '../../router/index.js';
 export default class HttpRequests
 {
     constructor()
@@ -7,21 +7,10 @@ export default class HttpRequests
         this.domain = 'http://localhost:3000/api/';
     }
 
-    index()
+    checkToken()
     {
-        return fetch(this.domain + 'projetos', {method: 'GET'})
-            .then(res => res.json());
-    }
-
-    store(data)
-    {
-        return fetch(this.domain + 'projetos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
-            },
-            body: JSON.stringify(data)
-        });
+        if (!Cookies.get('_myapp_token')) {
+            router.push({name: 'Login'})
+        }
     }
 }

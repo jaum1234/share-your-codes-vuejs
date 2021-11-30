@@ -28,7 +28,7 @@
 import Input from '../../components/shared/Form/Input.vue';
 import AuthRequest from '../../domain/Http/AuthRequest';
 import Botao from '../../components/shared/Botao/Botao.vue';
-import Cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 
 const http = new AuthRequest();
 
@@ -62,9 +62,12 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success === true) {
-                        Cookie.set('_myapp_token', data.access_token);
-                        Cookie.set('user_email', data.user.email);
-                        Cookie.set('user_nickname', data.user.nickname);
+                        var inOneHour = new Date(new Date().getTime() + 60 * 60 * 1000);
+                        
+                        Cookies.set('_myapp_token', data.access_token, {expires: inOneHour});
+                        Cookies.set('user_id', data.user.id);
+                        Cookies.set('user_email', data.user.email);
+                        Cookies.set('user_nickname', data.user.nickname);
                         
                         this.$router.push({name: 'EditorDeCodigo'})
                         return;
