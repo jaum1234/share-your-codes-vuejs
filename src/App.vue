@@ -43,6 +43,7 @@ export default {
 
 html, body {
   background: #051D3B;
+  font-family: 'Inter', sans-serif;
   -webkit-appearance: none;
 }
 
@@ -66,7 +67,6 @@ html, body {
 }
 
 #app {
-  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

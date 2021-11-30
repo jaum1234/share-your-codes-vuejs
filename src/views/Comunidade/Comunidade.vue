@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import CardProjeto from '../../components/shared/Cards/CardProjeto.vue';
 import ProjectRequests from '../../domain/Http/ProjectRequests.js';
+import CardProjeto from '../../components/shared/Cards/CardProjeto.vue'
 
 var http = new ProjectRequests();
 

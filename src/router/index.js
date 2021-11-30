@@ -1,20 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import EditorDeCodigo from '../views/EditorDeCodigo/EditorDeCodigo.vue';
 import Comunidade from '../views/Comunidade/Comunidade.vue';
 import Login from '../views/Login/Login.vue';
+//import EditorDeCodigo from '../views/EditorDeCodigo/EditorDeCodigo.vue';
 import MeusProjetos from '../views/MeusProjetos/MeusProjetos.vue';
 
 const routes = [
   {
     path: '/editordecodigo',
     name: 'EditorDeCodigo',
-    component: EditorDeCodigo
+    component: () => import('../views/EditorDeCodigo/EditorDeCodigo.vue')
   },
   {
     path: '/comunidade',
     name: 'Comunidade',
-    component: Comunidade
+    component: () => import('../views/Comunidade/Comunidade.vue')
   },
   {
     path: '/meusprojetos',
