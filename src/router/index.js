@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Comunidade from '../views/Comunidade/Comunidade.vue';
+//import Comunidade from '../views/Comunidade/Comunidade.vue';
 import Login from '../views/Login/Login.vue';
 //import EditorDeCodigo from '../views/EditorDeCodigo/EditorDeCodigo.vue';
-import MeusProjetos from '../views/MeusProjetos/MeusProjetos.vue';
+//import MeusProjetos from '../views/MeusProjetos/MeusProjetos.vue';
 
 const routes = [
   {
@@ -19,7 +19,7 @@ const routes = [
   {
     path: '/meusprojetos',
     name: 'MeusProjetos',
-    component: MeusProjetos,
+    component: () => import('../views/MeusProjetos/MeusProjetos.vue')
   },
   {
     path: '/meuperfil',
@@ -32,8 +32,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    component: Comunidade
-
+    component: () => import('../views/Comunidade/Comunidade.vue')
   }
   //{
   //  path: '/about',

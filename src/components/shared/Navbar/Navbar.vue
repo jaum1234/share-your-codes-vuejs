@@ -8,19 +8,20 @@
                 <div class="navbar__search">
                     <input placeholder="Busque por algo" type="search" v-model="projetos" class="navbar__input">
                 </div>
-                <div v-if="isLogged()" >
-                    <div>
+                <div v-if="isLogged()" class="logged navbar__login">
+                    <div class="user" @click="isActive">
                         <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
                         <div class="login__text login__text--logged">{{ nickname }}</div>
+                        <font-awesome-icon :icon="['fas', 'sort-down']" class="login__icon"/>
                     </div>
-                    <ul>
-                        <li>
-                            <router-link :to="{name: 'MeusProjetos'}">Meus projetos</router-link>
+                    <ul class="login__lista" v-show="active">
+                        <li class="login__item">
+                            <router-link class="login__link" :to="{name: 'MeusProjetos'}">Meus projetos</router-link>
                         </li>
-                        <li>
-                            <router-link :to="{name: 'MeuPerfil'}">Meu Perfil</router-link>
+                        <li class="login__item">
+                            <router-link class="login__link" :to="{name: 'MeuPerfil'}">Meu Perfil</router-link>
                         </li>
-                        <li @click="logout" class="login__logout">Logout</li>
+                        <li @click="logout" class="login__logout login__item">Logout</li>
                     </ul>
                 </div>
                 <router-link v-else :to="{name: 'Login'}" class="navbar__login">
@@ -40,7 +41,8 @@ export default {
         return {
             projetos: '',
             logo: require('/static/img/logo.png'),
-            nickname: ''
+            nickname: '',
+            active: false
         }
     },
     methods: {
@@ -59,6 +61,9 @@ export default {
             this.logged = false;
 
             this.$router.push({name: 'Login'});
+        },
+        isActive() {
+            return this.active = !this.active;
         }
     },
     created() {
@@ -111,7 +116,7 @@ export default {
 }
 
 .login__text {
-    margin-left: 1rem;
+    margin: 0 1rem 0 0.5rem;
 }
 
 .login__text--login {
@@ -123,5 +128,44 @@ export default {
     color: red;
     cursor: pointer;
     font-weight: bold;
+}
+
+.login__link {
+    color: black;
+    text-decoration: none;
+}
+
+.login__lista {
+    background: white;
+    border-radius: 2px;
+    padding: 0.6rem;
+    position: absolute;
+    text-align: start;
+    top: 100%;
+    width: 150px;
+}
+
+.login__icon {
+    align-self: center;
+}
+
+.login__item {
+    margin: 0.8rem 0;
+}
+
+.login__link:hover {
+    color: rgb(119, 119, 119);
+}
+
+.user {
+    display: flex;
+    cursor: pointer;
+    margin-block: 0.5rem;
+}
+
+.logged {
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 </style>

@@ -3,7 +3,9 @@
         <div class="projeto__editor">
             <Editor @codigo-atualizado="getCodigo" height="350px" :borderColor="form.cor" :isActive="active"/>
             <small style="color: red">{{ errors.codigo }}</small>
-            <Botao @click="highlight" tipo="button" corLabel="white" background="#0B254A" label="Visualizar com highlight" />
+            <div class="botao__highlight">
+                <Botao @click="highlight" tipo="button" corLabel="white" background="#0B254A" label="Visualizar com highlight" />
+            </div>
         </div>
         <div class="projeto__info">
             <div class="info descricao">
@@ -117,6 +119,10 @@ export default {
 
 small {
     letter-spacing: 0;
+}
+
+.botao__highlight {
+    margin-top: 2rem;
 }
 
 .botao__salvar {
