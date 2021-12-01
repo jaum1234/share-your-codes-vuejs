@@ -11,7 +11,7 @@
                 <div v-if="isLogged()" >
                     <div>
                         <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                        <div class="login__text login__text--logged">{{ nomeUsuario }}</div>
+                        <div class="login__text login__text--logged">{{ nickname }}</div>
                     </div>
                     <ul>
                         <li>
@@ -40,12 +40,13 @@ export default {
         return {
             projetos: '',
             logo: require('/static/img/logo.png'),
-            nomeUsuario: Cookies.get('user_nickname')
+            nickname: ''
         }
     },
     methods: {
         isLogged() {
             if (Cookies.get('_myapp_token')) {
+                this.nickname = Cookies.get('user_nickname');
                 return true;
             }
             return false;
@@ -62,7 +63,8 @@ export default {
     },
     created() {
         this.isLogged();
-    }
+    },
+    
 }
 </script>
 

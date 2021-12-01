@@ -65,9 +65,9 @@ export default {
                         var inOneHour = new Date(new Date().getTime() + 60 * 60 * 1000);
                         
                         Cookies.set('_myapp_token', data.access_token, {expires: inOneHour});
-                        Cookies.set('user_id', data.user.id);
-                        Cookies.set('user_email', data.user.email);
-                        Cookies.set('user_nickname', data.user.nickname);
+                        Cookies.set('user_id', data.user.id, {expires: inOneHour});
+                        Cookies.set('user_email', data.user.email, {expires: inOneHour});
+                        Cookies.set('user_nickname', data.user.nickname, {expires: inOneHour});
                         
                         this.$router.push({name: 'EditorDeCodigo'})
                         return;
