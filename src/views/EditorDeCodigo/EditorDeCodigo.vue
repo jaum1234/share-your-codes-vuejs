@@ -60,7 +60,6 @@ export default {
     },
     methods: {
         highlight() {
-            console.log(this.form.cor)
             this.active = !this.active;
 
         },

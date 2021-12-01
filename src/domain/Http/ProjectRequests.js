@@ -8,9 +8,9 @@ export default class ProjectRequests extends HttpRequests
         super();
     }
 
-    index()
+    index(page, limit)
     {
-        return fetch(this.domain + 'projetos', {method: 'GET'})
+        return fetch(this.domain + 'projetos?page=' + page + '&limit=' + limit, {method: 'GET'})
             .then(res => res.json());
     }
 

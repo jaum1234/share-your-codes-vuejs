@@ -38,7 +38,6 @@ export default {
             http.delete(this.projeto.id)
                 .then(data => {
                     if (data.success) {
-                        console.log(data);
                         this.$swal({
                             title: 'Projeto removido com successo',
                             icon: 'success'

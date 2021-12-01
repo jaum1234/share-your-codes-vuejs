@@ -1,46 +1,62 @@
 <template>
-    <div class="projetos">
-        <div v-for="projeto in projetos" :key="projeto.id" class="projeto">
-            <CardProjeto :projeto="projeto"/>
+    <div class="comunidade">
+        <div class="projetos">
+            <div v-for="projeto in projetos" :key="projeto.id" class="projeto">
+                <CardProjeto :projeto="projeto"/>
+            </div>
         </div>
+        <Pagination @page-changed="changePage" :total="total" :limit="limit" :offset="offset"/>
     </div>
 </template>
 
 <script>
 import ProjectRequests from '../../domain/Http/ProjectRequests.js';
 import CardProjeto from '../../components/shared/Cards/CardProjeto.vue'
+import Pagination from '../../components/shared/Pagination/Pagination.vue';
 
 var http = new ProjectRequests();
 
 export default {
     components: {
-        CardProjeto
+        CardProjeto,
+        Pagination
     },
     data() {
         return {
-            projetos: []
+            projetos: [],
+            total: 0,
+            limit: 4,
+            offset: 1
         }
     },
     methods: {
-        fetchProjetos() {
-            http.index()
+        fetchProjetos(offset) {
+            http.index(offset, this.limit)
                 .then(data => {
-                    console.log(data);
                     this.projetos = data.projetos;
+                    this.total = data.total;
                 });
+        },
+        changePage(data) {
+            this.offset = data;
+            this.fetchProjetos(data)
         }
     },
-    mounted() {
-        this.fetchProjetos();
+    created() {
+        this.fetchProjetos(this.offset);
     }
 }
 </script>
 
 <style scoped>
+.comunidade {
+    width: 80%;
+}
+
 .projetos {
     display: flex;
     flex-wrap: wrap;
-    width: 80%;
+    width: 100%;
 }
 
 .projeto {
@@ -49,5 +65,6 @@ export default {
     margin: 0 1rem;
     width: 45%;
 }
+
 
 </style>

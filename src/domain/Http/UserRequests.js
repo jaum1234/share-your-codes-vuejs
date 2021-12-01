@@ -8,11 +8,11 @@ export default class UserRequests extends HttpRequests
         super()
     }
 
-    projetos(id)
+    projetos(id, page, limit)
     {
         this.checkToken();
 
-        return fetch(this.domain + 'users/' + id + '/projetos', {
+        return fetch(this.domain + 'users/' + id + '/projetos?page=' + page + '&limit=' + limit, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
