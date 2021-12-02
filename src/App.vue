@@ -1,9 +1,9 @@
 <template>
-  <Nav v-show="isAuth()"/>
+  <Nav @projects-search="getSearchQuery" v-show="isAuth()"/>
   <div class="container">
     <div class="main">
       <Sidebar v-show="isAuth()"/>
-      <router-view/>
+      <router-view :searchQuery="searchQuery"/>
     </div>
   </div>
 </template>
@@ -17,12 +17,20 @@ export default {
     Nav,
     Sidebar,
   },
+  data() {
+    return {
+      searchQuery: ''
+    }
+  },
   methods: {
     isAuth() {
       if (this.$route.name == 'Login') {
         return false;
       } 
       return true;
+    },
+    getSearchQuery(query) {
+      return this.searchQuery = query;
     }
   },
   created() {

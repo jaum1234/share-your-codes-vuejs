@@ -6,7 +6,9 @@
                     <img :src="logo" alt="" class="navbar__img">
                 </div>
                 <div class="navbar__search">
-                    <input placeholder="Busque por algo" type="search" v-model="projetos" class="navbar__input">
+                    <form @submit.prevent="searchProject">
+                        <input placeholder="Busque por algo" type="search" v-model="nomeProjetos" class="navbar__input">
+                    </form>
                 </div>
                 <div v-if="isLogged()" class="logged navbar__login">
                     <div class="user" @click="isActive">
@@ -35,11 +37,14 @@
 
 <script>
 import Cookies from 'js-cookie';
+//import ProjectRequests from '../../../domain/Http/ProjectRequests.js';
+//
+//const http = new ProjectRequests();
 
 export default {
     data() {
         return {
-            projetos: '',
+            nomeProjetos: '',
             logo: require('/static/img/logo.png'),
             nickname: '',
             active: false
@@ -54,6 +59,8 @@ export default {
             return false;
         },
         logout() {
+
+            
             Cookies.remove('_myapp_token');
             Cookies.remove('user_email');
             Cookies.remove('user_nickname');
@@ -64,6 +71,10 @@ export default {
         },
         isActive() {
             return this.active = !this.active;
+        },
+        searchProject() {
+            Cookies.set('search', this.nomeProjetos);
+            this.$router.push({name: 'Comunidade'});
         }
     },
     created() {

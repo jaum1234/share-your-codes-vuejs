@@ -25,7 +25,19 @@ export default class ProjectRequests extends HttpRequests
                 'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
             },
             body: JSON.stringify(data)
-        });
+        })
+    }
+
+    search(data, page)
+    {
+        return fetch(this.domain + 'pesquisar?q=' + data + '&page=' + page, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(res => res.json());
+        
     }
 
     delete(id) {
