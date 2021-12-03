@@ -14,11 +14,12 @@ export default {
         'tipo',
         'placeholder',
         'nome',
-        'textAlign'
+        'textAlign',
+        'defaultValue'
     ],
     data() {
         return {
-            value: ''
+            value: this.defaultValue
         }
     },
     methods: {

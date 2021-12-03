@@ -23,7 +23,8 @@ const routes = [
   },
   {
     path: '/meuperfil',
-    name: 'MeuPerfil', 
+    name: 'MeuPerfil',
+    component: () => import('../views/MyProfile/MyProfile.vue') 
   },
   {
     path: '/login',
