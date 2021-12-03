@@ -28,13 +28,11 @@
 
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
-import ProjectRequests from '../../domain/Http/ProjectRequests.js';
+import { projectHttp } from '../../domain/Http/ProjectRequests.js';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import Input from '../../components/shared/Form/Input.vue';
 import Textarea from '../../components/shared/Form/Textarea.vue';
 import ColorInput from '../../components/shared/Form/ColorInput.vue';
-
-const http = new ProjectRequests();
 
 export default {
     data() {
@@ -63,7 +61,6 @@ export default {
     methods: {
         highlight() {
             this.active = !this.active;
-
         },
         getCodigo(codigo) {
             this.form.codigo = codigo;
@@ -78,7 +75,7 @@ export default {
             this.form.descricao = descricao;
         },
         salvar() {
-            http.store(this.form)
+            projectHttp.store(this.form)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success === true) {

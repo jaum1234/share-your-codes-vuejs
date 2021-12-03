@@ -37,9 +37,7 @@
 
 <script>
 import Cookies from 'js-cookie';
-//import ProjectRequests from '../../../domain/Http/ProjectRequests.js';
-//
-//const http = new ProjectRequests();
+import { authHttp } from '../../../domain/Http/AuthRequest.js';
 
 export default {
     data() {
@@ -59,15 +57,7 @@ export default {
             return false;
         },
         logout() {
-
-            
-            Cookies.remove('_myapp_token');
-            Cookies.remove('user_email');
-            Cookies.remove('user_nickname');
-
-            this.logged = false;
-
-            this.$router.push({name: 'Login'});
+            authHttp.logout();
         },
         isActive() {
             return this.active = !this.active;

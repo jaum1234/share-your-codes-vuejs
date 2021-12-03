@@ -16,9 +16,7 @@
 
 <script>
 import Editor from '../Editor/Editor.vue';
-import ProjectRequests from '../../../domain/Http/ProjectRequests.js';
-
-const http = new ProjectRequests();
+import { projectHttp } from '../../../domain/Http/ProjectRequests.js';
 
 export default {
     props: [
@@ -35,16 +33,32 @@ export default {
             }
         },
         remove() {
-            http.delete(this.projeto.id)
-                .then(data => {
-                    if (data.success) {
-                        this.$swal({
-                            title: 'Projeto removido com successo',
-                            icon: 'success'
-                        });
-                        this.$emit('removed', this.index);
-                    }
-                });
+            this.$swal({
+                title: 'Tem certeza que deseja excluir esse projeto?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Tem certeza que deseja excluir esse projeto?'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                
+                projectHttp.delete(this.projeto.id)
+                    .then(data => {
+                        if (data.success) {
+                            this.$swal({
+                                title: 'Projeto excluido!',
+                                icon: 'success',
+                                showConfirmButton: false,
+                            })   
+                            
+                            setInterval(() => {
+                                this.$router.go();  
+                            }, 1000);
+                        }
+                    });
+            }
+            })
         }
     },
     mounted() {

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 //import Comunidade from '../views/Comunidade/Comunidade.vue';
-import Login from '../views/Login/Login.vue';
+//import Login from '../views/Login/Login.vue';
 //import EditorDeCodigo from '../views/EditorDeCodigo/EditorDeCodigo.vue';
 //import MeusProjetos from '../views/MeusProjetos/MeusProjetos.vue';
 
@@ -28,11 +28,16 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: () => import('../views/Login/Login.vue')
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register/Register.vue')
   },
   {
     path: '/:pathMatch(.*)*',
-    component: () => import('../views/Comunidade/Comunidade.vue')
+    redirect: {name: 'Comunidade'}
   }
   //{
   //  path: '/about',

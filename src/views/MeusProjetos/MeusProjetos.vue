@@ -2,20 +2,18 @@
     <div class="meus-projetos">
         <div class="projetos">
             <div v-for="(projeto, index) in projetos" :key="projeto.id" class="projeto">
-                <CardProjeto @removed="removeFromList" :projeto="projeto" :index="index"/>
+                <CardProjeto :projeto="projeto" :index="index"/>
             </div>
         </div>
-        <Pagination @page-changed="changePage" :total="total" :limit="limit" :offset="offset"/>
+        <Pagination v-if="projetos.length" @page-changed="changePage" :total="total" :limit="limit" :offset="offset"/>
     </div>
 </template>
 
 <script>
 import CardProjeto from '../../components/shared/Cards/CardProjeto.vue';
-import UserRequests from '../../domain/Http/UserRequests.js';
+import { userHttp } from '../../domain/Http/UserRequests.js';
 import Cookies from 'js-cookie';
 import Pagination from '../../components/shared/Pagination/Pagination.vue';
-
-var http = new UserRequests();
 
 export default {
     components: {
@@ -33,14 +31,11 @@ export default {
     methods: {
         fetchProjetos(offset) {
             var id = Cookies.get('user_id');
-            http.projetos(id, offset, this.limit)
+            userHttp.projetos(id, offset, this.limit)
                 .then(data => {
                     this.projetos = data.projetos;
                     this.total = data.total;
                 });
-        },
-        removeFromList(index) {
-            this.projetos.splice(index, 1);
         },
         changePage(data) {
             this.offset = data;

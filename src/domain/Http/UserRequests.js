@@ -1,7 +1,7 @@
 import HttpRequests from "./HttpRequests";
 import Cookies from "js-cookie";
 
-export default class UserRequests extends HttpRequests
+class UserRequests extends HttpRequests
 {
     constructor()
     {
@@ -22,3 +22,6 @@ export default class UserRequests extends HttpRequests
         .then(res => res.json());
     }
 }
+
+const userHttp = new UserRequests();
+export { userHttp };

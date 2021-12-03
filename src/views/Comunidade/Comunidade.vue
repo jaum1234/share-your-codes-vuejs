@@ -11,12 +11,10 @@
 </template>
 
 <script>
-import ProjectRequests from '../../domain/Http/ProjectRequests.js';
+import { projectHttp } from '../../domain/Http/ProjectRequests.js';
 import CardProjeto from '../../components/shared/Cards/CardProjeto.vue'
 import Pagination from '../../components/shared/Pagination/Pagination.vue';
 import Cookies from 'js-cookie';
-
-var http = new ProjectRequests();
 
 export default {
     components: {
@@ -35,14 +33,14 @@ export default {
     },
     methods: {
         fetchProjetos(offset) {
-            http.index(offset, this.limit)
+            projectHttp.index(offset, this.limit)
                 .then(data => {
                     this.projetos = data.projetos;
                     this.total = data.total;
                 });
         },
         searchedProjects(offset) {
-            http.search(Cookies.get('search'), offset)
+            projectHttp.search(Cookies.get('search'), offset)
                 .then(data => {
                     this.projetos = data.projetos;
                     this.total = data.total

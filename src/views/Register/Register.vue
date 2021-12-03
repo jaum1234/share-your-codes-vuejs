@@ -1,25 +1,20 @@
 <template>
     <div class="container--small">
-        <div class="login">
+        <div class="register">
             <div class="link--home">
                 <router-link :to="{name: 'Comunidade'}" class="link">Home</router-link>
             </div>
-            <h1 class="login__title">Login</h1>
-            <form @submit.prevent="login">
+            <h1 class="register__title">Cadastro</h1>
+            <form @submit.prevent="register">
                 <div v-for="field in fields" :key="field" class="field" :class="field.class">
-                    <div class="login__label"><label>{{ field.name }}</label></div>
+                    <div class="register__label"><label>{{ field.name }}</label></div>
                     <Input textAlign="center" @value="field.inputGetter" tipo="field.inputType"/>
                     <small style="color: red"></small>
                 </div>
-                <div class="field login__password">
-                    <div class="login__label"><label>Senha</label></div>
-                    <Input textAlign="center" @value="getPassword" tipo="password"/>
-                    <small style="color: red"></small>
+                <div class="register__botao">
+                    <Botao type="submit" label="Finalizar Cadastro" background="#5081FB"/>
                 </div>
-                <div class="login__botao">
-                    <Botao type="submit" label="Fazer login" background="#5081FB"/>
-                </div>
-                <router-link :to="{name: 'Register'}">Ainda nao pussuo cadastro</router-link>
+                <router-link :to="{name: 'Login'}">Já possuo cadastro</router-link>
             </form>
         </div>
     </div>
@@ -27,7 +22,6 @@
 
 <script>
 import Input from '../../components/shared/Form/Input.vue';
-//import AuthRequest from '../../domain/Http/AuthRequest';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import { authHttp } from '../../domain/Http/AuthRequest.js';
 //import Cookies from 'js-cookie';
@@ -42,37 +36,62 @@ export default {
             fields: [
                 {
                     name: 'E-mail', 
-                    class: 'login__email', 
+                    class: 'register__email', 
                     inputGetter: this.getEmail, 
                     inputType: 'email'
                 },
                 {
+                    name: 'Nickname', 
+                    class: 'register__nickname', 
+                    inputGetter: this.getNickname, 
+                    inputType: 'text'
+                },
+                {
                     name: 'Senha', 
-                    class: 'login__password', 
+                    class: 'register__password', 
                     inputGetter: this.getPassword, 
                     inputType: 'password'
-                },
+                    },
+                {
+                    name: 'Confirmar senha', 
+                    class: 'register__confirm-password', 
+                    inputGetter: this.getConfirmPassword, 
+                    inputType: 'passowrd'
+                }
             ],
             form: {
                 email: '',
-                password: ''
+                password: '',
+                nickname: ''
             },
             errors: {
                 email: '',
-                password: '' 
+                password: '' ,
+                nickname: '',
+                confirmPassword: ''
             }
         }
     },
     methods: {
         getEmail(email) {
+            console.log("Email: " + email)
             this.form.email = email;
         },
+        getNickname(nickname) {
+            console.log("Nickname: " + nickname)
+            this.form.nickname = nickname;
+        },
+        getConfirmPassword(confirmPassword) {
+            console.log("Confirm password: " + confirmPassword);
+            this.form.confirmPassword = confirmPassword;
+        },
         getPassword(password) {
+            console.log("Passoword: " + password)
             this.form.password = password;
         },
 
-        login() {
-            authHttp.login(this.form);
+        register() {
+            authHttp.register(this.form);
         }
     }
 }
@@ -84,12 +103,12 @@ h1 {
     margin-bottom: 3.5rem;
 }
 
-.login__label {
+.register__label {
     margin-bottom: 1rem;
 }
 
-.login {
-    margin-top: 7rem;
+.register {
+    margin: 4rem 0;
 }
 
 .link--home {
@@ -104,7 +123,7 @@ h1 {
     margin-bottom: 1rem;
 }
 
-.login__botao {
+.register__botao {
     margin: 0 auto 2rem auto;
     width: 50%;
 }
