@@ -8,7 +8,7 @@
             <form @submit.prevent="register">
                 <div v-for="field in fields" :key="field" class="field" :class="field.class">
                     <div class="register__label"><label>{{ field.name }}</label></div>
-                    <Input textAlign="center" @value="field.inputGetter" tipo="field.inputType"/>
+                    <Input textAlign="center" @value="field.inputGetter" :tipo="field.inputType"/>
                     <small style="color: red"></small>
                 </div>
                 <div class="register__botao">

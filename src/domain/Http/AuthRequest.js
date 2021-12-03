@@ -21,18 +21,30 @@ class AuthRequest extends HttpRequests
         .then(response => response.json())
         .then((data) => {
             this.setCookies(data);
-            router.push({name: 'EditorDeCodigo'})
+
+            this.interval = setInterval(() => {
+                var now = new Date();
+                console.log(now)
+            
+                if (now.getTime() >= Cookies.get('token_expires_at')) {
+                    authHttp.refreshToken();
+                }
+            }, 1000);
+
+            router.push({name: 'EditorDeCodigo'})    
         });
     }
 
     setCookies(data)
-    {
-        var inTwentyMinutes = new Date(new Date().getTime() + 20 * 60 * 1000);
-                        
-        Cookies.set('_myapp_token', data.access_token, {expires: inTwentyMinutes});
+    {   
+        var inTwentyMinutes =  new Date(new Date().getTime() + 20 * 60 * 1000);    
+        console.log(data.access_token);              
+
+        Cookies.set('_myapp_token', data.access_token);
         Cookies.set('user_id', data.user.id);
         Cookies.set('user_email', data.user.email);
         Cookies.set('user_nickname', data.user.nickname);
+        Cookies.set('token_expires_at', inTwentyMinutes.getTime());
     }
 
     register(data)
@@ -59,8 +71,11 @@ class AuthRequest extends HttpRequests
         .then(res => res.json())
         .then(() => {
             Cookies.remove('_myapp_token');
+            Cookies.remove('token_expires_at');
             Cookies.remove('user_email');
             Cookies.remove('user_nickname');
+            console.log(this.interval);
+            clearInterval(this.interval);
     
             router.push({name: 'Login'});
         })
@@ -78,7 +93,10 @@ class AuthRequest extends HttpRequests
         })
         .then(res => res.json())
         .then(data => {
+            var inTwentyMinutes =  new Date(new Date().getTime() + 20 * 60 * 1000);                  
+
             Cookies.set('_myapp_token', data.access_token);
+            Cookies.set('token_expires_at', inTwentyMinutes.getTime());
             console.log(Cookies.get('_myapp_token'))
         });
     }

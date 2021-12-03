@@ -3,7 +3,7 @@
         <h2 class="sidebar__titulo">MENU</h2>
         <ul v-for="item in items" :key="item.id" class="sidebar__lista">
             <router-link :to="item.url">
-                <li class="sidebar__item" @click="activeMenu(item.url)">
+                <li class="sidebar__item">
                     <div class="sidebar__icon" >
                         <font-awesome-icon id="fwi" :icon="['fas', item.icon]" class="icon" :class="{active: isActive(item.url)}"/>
                     </div>

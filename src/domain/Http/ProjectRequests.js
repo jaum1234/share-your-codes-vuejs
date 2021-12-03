@@ -17,6 +17,7 @@ class ProjectRequests extends HttpRequests
     store(data)
     {
         this.checkToken();
+            
 
         return fetch(this.domain + 'projetos', {
             method: 'POST',

@@ -11,6 +11,8 @@ export default class HttpRequests
     {
         if (!Cookies.get('_myapp_token')) {
             router.push({name: 'Login'})
+            return false;
         }
+        return true;
     }
 }

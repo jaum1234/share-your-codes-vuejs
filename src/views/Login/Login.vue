@@ -8,12 +8,7 @@
             <form @submit.prevent="login">
                 <div v-for="field in fields" :key="field" class="field" :class="field.class">
                     <div class="login__label"><label>{{ field.name }}</label></div>
-                    <Input textAlign="center" @value="field.inputGetter" tipo="field.inputType"/>
-                    <small style="color: red"></small>
-                </div>
-                <div class="field login__password">
-                    <div class="login__label"><label>Senha</label></div>
-                    <Input textAlign="center" @value="getPassword" tipo="password"/>
+                    <Input textAlign="center" @value="field.inputGetter" :tipo="field.inputType"/>
                     <small style="color: red"></small>
                 </div>
                 <div class="login__botao">
