@@ -20,11 +20,8 @@ class UserRequests extends HttpRequests
             },
             body: JSON.stringify(data)
         })
-        .then(res => res.json())
-        .then(data => {
-            Cookies.set('user_nickname', data.dados.new_nickname);
-            Cookies.set('user_name', data.dados.new_name);
-        });
+        .then(res => res.json());
+        
     }
 
     projetos(id, page, limit)

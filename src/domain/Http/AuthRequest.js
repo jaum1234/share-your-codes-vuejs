@@ -19,28 +19,7 @@ class AuthRequest extends HttpRequests
             body: JSON.stringify(data)
         })
         .then(response => response.json())
-        .then((data) => {
-            this.setCookies(data);
-            let counter = 0;
-
-            this.interval = setInterval(() => {
-                var now = new Date();
-                
-                if (now.getTime() >= Cookies.get('token_expires_at')) {
-                    counter++;
-                    console.log(counter);
-                    if (counter == 3) {
-                        this.logout();
-                        return;
-                    }
-
-                    authHttp.refreshToken();
-                }
-
-            }, 1000);
-
-            router.push({name: 'EditorDeCodigo'})    
-        });
+        
     }
 
     setCookies(data)

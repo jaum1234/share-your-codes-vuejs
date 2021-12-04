@@ -7,9 +7,11 @@
             <h1 class="login__title">Login</h1>
             <form @submit.prevent="login">
                 <div v-for="field in fields" :key="field" class="field" :class="field.class">
-                    <div class="login__label"><label>{{ field.name }}</label></div>
+                    <div class="login__label"><label>{{ field.label }}</label></div>
                     <Input textAlign="center" @value="field.inputGetter" :tipo="field.inputType"/>
-                    <small style="color: red"></small>
+                    <small style="color: red" v-for="error in field.errors" :key="error">
+                        {{ error }}
+                    </small>
                 </div>
                 <div class="login__botao">
                     <Botao type="submit" label="Fazer login" background="#5081FB"/>
@@ -22,10 +24,9 @@
 
 <script>
 import Input from '../../components/shared/Form/Input.vue';
-//import AuthRequest from '../../domain/Http/AuthRequest';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import { authHttp } from '../../domain/Http/AuthRequest.js';
-//import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 
 export default {
     components: {
@@ -36,26 +37,26 @@ export default {
         return {
             fields: [
                 {
-                    name: 'E-mail', 
+                    label: 'Email', 
+                    name: 'email',
                     class: 'login__email', 
                     inputGetter: this.getEmail, 
-                    inputType: 'email'
+                    inputType: 'email',
+                    errors: []
                 },
                 {
-                    name: 'Senha', 
+                    label: 'Senha', 
+                    name: 'password',
                     class: 'login__password', 
                     inputGetter: this.getPassword, 
-                    inputType: 'password'
+                    inputType: 'password',
+                    errors: []
                 },
             ],
             form: {
                 email: '',
                 password: ''
             },
-            errors: {
-                email: '',
-                password: '' 
-            }
         }
     },
     methods: {
@@ -67,7 +68,47 @@ export default {
         },
 
         login() {
-            authHttp.login(this.form);
+            authHttp.login(this.form)
+                .then((data) => {
+                    if (data.success) {
+                        authHttp.setCookies(data);
+                        let counter = 0;
+    
+                        this.interval = setInterval(() => {
+                            var now = new Date();
+                            
+                            if (now.getTime() >= Cookies.get('token_expires_at')) {
+                                counter++;
+                                console.log(counter);
+                                if (counter == 3) {
+                                    this.logout();
+                                    return;
+                                }
+    
+                                authHttp.refreshToken();
+                            }
+    
+                        }, 1000);
+    
+                        this.$router.push({name: 'EditorDeCodigo'});
+                        return;   
+
+                    }
+                    
+                    const responseErrorKeys = Object.keys(data.erros);
+                    responseErrorKeys.forEach((responseErrorKey) => {
+                    
+                    this.fields.forEach(field => {
+                        if (responseErrorKey == field.name) {
+                            field.errors = data.erros[responseErrorKey];
+                        }
+
+                        setTimeout(() => {
+                            field.errors = [];
+                        }, 3000);
+                    })
+                })
+                });
         }
     }
 }
