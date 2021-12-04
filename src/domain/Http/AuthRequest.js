@@ -21,14 +21,22 @@ class AuthRequest extends HttpRequests
         .then(response => response.json())
         .then((data) => {
             this.setCookies(data);
+            let counter = 0;
 
             this.interval = setInterval(() => {
                 var now = new Date();
-                console.log(now)
-            
+                
                 if (now.getTime() >= Cookies.get('token_expires_at')) {
+                    counter++;
+                    console.log(counter);
+                    if (counter == 3) {
+                        this.logout();
+                        return;
+                    }
+
                     authHttp.refreshToken();
                 }
+
             }, 1000);
 
             router.push({name: 'EditorDeCodigo'})    
@@ -42,7 +50,7 @@ class AuthRequest extends HttpRequests
 
         Cookies.set('_myapp_token', data.access_token);
         Cookies.set('user_id', data.user.id);
-        Cookies.set('user_email', data.user.email);
+        Cookies.set('user_name', data.user.name);
         Cookies.set('user_nickname', data.user.nickname);
         Cookies.set('token_expires_at', inTwentyMinutes.getTime());
     }
@@ -72,7 +80,7 @@ class AuthRequest extends HttpRequests
         .then(() => {
             Cookies.remove('_myapp_token');
             Cookies.remove('token_expires_at');
-            Cookies.remove('user_email');
+            Cookies.remove('user_name');
             Cookies.remove('user_nickname');
             console.log(this.interval);
             clearInterval(this.interval);

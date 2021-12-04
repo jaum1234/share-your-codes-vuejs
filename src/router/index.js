@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Cookies from 'js-cookie';
 
 //import Comunidade from '../views/Comunidade/Comunidade.vue';
 //import Login from '../views/Login/Login.vue';
@@ -54,6 +55,14 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   linkActiveClass: "active"
+})
+
+router.beforeEach((to, from, next) => {
+  if(!Cookies.get('_myapp_token') && (to.name == 'MeusProjetos' || to.name == 'MeuPerfil')) {
+    next({name: 'Login'});
+    return;
+  }
+  next();
 })
 
 export default router

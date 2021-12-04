@@ -26,6 +26,7 @@
 <script>
 import Input from '../../components/shared/Form/Input.vue';
 import Button from '../../components/shared/Botao/Botao.vue';
+import { userHttp } from '../../domain/Http/UserRequests.js';
 import Cookies from 'js-cookie';
 
 export default {
@@ -38,8 +39,11 @@ export default {
             this.form.nickname = nickname;
             console.log(this.form.nickname)
         },
-        getEmail(email) {
-            this.form.email = email;
+        getName(name) {
+            this.form.name = name;
+        },
+        update() {
+            userHttp.update(Cookies.get('user_id'), this.form);
         }
     },
     data() {
@@ -53,11 +57,11 @@ export default {
                     defaultValue: Cookies.get('user_nickname')
                 },
                 {
-                    name: 'E-mail',
-                    inputType: 'email', 
-                    placeholder: 'Seu e-mail', 
-                    inputGetter: this.getEmail,
-                    defaultValue: Cookies.get('user_email')
+                    name: 'Name',
+                    inputType: 'text', 
+                    placeholder: 'Seu nome', 
+                    inputGetter: this.getName,
+                    defaultValue: Cookies.get('user_name')
                 },
             ],
             form: {
