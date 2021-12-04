@@ -29,6 +29,7 @@
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
 import { projectHttp } from '../../domain/Http/ProjectRequests.js';
+import { validator } from '../../domain/Errors/ValidationErrors.js';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import Input from '../../components/shared/Form/Input.vue';
 import Textarea from '../../components/shared/Form/Textarea.vue';
@@ -82,9 +83,19 @@ export default {
                         this.successAlert();
                         return;
                     }
-                    this.errors.nome = data.erros.nome[0];
-                    this.errors.descricao = data.erros.descricao[0];
-                    this.errors.codigo = data.erros.codigo[0];
+                    
+                    validator.validate(this.errors, data.erros);
+
+                    //const componentErrorKeys = Object.keys(this.errors);
+                    //const responseErrorKeys = Object.keys(data.erros);
+                    //
+                    //componentErrorKeys.forEach(componentError => {
+                    //    responseErrorKeys.forEach(responseError => {
+                    //        if (componentError == responseError) {
+                    //            this.errors[componentError] = data.erros[responseError][0];
+                    //        }
+                    //    });
+                    //});
 
                     setTimeout(() => {
                         this.errors.nome = '';
