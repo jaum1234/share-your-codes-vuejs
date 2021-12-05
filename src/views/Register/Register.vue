@@ -7,9 +7,11 @@
             <h1 class="register__title">Cadastro</h1>
             <form @submit.prevent="register">
                 <div v-for="field in fields" :key="field" class="field" :class="field.class">
-                    <div class="register__label"><label>{{ field.name }}</label></div>
+                    <div class="register__label"><label>{{ field.label }}</label></div>
                     <Input textAlign="center" @value="field.inputGetter" :tipo="field.inputType"/>
-                    <small style="color: red"></small>
+                    <small style="color: red" v-for="error in field.errors" :key="error">
+                        {{ error }}
+                    </small>
                 </div>
                 <div class="register__botao">
                     <Botao type="submit" label="Finalizar Cadastro" background="#5081FB"/>
@@ -35,34 +37,52 @@ export default {
         return {
             fields: [
                 {
-                    name: 'E-mail', 
+                    label: 'E-mail',
+                    name: 'email',
                     class: 'register__email', 
                     inputGetter: this.getEmail, 
-                    inputType: 'email'
+                    inputType: 'email',
+                    errors: []
                 },
                 {
-                    name: 'Nickname', 
+                    label: 'Nome',
+                    name: 'name',
+                    class: 'register__name', 
+                    inputGetter: this.getName, 
+                    inputType: 'text',
+                    errors: []
+                },
+                {
+                    label: 'Nickname',
+                    name: 'nickname', 
                     class: 'register__nickname', 
                     inputGetter: this.getNickname, 
-                    inputType: 'text'
+                    inputType: 'text',
+                    errors: []
                 },
                 {
-                    name: 'Senha', 
+                    label: 'Senha',
+                    name: 'password', 
                     class: 'register__password', 
                     inputGetter: this.getPassword, 
-                    inputType: 'password'
-                    },
+                    inputType: 'password',
+                    errors: []
+                },
                 {
-                    name: 'Confirmar senha', 
+                    label: 'Confirmar senha',
+                    name: 'password_confirmation', 
                     class: 'register__confirm-password', 
                     inputGetter: this.getConfirmPassword, 
-                    inputType: 'passowrd'
+                    inputType: 'password',
+                    errors: []
                 }
             ],
             form: {
                 email: '',
                 password: '',
-                nickname: ''
+                name: '',
+                nickname: '',
+                password_confirmation: ''
             },
             errors: {
                 email: '',
@@ -81,9 +101,12 @@ export default {
             console.log("Nickname: " + nickname)
             this.form.nickname = nickname;
         },
+        getName(name) {
+            this.form.name = name;
+        },
         getConfirmPassword(confirmPassword) {
             console.log("Confirm password: " + confirmPassword);
-            this.form.confirmPassword = confirmPassword;
+            this.form.password_confirmation = confirmPassword;
         },
         getPassword(password) {
             console.log("Passoword: " + password)
@@ -91,7 +114,29 @@ export default {
         },
 
         register() {
-            authHttp.register(this.form);
+            authHttp.register(this.form)
+                .then(data => {
+                    if (data.success) {
+                        console.log(data);
+                        this.$router.push({ name: 'Login' });
+                        return;
+                    }
+                    console.log(data)
+                    const responseErrorKeys = Object.keys(data.erros);
+                    responseErrorKeys.forEach((responseErrorKey) => {
+                    
+                        this.fields.forEach(field => {
+                            if (responseErrorKey == field.name) {
+                                field.errors = data.erros[responseErrorKey];
+                            }
+
+                            setTimeout(() => {
+                                field.errors = [];
+                            }, 3000);
+                        })
+                    });
+                })
+                
         }
     }
 }
