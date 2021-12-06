@@ -64,7 +64,14 @@ export default {
         },
         searchProject() {
             Cookies.set('search', this.nomeProjetos);
-            this.$router.push({name: 'Comunidade'});
+            this.nomeProjetos = '';
+
+            if (this.$route.name == 'Comunidade') {
+                this.$router.go();
+                return;
+            }
+
+            this.$router.push({ name: 'Comunidade' });
         }
     },
     created() {

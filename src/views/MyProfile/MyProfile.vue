@@ -53,6 +53,11 @@ export default {
                 if (data.success) {
                     Cookies.set('user_nickname', data.dados.new_nickname);
                     Cookies.set('user_name', data.dados.new_name);
+
+                    this.$swal({
+                        title: 'Dados atualizados com sucesso!',
+                        icon: 'success'
+                    });
                     return;
                 }
 

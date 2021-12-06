@@ -28,6 +28,11 @@ const routes = [
     component: () => import('../views/MyProfile/MyProfile.vue') 
   },
   {
+    path: '/projeto/:id',
+    name: 'ProjectPage',
+    component: () => import('../views/ProjectPage/ProjectPage.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login/Login.vue')
@@ -39,16 +44,9 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: {name: 'Comunidade'}
+    redirect: { name: 'Comunidade' }
   }
-  //{
-  //  path: '/about',
-  //  name: 'About',
-  //  // route level code-splitting
-  //  // this generates a separate chunk (about.[hash].js) for this route
-  //  // which is lazy-loaded when the route is visited.
-  //  component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  //}
+  
 ]
 
 const router = createRouter({
@@ -58,7 +56,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(!Cookies.get('_myapp_token') && (to.name == 'MeusProjetos' || to.name == 'MeuPerfil' || to.name == 'EditorDeCodigo')) {
+  if(!Cookies.get('_myapp_token') && (to.name == 'MeusProjetos' || to.name == 'MeuPerfil' || to.name == 'EditorDeCodigo' || to.name == 'ProjectPage')) {
     next({name: 'Login'});
     return;
   }

@@ -1,9 +1,10 @@
 <template>
     <div class="comunidade">
-        <h1>{{ projetosBuscados }}</h1>
         <div class="projetos">
             <div v-for="projeto in projetos" :key="projeto.id" class="projeto">
-                <CardProjeto :projeto="projeto"/>
+                <router-link :to="{ path: '/projeto/' + projeto.id }">
+                    <CardProjeto :projeto="projeto"/>
+                </router-link>
             </div>
         </div>
         <Pagination v-if="projetos.length" @page-changed="changePage" :total="total" :limit="limit" :offset="offset"/>
@@ -21,14 +22,15 @@ export default {
         CardProjeto,
         Pagination
     },
-    
+    props: [
+        'search'
+    ],
     data() {
         return {
             projetos: [],
             total: 0,
             limit: 4,
             offset: 1,
-            procura: ''
         }
     },
     methods: {
@@ -53,16 +55,30 @@ export default {
     },
     mounted() {
         if (Cookies.get('search')) {
+            console.log('true')
             this.searchedProjects(this.offset);
+
+            if (this.$route.name == 'Comunidade') {
+                this.$router.go();
+            }
+            
+            Cookies.remove('search');
             return;
         }
+        console.log('false')
         this.fetchProjetos(this.offset);
     },
     unmounted() {
         Cookies.remove('search');
     },
-    updated() {
-        console.log('ok');
+    computed: {
+        projects() {
+            if (Cookies.get('search')) {
+                return this.searchedProjects(this.offset);
+            
+            }
+            return this.fetchProjetos(this.offset);
+        }
     }
     
 }

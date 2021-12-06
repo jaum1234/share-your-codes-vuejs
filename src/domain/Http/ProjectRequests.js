@@ -10,8 +10,21 @@ class ProjectRequests extends HttpRequests
 
     index(page, limit)
     {
-        return fetch(this.domain + 'projetos?page=' + page + '&limit=' + limit, {method: 'GET'})
-            .then(res => res.json());
+        return fetch(this.domain + 'projetos?page=' + page + '&limit=' + limit, {
+            method: 'GET'
+        })
+        .then(res => res.json());
+    }
+
+    show(id)
+    {
+        return fetch(this.domain + 'projetos/' + id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(res => res.json());
     }
 
     store(data)
