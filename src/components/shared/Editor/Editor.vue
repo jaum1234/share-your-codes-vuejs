@@ -47,7 +47,7 @@ export default {
     width: 100%;
 }
 
-.editor--highlight {
+.editor-highlight--med {
     font-family: monospace;
     text-align: start;
     line-height: 1.2rem;
