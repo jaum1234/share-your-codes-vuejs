@@ -121,7 +121,6 @@ export default {
 .editor {
     display: flex;
     font-weight: lighter;
-    
     width: 80%;
 }
 
@@ -143,7 +142,7 @@ small {
 }
 
 .projeto__editor {
-    width: 100%;
+    width: 75%;
     margin-right: 3rem;
 }
 
@@ -156,7 +155,7 @@ small {
     display: flex;
     flex-direction: column;
     text-align: start;
-    width: 30%;
+    width: 20%;
     letter-spacing: 0.35rem;
 }
 

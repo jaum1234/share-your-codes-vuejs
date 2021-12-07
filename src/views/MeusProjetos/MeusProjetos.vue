@@ -2,7 +2,9 @@
     <div class="meus-projetos">
         <div class="projetos">
             <div v-for="(projeto, index) in projetos" :key="projeto.id" class="projeto">
-                <CardProjeto :projeto="projeto" :index="index"/>
+                <router-link :to="{ path: '/projeto/' + projeto.id }">
+                    <CardProjeto :projeto="projeto" :index="index"/>
+                </router-link>
             </div>
         </div>
         <Pagination v-if="projetos.length" @page-changed="changePage" :total="total" :limit="limit" :offset="offset"/>

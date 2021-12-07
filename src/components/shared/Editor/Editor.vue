@@ -1,16 +1,15 @@
 <template>
-    <pre v-highlightjs v-show="isActive" 
-        class="editor editor--highlight" 
-        :style="{ height: height, borderColor: borderColor }"><code class="javascript">{{ code ? code : savedCode }}</code></pre>
-    <textarea 
+    <pre v-highlightjs v-show="isActive" class="editor editor-highlight" :style="{ height: height, borderColor: borderColor }"><code class="javascript">{{ code ? code : savedCode }}</code></pre>
+    <textarea
         class="editor"
-        name="codigo" 
+        name="codigo"
         @input="escreverCodigo"
-        id="editor" 
+        id="editor"
         v-model="code"
         :style="{height: height, borderColor: borderColor}"
         v-show="!isActive"
         ></textarea>
+   
 </template>
 
 <script>
@@ -19,7 +18,7 @@ export default {
         'height',
         'borderColor',
         'isActive',
-        'savedCode'
+        'savedCode',
     ],
     emits: ["codigo-atualizado"],
     data() {
@@ -41,22 +40,23 @@ export default {
     color: white;
     border: 30px solid;
     border-radius: 5px;
+    padding: 0.5rem;
     font-size: 1rem;
-    padding: 1rem;
     resize: none;
     width: 100%;
 }
 
-.editor-highlight--med {
+.editor-highlight {
     font-family: monospace;
     text-align: start;
     line-height: 1.2rem;
-    max-width: 750px;
+    max-width: 100%;
     overflow-wrap: break-word;
 }
 
 code {
-    max-height: 260px;
+    height: 100%;
+    width: 100%;
 }
 
 

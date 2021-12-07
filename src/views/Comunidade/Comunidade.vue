@@ -98,6 +98,7 @@ export default {
 .projeto {
     display: flex;
     flex-direction: column;
+    text-decoration: none;
     margin: 0 1rem;
     width: 45%;
 }

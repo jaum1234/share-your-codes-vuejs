@@ -78,6 +78,7 @@ export default {
 
 .card__body {
     background: #041832;
+    color: white;
     padding: 2rem;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
