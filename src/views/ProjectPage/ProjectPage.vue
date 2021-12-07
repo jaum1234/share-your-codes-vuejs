@@ -42,7 +42,9 @@ export default {
     width: 80%;
 }
 
-.project__editor {
-    
+@media screen and (max-width: 1280px) {
+    .project {
+        width: 100%;
+    }
 }
 </style>

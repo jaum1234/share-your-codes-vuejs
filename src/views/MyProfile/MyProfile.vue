@@ -30,9 +30,7 @@
 import Input from '../../components/shared/Form/Input.vue';
 import Button from '../../components/shared/Botao/Botao.vue';
 import { userHttp } from '../../domain/Http/UserRequests.js';
-//import { validator } from '../../domain/Errors/ValidationErrors';
 import Cookies from 'js-cookie';
-//import { validator } from '../../domain/Errors/ValidationErrors';
 
 export default {
     components: {
@@ -132,5 +130,11 @@ export default {
 
 .my-profile__label {
     margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 1280px) {
+    .my-profile {
+        width: 100%;
+    }
 }
 </style>

@@ -103,5 +103,22 @@ export default {
     width: 45%;
 }
 
+@media screen and (max-width: 1280px) {
+    .comunidade {
+        width: 100%;
+    }
+
+    .projetos {
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .projeto {
+        width: 100%;
+        margin: 0;
+    }
+}
+
 
 </style>

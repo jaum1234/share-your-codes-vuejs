@@ -67,4 +67,14 @@ export default {
     margin: 0 1rem;
     width: 45%;
 }
+
+@media screen and (max-width: 1280px) {
+    .meus-projetos {
+        width: 100%;
+    }
+
+    .projeto {
+        width: 100%;
+    }
+}
 </style>

@@ -10,6 +10,9 @@
                         <input placeholder="Busque por algo" type="search" v-model="nomeProjetos" class="navbar__input">
                     </form>
                 </div>
+                <div class="navbar__ham">
+                    <font-awesome-icon :icon="['fas', 'bars']"/>
+                </div>
                 <div v-if="isLogged()" class="logged navbar__login">
                     <div class="user" @click="isActive">
                         <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
@@ -113,6 +116,10 @@ export default {
     
 }
 
+.navbar__ham {
+    display: none;
+}
+
 .navbar__login {
     color: white;
     display: flex;
@@ -121,6 +128,17 @@ export default {
 
     width: calc(100% - 80%);
 
+}
+
+@media screen and (max-width: 1280px) {
+
+    .navbar__ham {
+        display: block;
+    }
+
+    .navbar__login ul {
+        display: block;
+    }
 }
 
 .login__text {

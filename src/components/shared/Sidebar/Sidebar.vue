@@ -44,6 +44,12 @@ export default {
     width: calc(100% - 80%);
 }
 
+@media screen and (max-width: 1280px) {
+    .sidebar {
+        display: none;
+    }
+}
+
 .sidebar__titulo {
     font-weight: lighter;
     letter-spacing: 0.35rem;

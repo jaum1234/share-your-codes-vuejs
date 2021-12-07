@@ -172,4 +172,10 @@ h1 {
     margin: 0 auto 2rem auto;
     width: 50%;
 }
+
+@media screen and (max-width: 1280px) {
+    .register__botao {
+        width: 100%
+    }
+}
 </style>

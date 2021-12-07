@@ -19,6 +19,7 @@ export default {
         'borderColor',
         'isActive',
         'savedCode',
+        'isMobile'
     ],
     emits: ["codigo-atualizado"],
     data() {

@@ -11,7 +11,7 @@
             <div class="info descricao">
                 <h3 class="titulo descricao__titulo">SEU PROJETO</h3>
                 <small style="color: red">{{ errors.nome }}</small>
-                <Input @value="getNome" tipo="text" placeholder="Nome do projeto" v-model="form.nome"/>
+                <div><Input @value="getNome" tipo="text" placeholder="Nome do projeto" v-model="form.nome"/></div>
                 <small style="color: red">{{ errors.descricao }}</small>
                 <Textarea @value="getDescricao" placeholder="Descricao do projeto" v-model="form.descricao"/>
             </div>
@@ -146,6 +146,7 @@ small {
     margin-right: 3rem;
 }
 
+
 .descricao {
     margin-bottom: 2rem;
 }
@@ -162,5 +163,32 @@ small {
 .personalizacao {
     width: 100%;
 }
+    @media screen and (max-width: 1280px) {
+        .editor {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .botao__highlight {
+            margin-bottom: 3rem;
+        }
+
+        .botao__salvar {
+            margin-bottom: 2rem;
+        }
+
+        .info {
+            width: 100%;
+        }
+
+        .projeto__info {
+            width: 100%;
+        }
+
+        .projeto__editor  {
+            width: 100% !important;
+            margin: 0;
+        }
+    }
 
 </style>

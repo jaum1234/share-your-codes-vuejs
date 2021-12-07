@@ -89,6 +89,12 @@ html, body {
   margin: 0 auto;
 }
 
+@media screen and (max-width: 800px) {
+  .container, .container--fluid, .container--small {
+    width: 90%;
+  }
+}
+
 .main {
   display: flex;
 }
