@@ -13,26 +13,28 @@
                 <div class="navbar__ham">
                     <font-awesome-icon :icon="['fas', 'bars']"/>
                 </div>
-                <div v-if="isLogged()" class="logged navbar__login">
-                    <div class="user" @click="isActive">
-                        <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                        <div class="login__text login__text--logged">{{ nickname }}</div>
-                        <font-awesome-icon :icon="['fas', 'sort-down']" class="login__icon"/>
+                <div class="navbar__login">
+                    <div v-if="isLogged()" class="logged">
+                        <div class="user" @click="isActive">
+                            <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
+                            <div class="login__text login__text--logged">{{ nickname }}</div>
+                            <font-awesome-icon :icon="['fas', 'sort-down']" class="login__icon"/>
+                        </div>
+                        <ul class="login__lista" v-show="active">
+                            <li class="login__item">
+                                <router-link class="login__link" :to="{name: 'MeusProjetos'}">Meus projetos</router-link>
+                            </li>
+                            <li class="login__item">
+                                <router-link class="login__link" :to="{name: 'MeuPerfil'}">Meu Perfil</router-link>
+                            </li>
+                            <li @click="logout" class="login__logout login__item">Logout</li>
+                        </ul>
                     </div>
-                    <ul class="login__lista" v-show="active">
-                        <li class="login__item">
-                            <router-link class="login__link" :to="{name: 'MeusProjetos'}">Meus projetos</router-link>
-                        </li>
-                        <li class="login__item">
-                            <router-link class="login__link" :to="{name: 'MeuPerfil'}">Meu Perfil</router-link>
-                        </li>
-                        <li @click="logout" class="login__logout login__item">Logout</li>
-                    </ul>
+                    <router-link v-else :to="{name: 'Login'}" class="not-logged">
+                        <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
+                        <div  class="login__text login__text--login">Login</div>
+                    </router-link>
                 </div>
-                <router-link v-else :to="{name: 'Login'}" class="navbar__login">
-                    <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                    <div  class="login__text login__text--login">Login</div>
-                </router-link>
             </div>
         </div>
     </nav>
@@ -92,6 +94,12 @@ export default {
     padding: 3rem 0;
 }
 
+.not-logged {
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .navbar__img {
     width: 135px;
     height: auto;
@@ -123,11 +131,13 @@ export default {
 .navbar__login {
     color: white;
     display: flex;
-    justify-content: flex-end;
     text-decoration: none;
-
     width: calc(100% - 80%);
 
+}
+
+.login__icon {
+    margin-right: 0.5rem;
 }
 
 @media screen and (max-width: 1280px) {
