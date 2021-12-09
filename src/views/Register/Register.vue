@@ -115,19 +115,19 @@ export default {
 
         register() {
             authHttp.register(this.form)
-                .then(data => {
-                    if (data.success) {
-                        console.log(data);
+                .then(res => {
+                    if (res.success) {
+                        console.log(res);
                         this.$router.push({ name: 'Login' });
                         return;
                     }
-                    console.log(data)
-                    const responseErrorKeys = Object.keys(data.erros);
+                    console.log(res)
+                    const responseErrorKeys = Object.keys(res.data.erros);
                     responseErrorKeys.forEach((responseErrorKey) => {
                     
                         this.fields.forEach(field => {
                             if (responseErrorKey == field.name) {
-                                field.errors = data.erros[responseErrorKey];
+                                field.errors = res.data.erros[responseErrorKey];
                             }
 
                             setTimeout(() => {

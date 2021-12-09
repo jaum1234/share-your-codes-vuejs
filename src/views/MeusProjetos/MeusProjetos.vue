@@ -34,9 +34,9 @@ export default {
         fetchProjetos(offset) {
             var id = Cookies.get('user_id');
             userHttp.projetos(id, offset, this.limit)
-                .then(data => {
-                    this.projetos = data.projetos;
-                    this.total = data.total;
+                .then(res => {
+                    this.projetos = res.data.projetos;
+                    this.total = res.data.total;
                 });
         },
         changePage(data) {

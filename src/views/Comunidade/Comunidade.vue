@@ -1,5 +1,13 @@
 <template>
     <div class="comunidade">
+        <div class="remover" @click="removeSearchCookie" v-show="hasSearch">
+            <div class="remover__botao">
+                x
+            </div>
+            <div class="remover__label">
+                Remover critério de busca
+            </div>
+        </div>
         <div class="projetos">
             <div v-for="projeto in projetos" :key="projeto.id" class="projeto">
                 <router-link :to="{ path: '/projeto/' + projeto.id }">
@@ -34,42 +42,48 @@ export default {
         }
     },
     methods: {
+        removeSearchCookie() {
+            Cookies.remove('search');
+            this.hasSearch;
+            this.fetchProjetos(this.offset);
+        },
         fetchProjetos(offset) {
             projectHttp.index(offset, this.limit)
-                .then(data => {
-                    this.projetos = data.projetos;
-                    this.total = data.total;
+                .then(res => {
+                    this.projetos = res.data.projetos;
+                    this.total = res.data.total;
                 });
         },
         searchedProjects(offset) {
             projectHttp.search(Cookies.get('search'), offset)
-                .then(data => {
-                    this.projetos = data.projetos;
-                    this.total = data.total
+                .then(res => {
+                    this.projetos = res.data.projetos;
+                    this.total = res.data.total
                 });
         },
         changePage(data) {
             this.offset = data;
-            this.fetchProjetos(data)
+            if (Cookies.get('search')) {
+                console.log('true')
+                this.searchedProjects(this.offset);
+            
+                return;
+            }
+            this.fetchProjetos(this.offset);
+            console.log(this.total)
         }
     },
     mounted() {
         if (Cookies.get('search')) {
             console.log('true')
             this.searchedProjects(this.offset);
-
-            if (this.$route.name == 'Comunidade') {
-                this.$router.go();
-            }
             
-            Cookies.remove('search');
             return;
         }
-        console.log('false')
         this.fetchProjetos(this.offset);
+        console.log(this.total)
     },
     unmounted() {
-        Cookies.remove('search');
     },
     computed: {
         projects() {
@@ -78,6 +92,13 @@ export default {
             
             }
             return this.fetchProjetos(this.offset);
+        },
+
+        hasSearch() {
+            if (Cookies.get('search')) {
+                return true;
+            }
+            return false;
         }
     }
     
@@ -86,7 +107,30 @@ export default {
 
 <style scoped>
 .comunidade {
+    cursor: pointer;
     width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.remover {
+    align-items: center;
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.remover__botao {
+    align-self: flex-start;
+    margin-left: 2rem;
+    background: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.remover__label {
+    color: red;
+    margin-left: 0.5rem;
 }
 
 .projetos {

@@ -40,6 +40,7 @@ class ProjectRequests extends HttpRequests
             },
             body: JSON.stringify(data)
         })
+        .then(res => res.json());
     }
 
     search(data, page)

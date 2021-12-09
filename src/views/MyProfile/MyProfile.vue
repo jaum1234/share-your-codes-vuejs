@@ -47,10 +47,10 @@ export default {
         },
         update() {
             userHttp.update(Cookies.get('user_id'), this.form)
-            .then(data => {
-                if (data.success) {
-                    Cookies.set('user_nickname', data.dados.new_nickname);
-                    Cookies.set('user_name', data.dados.new_name);
+            .then(res => {
+                if (res.success) {
+                    Cookies.set('user_nickname', res.data.new_nickname);
+                    Cookies.set('user_name', res.data.new_name);
 
                     this.$swal({
                         title: 'Dados atualizados com sucesso!',
@@ -59,12 +59,12 @@ export default {
                     return;
                 }
 
-                const responseErrorKeys = Object.keys(data.erros);
+                const responseErrorKeys = Object.keys(res.data.erros);
                 responseErrorKeys.forEach((responseErrorKey) => {
                     
                     this.fields.forEach(field => {
                         if (responseErrorKey == field.name) {
-                            field.errors = data.erros[responseErrorKey];
+                            field.errors = res.data.erros[responseErrorKey];
                         }
 
                         setTimeout(() => {

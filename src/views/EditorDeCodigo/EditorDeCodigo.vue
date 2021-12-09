@@ -77,14 +77,15 @@ export default {
         },
         salvar() {
             projectHttp.store(this.form)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success === true) {
+                .then(res => {
+                    if (res.success === true) {
                         this.successAlert();
                         return;
                     }
+
+                    console.log(res);
                     
-                    validator.validate(this.errors, data.erros);
+                    validator.validate(this.errors, res.data.erros);
 
                     //const componentErrorKeys = Object.keys(this.errors);
                     //const responseErrorKeys = Object.keys(data.erros);

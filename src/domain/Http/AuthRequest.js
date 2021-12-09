@@ -22,15 +22,15 @@ class AuthRequest extends HttpRequests
         
     }
 
-    setCookies(data)
+    setCookies(res)
     {   
         var inTwentyMinutes =  new Date(new Date().getTime() + 20 * 60 * 1000);    
-        console.log(data.access_token);              
+        console.log(res);              
 
-        Cookies.set('_myapp_token', data.access_token);
-        Cookies.set('user_id', data.user.id);
-        Cookies.set('user_name', data.user.name);
-        Cookies.set('user_nickname', data.user.nickname);
+        Cookies.set('_myapp_token', res.data.access_token);
+        Cookies.set('user_id', res.data.user.id);
+        Cookies.set('user_name', res.data.user.name);
+        Cookies.set('user_nickname', res.data.user.nickname);
         Cookies.set('token_expires_at', inTwentyMinutes.getTime());
     }
 
@@ -80,10 +80,10 @@ class AuthRequest extends HttpRequests
         })
         .then(res => res.json())
         .then(data => {
-            var inTwentyMinutes =  new Date(new Date().getTime() + 20 * 60 * 1000);                  
+            var inAproxFiveMinutes =  new Date(new Date().getTime() + 4.8 * 60 * 1000);                  
 
             Cookies.set('_myapp_token', data.access_token);
-            Cookies.set('token_expires_at', inTwentyMinutes.getTime());
+            Cookies.set('token_expires_at', inAproxFiveMinutes.getTime());
             console.log(Cookies.get('_myapp_token'))
         });
     }

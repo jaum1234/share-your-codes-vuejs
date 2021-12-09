@@ -71,7 +71,7 @@ export default {
 .card {
     display: flex;
     flex-direction: column;
-    margin: 0 1rem 2rem 1rem;
+    margin: 0 0 2rem 0;
     width: 100%;
     
 }

@@ -69,21 +69,15 @@ export default {
 
         login() {
             authHttp.login(this.form)
-                .then((data) => {
-                    if (data.success) {
-                        authHttp.setCookies(data);
-                        let counter = 0;
+                .then((res) => {
+                    if (res.success) {
+                        authHttp.setCookies(res);
     
                         this.interval = setInterval(() => {
                             var now = new Date();
+                            console.log(now);
                             
-                            if (now.getTime() >= Cookies.get('token_expires_at')) {
-                                counter++;
-                                console.log(counter);
-                                if (counter == 3) {
-                                    this.logout();
-                                    return;
-                                }
+                            if (now.getTime() >= Cookies.get('token_expires_at')) {       
     
                                 authHttp.refreshToken();
                             }
@@ -94,13 +88,14 @@ export default {
                         return;   
 
                     }
+                    console.log(res)
                     
-                    const responseErrorKeys = Object.keys(data.erros);
+                    const responseErrorKeys = Object.keys(res.data.erros);
                     responseErrorKeys.forEach((responseErrorKey) => {
                     
                     this.fields.forEach(field => {
                         if (responseErrorKey == field.name) {
-                            field.errors = data.erros[responseErrorKey];
+                            field.errors = res.data.erros[responseErrorKey];
                         }
 
                         setTimeout(() => {

@@ -26,8 +26,8 @@ export default {
     methods: {
         fetchProject() {
             projectHttp.show(this.$route.params.id)
-                .then(data => {
-                    this.project = data.projeto
+                .then(res => {
+                    this.project = res.data.projeto
                 })
         }
     },
