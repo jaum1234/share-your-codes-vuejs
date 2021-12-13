@@ -1,43 +1,55 @@
 <template>
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar__bar">
-                <div class="navbar__logo">
-                    <img :src="logo" alt="" class="navbar__img">
-                </div>
-                <div class="navbar__search">
-                    <form @submit.prevent="searchProject">
-                        <input placeholder="Busque por algo" type="search" v-model="nomeProjetos" class="navbar__input">
-                    </form>
-                </div>
-                <div class="navbar__ham">
-                    <font-awesome-icon :icon="['fas', 'bars']"/>
-                </div>
-                <div class="navbar__login">
-                    <div v-if="isLogged()" class="logged">
-                        <div class="user" @click="isActive">
-                            <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                            <div class="login__text login__text--logged">{{ nickname }}</div>
-                            <font-awesome-icon :icon="['fas', 'sort-down']" class="login__icon"/>
-                        </div>
-                        <ul class="login__lista" v-show="active">
-                            <li class="login__item">
-                                <router-link class="login__link" :to="{name: 'MeusProjetos'}">Meus projetos</router-link>
-                            </li>
-                            <li class="login__item">
-                                <router-link class="login__link" :to="{name: 'MeuPerfil'}">Meu Perfil</router-link>
-                            </li>
-                            <li @click="logout" class="login__logout login__item">Logout</li>
-                        </ul>
+    <header :class="{ 'scrolled-nav': scrollPosition }">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar__bar">
+                    <div class="navbar__logo">
+                        <img :src="logo" alt="" class="navbar__img">
                     </div>
-                    <router-link v-else :to="{name: 'Login'}" class="not-logged">
-                        <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                        <div  class="login__text login__text--login">Login</div>
-                    </router-link>
+                    <div class="navbar__search">
+                        <form @submit.prevent="searchProject">
+                            <input placeholder="Busque por algo" type="search" v-model="nomeProjetos" class="navbar__input">
+                        </form>
+                    </div>
+                    
+                    <div class="navbar__login" v-show="!mobile">
+                        <div v-if="isLogged()" class="logged">
+                            <div class="user" @click="isActive">
+                                <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
+                                <div class="login__text login__text--logged">{{ nickname }}</div>
+                                <font-awesome-icon :icon="['fas', 'sort-down']" class="login__icon"/>
+                            </div>
+                            <ul class="login__lista" v-show="active">
+                                <li class="login__item">
+                                    <router-link class="login__link" :to="{name: 'MeusProjetos'}">Meus projetos</router-link>
+                                </li>
+                                <li class="login__item">
+                                    <router-link class="login__link" :to="{name: 'MeuPerfil'}">Meu Perfil</router-link>
+                                </li>
+                                <li @click="logout" class="login__logout login__item">Logout</li>
+                            </ul>
+                        </div>
+                        <router-link v-else :to="{name: 'Login'}" class="not-logged">
+                            <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
+                            <div  class="login__text login__text--login">Login</div>
+                        </router-link>
+                    </div>
+                    <button class="navbar__ham" @click="toggleMobileNav" v-show="mobile" :class="{ 'icon-active': mobileNav }">
+                        <font-awesome-icon :icon="['fas', 'bars']" />
+                    </button>
+                    <transition name="mobile-nav">
+                        <ul class="nav__dropdown" v-show="mobileNav">
+                            <li>{{ nickname }}</li>
+                            <li>Editor de Código</li>
+                            <li>Comunidade</li>
+                            <li>Meu Perfil</li>
+                            <li>Meus Projetos</li>
+                        </ul>
+                    </transition>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 </template>
 
 <script>
@@ -50,7 +62,11 @@ export default {
             nomeProjetos: '',
             logo: require('/static/img/logo.png'),
             nickname: '',
-            active: false
+            active: false,
+            scrollPosition: null,
+            mobile: null,
+            mobileNav: null,
+            windowWidth: null
         }
     },
     methods: {
@@ -60,6 +76,20 @@ export default {
                 return true;
             }
             return false;
+        },
+        toggleMobileNav() {
+            this.mobileNav = !this.mobileNav;
+        },
+        checkScreen() {
+            this.windowWidth = window.innerWidth;
+            if (this.windowWidth <= 1280) {
+                this.mobile = true;
+                return;
+            }
+
+            this.mobile = false;
+            this.mobileNav = false;
+            return;
         },
         logout() {
             authHttp.logout();
@@ -81,17 +111,29 @@ export default {
     },
     created() {
         this.isLogged();
+        window.addEventListener('resize', this.checkScreen);
+        this.checkScreen();
     },
     
 }
 </script>
 
 <style scoped>
+.navbar {
+    width: 100%;
+    transition: 0.5 ease all;    
+}
+
 .navbar__bar {
     align-items: center;
     display: flex;
     justify-content: space-between;
     padding: 3rem 0;
+}
+
+.navbar__ham {
+    display: flex;
+   
 }
 
 .not-logged {
@@ -124,10 +166,6 @@ export default {
     
 }
 
-.navbar__ham {
-    display: none;
-}
-
 .navbar__login {
     color: white;
     display: flex;
@@ -138,17 +176,6 @@ export default {
 
 .login__icon {
     margin-right: 0.5rem;
-}
-
-@media screen and (max-width: 1280px) {
-
-    .navbar__ham {
-        display: block;
-    }
-
-    .navbar__login ul {
-        display: block;
-    }
 }
 
 .login__text {
@@ -203,5 +230,28 @@ export default {
     display: flex;
     flex-direction: column;
     position: relative;
+}
+
+.icon-active {
+    transform: rotate(180deg);
+}
+
+.nav__dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: fixed;
+    width: 100%;
+    max-width: 300px;
+    padding: 2rem 0 0 1rem;
+    height: 100%;
+    background: white;
+    top: 0;
+    left: 0;
+}
+
+.nav__dropdown li {
+    color: black;
+    margin-bottom: 0.8rem;
 }
 </style>

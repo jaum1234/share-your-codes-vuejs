@@ -4,7 +4,7 @@ export default class HttpRequests
 {
     constructor()
     {
-        this.domain = 'http://localhost:3000/api/';
+        this.domain = 'http://ec2-3-137-191-218.us-east-2.compute.amazonaws.com/api/';
     }
 
     checkToken()

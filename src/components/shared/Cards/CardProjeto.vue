@@ -1,6 +1,10 @@
 <template>
     <div class="card">
-        <Editor :borderColor="projeto.cor" :savedCode="projeto.codigo" :isActive="!active" height="300px" />
+        <router-link :to="{ path: '/projeto/' + projeto.id }">
+            <div class="card__head">
+                <Editor :borderColor="projeto.cor" :savedCode="projeto.codigo" :isActive="!active" height="300px" />
+            </div>
+        </router-link>
         <div class="card__body">
             <div class="card__nome">{{ projeto.nome }}</div>
             <p class="card__descricao">{{ projeto.descricao }}</p>
@@ -31,6 +35,10 @@ export default {
             if (this.$route.name === 'MeusProjetos') {
                 return true;
             }
+        },
+        toProjectPage() {
+            console.log('ola');
+            this.$router.push({ path: "/projeto/" + this.projeto.id})
         },
         remove() {
             this.$swal({

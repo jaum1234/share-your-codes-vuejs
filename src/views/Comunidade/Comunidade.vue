@@ -10,9 +10,7 @@
         </div>
         <div class="projetos">
             <div v-for="projeto in projetos" :key="projeto.id" class="projeto">
-                <router-link :to="{ path: '/projeto/' + projeto.id }">
-                    <CardProjeto :projeto="projeto"/>
-                </router-link>
+                <CardProjeto :projeto="projeto"/>
             </div>
         </div>
         <Pagination v-if="projetos.length" @page-changed="changePage" :total="total" :limit="limit" :offset="offset"/>
@@ -107,7 +105,6 @@ export default {
 
 <style scoped>
 .comunidade {
-    cursor: pointer;
     width: 80%;
     display: flex;
     flex-direction: column;
