@@ -12,40 +12,46 @@
                         </form>
                     </div>
                     
-                    <div class="navbar__login" v-show="!mobile">
-                        <div v-if="isLogged()" class="logged">
-                            <div class="user" @click="isActive">
-                                <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                                <div class="login__text login__text--logged">{{ nickname }}</div>
-                                <font-awesome-icon :icon="['fas', 'sort-down']" class="login__icon"/>
-                            </div>
-                            <ul class="login__lista" v-show="active">
-                                <li class="login__item">
-                                    <router-link class="login__link" :to="{name: 'MeusProjetos'}">Meus projetos</router-link>
+                    <div v-if="isLogged()" class="logged">
+                        <button class="navbar__ham" @click="toggleNav">
+                            <font-awesome-icon :icon="['fas', 'bars']" />
+                        </button>
+                        <transition name="mobile-nav">
+                            <ul class="nav__dropdown" v-show="nav">
+                                <li>
+                                    <div>
+                                        <font-awesome-icon :icon="['fas', 'user']"/>
+                                        <div>{{ nickname }}</div>
+                                    </div>
+                                    <div>
+                                        <button class="remover__botao">
+                                            x
+                                        </button>
+                                    </div>
                                 </li>
-                                <li class="login__item">
-                                    <router-link class="login__link" :to="{name: 'MeuPerfil'}">Meu Perfil</router-link>
+                                <div v-if="mobile">
+                                    <li>
+                                        <router-link :to="{ name: 'CodeEditor' }">Editor de Código</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link :to="{ name: 'Comunity' }">Comunidade</router-link>
+                                    </li>
+                                </div>
+                                <li>
+                                    <router-link :to="{ name: 'MyProfile' }">Meu Perfil</router-link>
                                 </li>
-                                <li @click="logout" class="login__logout login__item">Logout</li>
+                                <li>
+                                    <router-link :to="{ name: 'MyProjects' }">Meus Projetos</router-link>
+                                </li>
+                                <li @click="logout">Logout</li>
                             </ul>
-                        </div>
-                        <router-link v-else :to="{name: 'Login'}" class="not-logged">
-                            <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
-                            <div  class="login__text login__text--login">Login</div>
-                        </router-link>
+                        </transition>
                     </div>
-                    <button class="navbar__ham" @click="toggleMobileNav" v-show="mobile" :class="{ 'icon-active': mobileNav }">
-                        <font-awesome-icon :icon="['fas', 'bars']" />
-                    </button>
-                    <transition name="mobile-nav">
-                        <ul class="nav__dropdown" v-show="mobileNav">
-                            <li>{{ nickname }}</li>
-                            <li>Editor de Código</li>
-                            <li>Comunidade</li>
-                            <li>Meu Perfil</li>
-                            <li>Meus Projetos</li>
-                        </ul>
-                    </transition>
+                    <router-link v-else :to="{name: 'Login'}" class="not-logged">
+                        <font-awesome-icon :icon="['fas', 'user']" class="login__icon"/>
+                        <div  class="login__text login__text--login">Login</div>
+                    </router-link>
+                    
                 </div>
             </div>
         </nav>
@@ -64,9 +70,8 @@ export default {
             nickname: '',
             active: false,
             scrollPosition: null,
-            mobile: null,
-            mobileNav: null,
-            windowWidth: null
+            nav: false,
+            mobile: false
         }
     },
     methods: {
@@ -77,48 +82,55 @@ export default {
             }
             return false;
         },
-        toggleMobileNav() {
-            this.mobileNav = !this.mobileNav;
+        toggleNav() {
+            this.nav = !this.nav;
         },
         checkScreen() {
-            this.windowWidth = window.innerWidth;
-            if (this.windowWidth <= 1280) {
+            if (window.innerWidth <= 800) {
                 this.mobile = true;
-                return;
+                return
             }
-
             this.mobile = false;
-            this.mobileNav = false;
             return;
         },
         logout() {
             authHttp.logout();
         },
-        isActive() {
-            return this.active = !this.active;
-        },
         searchProject() {
             Cookies.set('search', this.nomeProjetos);
             this.nomeProjetos = '';
 
-            if (this.$route.name == 'Comunidade') {
+            if (this.$route.name == 'Comunity') {
                 this.$router.go();
                 return;
             }
 
-            this.$router.push({ name: 'Comunidade' });
+            this.$router.push({ name: 'Comunity' });
         }
     },
     created() {
         this.isLogged();
-        window.addEventListener('resize', this.checkScreen);
         this.checkScreen();
+
+        window.addEventListener('resize', this.checkScreen);
     },
     
 }
 </script>
 
 <style scoped>
+.remover__botao {
+    align-self: flex-start;
+    margin-left: 2rem;
+    background: red;
+    border: transparent;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    
+}
+
 .navbar {
     width: 100%;
     transition: 0.5 ease all;    
@@ -132,8 +144,11 @@ export default {
 }
 
 .navbar__ham {
-    display: flex;
-   
+    background: transparent;
+    border: 1px solid transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5rem;
 }
 
 .not-logged {
@@ -187,12 +202,6 @@ export default {
     font-weight: bold;
 }
 
-.login__logout {
-    color: red;
-    cursor: pointer;
-    font-weight: bold;
-}
-
 .login__link {
     color: black;
     text-decoration: none;
@@ -232,9 +241,7 @@ export default {
     position: relative;
 }
 
-.icon-active {
-    transform: rotate(180deg);
-}
+
 
 .nav__dropdown {
     display: flex;
@@ -253,5 +260,55 @@ export default {
 .nav__dropdown li {
     color: black;
     margin-bottom: 0.8rem;
+    text-transform: uppercase;
+   
+}
+
+.nav__dropdown li:first-child {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.nav__dropdown li:first-child div {
+    display: flex;
+}
+
+.nav__dropdown li:first-child > div:last-child {
+   
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.nav__dropdown li:last-child {
+    color: red;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.nav__dropdown li:first-child div {
+    align-self: flex-end;
+    margin-left: 0.5rem;
+}
+
+.mobile-nav-enter-active, .mobile-nav-leave-active {
+    transition: 1s ease all;
+}
+
+.mobile-nav-enter-from, .mobile-nav-leave-to {
+    transform: translateX(-300px);
+}
+
+.mobile-nav-enter-to {
+    transform: translateX(0);
 }
 </style>

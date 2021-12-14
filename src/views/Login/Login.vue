@@ -2,7 +2,7 @@
     <div class="container--small">
         <div class="login">
             <div class="link--home">
-                <router-link :to="{name: 'Comunidade'}" class="link">Home</router-link>
+                <router-link :to="{name: 'Comunity'}" class="link">Home</router-link>
             </div>
             <h1 class="login__title">Login</h1>
             <form @submit.prevent="login">

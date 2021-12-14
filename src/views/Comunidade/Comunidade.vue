@@ -1,12 +1,7 @@
 <template>
     <div class="comunidade">
         <div class="remover" @click="removeSearchCookie" v-show="hasSearch">
-            <div class="remover__botao">
-                x
-            </div>
-            <div class="remover__label">
-                Remover critério de busca
-            </div>
+            
         </div>
         <div class="projetos">
             <div v-for="projeto in projetos" :key="projeto.id" class="projeto">
@@ -37,6 +32,7 @@ export default {
             total: 0,
             limit: 4,
             offset: 1,
+            
         }
     },
     methods: {
@@ -59,6 +55,7 @@ export default {
                     this.total = res.data.total
                 });
         },
+        
         changePage(data) {
             this.offset = data;
             if (Cookies.get('search')) {
@@ -71,6 +68,7 @@ export default {
             console.log(this.total)
         }
     },
+    
     mounted() {
         if (Cookies.get('search')) {
             console.log('true')
@@ -104,6 +102,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 .comunidade {
     width: 80%;
     display: flex;
@@ -120,6 +120,8 @@ export default {
     align-self: flex-start;
     margin-left: 2rem;
     background: red;
+    border: transparent;
+    color: white;
     width: 20px;
     height: 20px;
     border-radius: 5px;

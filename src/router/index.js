@@ -9,22 +9,22 @@ import Cookies from 'js-cookie';
 const routes = [
   {
     path: '/editordecodigo',
-    name: 'EditorDeCodigo',
+    name: 'CodeEditor',
     component: () => import('../views/EditorDeCodigo/EditorDeCodigo.vue')
   },
   {
     path: '/comunidade',
-    name: 'Comunidade',
+    name: 'Comunity',
     component: () => import('../views/Comunidade/Comunidade.vue')
   },
   {
     path: '/meusprojetos',
-    name: 'MeusProjetos',
+    name: 'MyProjects',
     component: () => import('../views/MeusProjetos/MeusProjetos.vue')
   },
   {
     path: '/meuperfil',
-    name: 'MeuPerfil',
+    name: 'MyProfile',
     component: () => import('../views/MyProfile/MyProfile.vue') 
   },
   {

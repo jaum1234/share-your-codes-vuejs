@@ -13,12 +13,12 @@ export default {
             Cookies.set('search', this.nomeProjetos);
             this.nomeProjetos = '';
 
-            if (this.$route.name == 'Comunidade') {
+            if (this.$route.name == 'Comunity') {
                 this.$router.go();
                 return;
             }
 
-            this.$router.push({ name: 'Comunidade' });
+            this.$router.push({ name: 'Comunity' });
         }
     }    
 }
