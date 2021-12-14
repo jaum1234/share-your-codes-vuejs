@@ -1,7 +1,7 @@
 <template>
     <div class="comunidade">
-        <div class="remover" @click="removeSearchCookie" v-show="hasSearch">
-            
+        <div class="remover" v-show="search">
+            <RemoveButton @click="removeSearchParam" label="Remover parametro de busca"/>
         </div>
         <div class="projetos">
             <div v-for="projeto in projetos" :key="projeto.id" class="projeto">
@@ -17,28 +17,27 @@ import { projectHttp } from '../../domain/Http/ProjectRequests.js';
 import CardProjeto from '../../components/shared/Cards/CardProjeto.vue'
 import Pagination from '../../components/shared/Pagination/Pagination.vue';
 import Cookies from 'js-cookie';
+import RemoveButton from '../../components/shared/Botao/Remove/RemoveButton.vue';
 
 export default {
     components: {
         CardProjeto,
-        Pagination
+        Pagination,
+        RemoveButton
     },
-    props: [
-        'search'
-    ],
     data() {
         return {
             projetos: [],
             total: 0,
             limit: 4,
             offset: 1,
-            
+            search: false
         }
     },
     methods: {
-        removeSearchCookie() {
+        removeSearchParam() {
             Cookies.remove('search');
-            this.hasSearch;
+            this.search = false;
             this.fetchProjetos(this.offset);
         },
         fetchProjetos(offset) {
@@ -53,6 +52,10 @@ export default {
                 .then(res => {
                     this.projetos = res.data.projetos;
                     this.total = res.data.total
+
+                    if (this.projetos.length == 0) {
+                        return this.$swal('Parece que nenhum projeto foi encontrado :(')
+                    }
                 });
         },
         
@@ -71,15 +74,12 @@ export default {
     
     mounted() {
         if (Cookies.get('search')) {
-            console.log('true')
             this.searchedProjects(this.offset);
-            
+            this.search = true;
             return;
         }
+        this.search = false;
         this.fetchProjetos(this.offset);
-        console.log(this.total)
-    },
-    unmounted() {
     },
     computed: {
         projects() {
@@ -89,13 +89,6 @@ export default {
             }
             return this.fetchProjetos(this.offset);
         },
-
-        hasSearch() {
-            if (Cookies.get('search')) {
-                return true;
-            }
-            return false;
-        }
     }
     
 }

@@ -24,9 +24,7 @@
                                         <div>{{ nickname }}</div>
                                     </div>
                                     <div>
-                                        <button class="remover__botao">
-                                            x
-                                        </button>
+                                        <RemoveButton @click="toggleNav"/>
                                     </div>
                                 </li>
                                 <div v-if="mobile">
@@ -60,9 +58,13 @@
 
 <script>
 import Cookies from 'js-cookie';
+import RemoveButton from '../Botao/Remove/RemoveButton.vue';
 import { authHttp } from '../../../domain/Http/AuthRequest.js';
 
 export default {
+    components: {
+        RemoveButton
+    },
     data() {
         return {
             nomeProjetos: '',

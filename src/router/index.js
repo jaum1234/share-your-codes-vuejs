@@ -44,7 +44,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: { name: 'Comunidade' }
+    redirect: { name: 'Comunity' }
   }
   
 ]
