@@ -1,7 +1,7 @@
-import HttpRequests from "./HttpRequests";
+import HttpController from "./HttpController";
 import Cookies from "js-cookie";
 
-class UserRequests extends HttpRequests
+class UserController extends HttpController
 {
     constructor()
     {
@@ -39,5 +39,5 @@ class UserRequests extends HttpRequests
     }
 }
 
-const userHttp = new UserRequests();
+const userHttp = new UserController();
 export { userHttp };

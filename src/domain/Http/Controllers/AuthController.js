@@ -1,8 +1,8 @@
 import Cookies from "js-cookie";
-import router from "../../router";
-import HttpRequests from "./HttpRequests";
+import router from "../../../router";
+import HttpRequests from "./HttpController";
 
-class AuthRequest extends HttpRequests
+class AuthController extends HttpRequests
 {
     constructor()
     {
@@ -79,16 +79,10 @@ class AuthRequest extends HttpRequests
             }
         })
         .then(res => res.json())
-        .then(data => {
-            var inAproxFiveMinutes =  new Date(new Date().getTime() + 4.8 * 60 * 1000);                  
-
-            Cookies.set('_myapp_token', data.access_token);
-            Cookies.set('token_expires_at', inAproxFiveMinutes.getTime());
-            console.log(Cookies.get('_myapp_token'))
-        });
+        .then(data => console.log(data))
     }
 
 }
 
-const authHttp = new AuthRequest();
+const authHttp = new AuthController();
 export { authHttp };

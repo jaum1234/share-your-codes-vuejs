@@ -1,7 +1,7 @@
-import HttpRequests from "./HttpRequests";
+import HttpController from "./HttpController";
 import Cookies from "js-cookie";
 
-class ProjectRequests extends HttpRequests
+class ProjectController extends HttpController
 {
     constructor()
     {
@@ -69,5 +69,5 @@ class ProjectRequests extends HttpRequests
     }
 }
 
-const projectHttp = new ProjectRequests()
+const projectHttp = new ProjectController()
 export { projectHttp };

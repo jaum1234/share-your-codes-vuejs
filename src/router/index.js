@@ -56,7 +56,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(!Cookies.get('_myapp_token') && (to.name == 'MeusProjetos' || to.name == 'MeuPerfil' || to.name == 'EditorDeCodigo' || to.name == 'ProjectPage')) {
+  if(!Cookies.get('_myapp_token') && (to.name == 'MeusProjetos' || to.name == 'MeuPerfil' || to.name == 'CodeEditor' || to.name == 'ProjectPage')) {
     next({name: 'Login'});
     return;
   }

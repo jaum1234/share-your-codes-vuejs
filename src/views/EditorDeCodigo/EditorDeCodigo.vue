@@ -78,12 +78,14 @@ export default {
         salvar() {
             projectHttp.store(this.form)
                 .then(res => {
+                    console.log(res);
+
                     if (res.success === true) {
                         this.successAlert();
                         return;
                     }
 
-                    console.log(res);
+                    
                     
                     validator.validate(this.errors, res.data.erros);
 

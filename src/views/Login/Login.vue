@@ -84,7 +84,7 @@ export default {
     
                         }, 1000);
     
-                        this.$router.push({name: 'EditorDeCodigo'});
+                        this.$router.push({name: 'CodeEditor'});
                         return;   
 
                     }
