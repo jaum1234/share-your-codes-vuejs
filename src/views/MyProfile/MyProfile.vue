@@ -29,7 +29,7 @@
 <script>
 import Input from '../../components/shared/Form/Input.vue';
 import Button from '../../components/shared/Botao/Botao.vue';
-import { userHttp } from '../../domain/Http/UserRequests.js';
+import { userHttp } from '../../domain/Http/Controllers/UserController.js';
 import Cookies from 'js-cookie';
 
 export default {

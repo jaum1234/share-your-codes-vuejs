@@ -59,7 +59,7 @@
 <script>
 import Cookies from 'js-cookie';
 import RemoveButton from '../Botao/Remove/RemoveButton.vue';
-import { authHttp } from '../../../domain/Http/AuthRequest.js';
+import { authHttp } from '../../../domain/Http/Controllers/AuthController.js';
 
 export default {
     components: {

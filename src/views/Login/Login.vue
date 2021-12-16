@@ -25,7 +25,7 @@
 <script>
 import Input from '../../components/shared/Form/Input.vue';
 import Botao from '../../components/shared/Botao/Botao.vue';
-import { authHttp } from '../../domain/Http/AuthRequest.js';
+import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
 import Cookies from 'js-cookie';
 
 export default {

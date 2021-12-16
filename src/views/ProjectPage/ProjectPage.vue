@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { projectHttp } from '../../domain/Http/ProjectRequests.js';
+import { projectHttp } from '../../domain/Http/Controllers/ProjectController.js';
 import Editor from '../../components/shared/Editor/Editor.vue';
 
 export default {

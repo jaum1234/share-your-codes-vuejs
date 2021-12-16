@@ -28,7 +28,7 @@
 
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
-import { projectHttp } from '../../domain/Http/ProjectRequests.js';
+import { projectHttp } from '../../domain/Http/Controllers/ProjectController.js';
 import { validator } from '../../domain/Errors/ValidationErrors.js';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import Input from '../../components/shared/Form/Input.vue';

@@ -20,7 +20,7 @@
 
 <script>
 import Editor from '../Editor/Editor.vue';
-import { projectHttp } from '../../../domain/Http/ProjectRequests.js';
+import { projectHttp } from '../../../domain/Http/Controllers/ProjectController.js';
 
 export default {
     props: [

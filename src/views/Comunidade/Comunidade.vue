@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { projectHttp } from '../../domain/Http/ProjectRequests.js';
+import { projectHttp } from '../../domain/Http/Controllers/ProjectController.js';
 import CardProjeto from '../../components/shared/Cards/CardProjeto.vue'
 import Pagination from '../../components/shared/Pagination/Pagination.vue';
 import Cookies from 'js-cookie';
