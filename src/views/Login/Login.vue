@@ -9,7 +9,7 @@
                 <div v-for="field in fields" :key="field" class="field" :class="field.class">
                     <div class="login__label"><label>{{ field.label }}</label></div>
                     <Input textAlign="center" @value="field.inputGetter" :tipo="field.inputType"/>
-                    <small style="color: red" v-for="error in field.errors" :key="error">
+                    <small style="color: red" v-for="error in errors" :key="error">
                         {{ error }}
                     </small>
                 </div>
@@ -26,7 +26,7 @@
 import Input from '../../components/shared/Form/Input.vue';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
-import Cookies from 'js-cookie';
+//import Cookies from 'js-cookie';
 
 export default {
     components: {
@@ -42,7 +42,6 @@ export default {
                     class: 'login__email', 
                     inputGetter: this.getEmail, 
                     inputType: 'email',
-                    errors: []
                 },
                 {
                     label: 'Senha', 
@@ -50,13 +49,16 @@ export default {
                     class: 'login__password', 
                     inputGetter: this.getPassword, 
                     inputType: 'password',
-                    errors: []
                 },
             ],
             form: {
                 email: '',
                 password: ''
             },
+            errors: {
+                email: '',
+                password: ''
+            }
         }
     },
     methods: {
@@ -73,36 +75,47 @@ export default {
                     if (res.success) {
                         authHttp.setCookies(res);
     
-                        this.interval = setInterval(() => {
-                            var now = new Date();
-                            console.log(now);
-                            
-                            if (now.getTime() >= Cookies.get('token_expires_at')) {       
-    
-                                authHttp.refreshToken();
-                            }
-    
-                        }, 1000);
+                        //this.interval = setInterval(() => {
+                        //    var now = new Date();
+                        //    console.log(now);
+                        //    
+                        //    if (now.getTime() >= Cookies.get('token_expires_at')) {       
+    //
+                        //        authHttp.refreshToken();
+                        //    }
+    //
+                        //}, 1000);
     
                         this.$router.push({name: 'CodeEditor'});
                         return;   
 
                     }
-                    console.log(res)
-                    
-                    const responseErrorKeys = Object.keys(res.data.erros);
-                    responseErrorKeys.forEach((responseErrorKey) => {
-                    
-                    this.fields.forEach(field => {
-                        if (responseErrorKey == field.name) {
-                            field.errors = res.data.erros[responseErrorKey];
+                    console.log(res.data.erros['email']);
+                    for (const error in this.errors) {
+                        for (const erro in res.data.erros) {
+                            if (erro == error) {
+                                if (this.errors[error] === '') {
+                                    console.log(this.errors[error]);
+                                    this.errors[error] = res.data.erros[erro][0];
+                                }
+                            }
                         }
-
-                        setTimeout(() => {
-                            field.errors = [];
-                        }, 3000);
-                    })
-                })
+                    }
+                    console.log(res)
+                    //
+                    //const responseErrorKeys = Object.keys(res.data.erros);
+                    //responseErrorKeys.forEach((responseErrorKey) => {
+                    //
+                    //this.fields.forEach(field => {
+                    //    if (responseErrorKey == field.name) {
+                    //        field.errors = res.data.erros[responseErrorKey];
+                    //    }
+//
+                    //    setTimeout(() => {
+                    //        field.errors = [];
+                    //    }, 3000);
+                    //})
+                //})
                 });
         }
     }

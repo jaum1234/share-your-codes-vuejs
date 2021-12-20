@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import Cookies from 'js-cookie';
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -14,4 +15,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faUser, faCode, faUsers, faTrash, faSortDown, faBars, faTimes);
 
-createApp(App).use(VueSweetalert2).use(router).use(VueHighlightJS).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+import { httpRequest } from './domain/Http/Controllers/HttpController'
+
+createApp(App).use(VueSweetalert2).use(router).use(VueHighlightJS).component('font-awesome-icon', FontAwesomeIcon).mount('#app');
+
+if (new Date().getTime() >= Cookies.get('token_expires_at')) {
+    httpRequest.refreshToken();
+}

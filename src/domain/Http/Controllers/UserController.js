@@ -8,11 +8,13 @@ class UserController extends HttpController
         super()
     }
 
-    update(id, data)
+    async update(id, data)
     {
-        this.checkToken();
+        if (new Date().getTime() >= Cookies.get('token_expires_at')) {
+            this.refreshToken();
+        }
 
-        return fetch(this.domain + 'users/' + id, {
+        return await fetch(this.domain + 'users/' + id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,14 +26,15 @@ class UserController extends HttpController
         
     }
 
-    projetos(id, page, limit)
+    async projetos(id, page, limit)
     {
-        this.checkToken();
+        if (new Date().getTime() >= Cookies.get('token_expires_at')) {
+            this.refreshToken();
+        }
 
-        return fetch(this.domain + 'users/' + id + '/projetos?page=' + page + '&limit=' + limit, {
+        return await fetch(this.domain + 'users/' + id + '/projetos?page=' + page + '&limit=' + limit, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
             },
         })

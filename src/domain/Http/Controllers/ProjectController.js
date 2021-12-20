@@ -8,31 +8,29 @@ class ProjectController extends HttpController
         super();
     }
 
-    index(page, limit)
+    async index(page, limit)
     {
-        return fetch(this.domain + 'projetos?page=' + page + '&limit=' + limit, {
+        return await fetch(this.domain + 'projetos?page=' + page + '&limit=' + limit, {
             method: 'GET'
         })
         .then(res => res.json());
     }
 
-    show(id)
+    async show(id)
     {
-        return fetch(this.domain + 'projetos/' + id, {
+        return await fetch(this.domain + 'projetos/' + id, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
         })
         .then(res => res.json());
     }
 
-    store(data)
+    async store(data)
     {
-        this.checkToken();
+        if (new Date().getTime() >= Cookies.get('token_expires_at')) {
+            this.refreshToken();
+        }
             
-
-        return fetch(this.domain + 'projetos', {
+        return await fetch(this.domain + 'projetos', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,22 +41,18 @@ class ProjectController extends HttpController
         .then(res => res.json());
     }
 
-    search(data, page)
+    async search(data, page)
     {
-        return fetch(this.domain + 'pesquisar?q=' + data + '&page=' + page, {
+        return await fetch(this.domain + 'pesquisar?q=' + data + '&page=' + page, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
         })
         .then(res => res.json());
-        
     }
 
-    delete(id) {
+    async delete(id) {
         this.checkToken();
         
-        return fetch(this.domain + 'projetos/' + id, {
+        return await fetch(this.domain + 'projetos/' + id, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

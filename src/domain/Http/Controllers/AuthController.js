@@ -9,9 +9,9 @@ class AuthController extends HttpRequests
         super();
     }
 
-    login(data)
+    async login(data)
     {
-        return fetch(this.domain + 'login', {
+        return await fetch(this.domain + 'login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,22 +19,21 @@ class AuthController extends HttpRequests
             body: JSON.stringify(data)
         })
         .then(response => response.json())
-        
     }
 
     setCookies(res)
     {   
-        var inTwentyMinutes =  new Date(new Date().getTime() + 20 * 60 * 1000);    
+        var inTwentyMinutes =  new Date(new Date().getTime() + 1 * 60 * 1000);    
         console.log(res);              
 
-        Cookies.set('_myapp_token', res.data.access_token);
+        Cookies.set('_myapp_token', res.data.token.access_token);
         Cookies.set('user_id', res.data.user.id);
         Cookies.set('user_name', res.data.user.name);
         Cookies.set('user_nickname', res.data.user.nickname);
         Cookies.set('token_expires_at', inTwentyMinutes.getTime());
     }
 
-    register(data)
+    async register(data)
     {
         return fetch(this.domain + 'register', {
             method: 'POST',
@@ -46,12 +45,15 @@ class AuthController extends HttpRequests
         .then(res => res.json())
     }
 
-    logout()
+   async logout()
     {
-        return fetch(this.domain + 'logout', {
+        if (new Date().getTime() >= Cookies.get('token_expires_at')) {
+            this.refreshToken();
+        }
+
+        return await fetch(this.domain + 'logout', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
             }
         })
@@ -61,27 +63,11 @@ class AuthController extends HttpRequests
             Cookies.remove('token_expires_at');
             Cookies.remove('user_name');
             Cookies.remove('user_nickname');
-            console.log(this.interval);
-            clearInterval(this.interval);
-    
+            
             router.push({name: 'Login'});
         })
 
     }
-
-    refreshToken()
-    {
-        return fetch(this.domain + 'refreshtoken', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
-            }
-        })
-        .then(res => res.json())
-        .then(data => console.log(data))
-    }
-
 }
 
 const authHttp = new AuthController();

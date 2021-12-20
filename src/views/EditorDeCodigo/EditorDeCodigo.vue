@@ -28,12 +28,13 @@
 
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
-import { projectHttp } from '../../domain/Http/Controllers/ProjectController.js';
-import { validator } from '../../domain/Errors/ValidationErrors.js';
+//import { validator } from '../../domain/Errors/ValidationErrors.js';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import Input from '../../components/shared/Form/Input.vue';
 import Textarea from '../../components/shared/Form/Textarea.vue';
 import ColorInput from '../../components/shared/Form/ColorInput.vue';
+import { projectHttp } from '../../domain/Http/Controllers/ProjectController';
+//import Cookies from 'js-cookie';
 
 export default {
     data() {
@@ -78,34 +79,23 @@ export default {
         salvar() {
             projectHttp.store(this.form)
                 .then(res => {
-                    console.log(res);
-
-                    if (res.success === true) {
+                    if (res.success) {
                         this.successAlert();
                         return;
                     }
 
-                    
-                    
-                    validator.validate(this.errors, res.data.erros);
-
-                    //const componentErrorKeys = Object.keys(this.errors);
-                    //const responseErrorKeys = Object.keys(data.erros);
-                    //
-                    //componentErrorKeys.forEach(componentError => {
-                    //    responseErrorKeys.forEach(responseError => {
-                    //        if (componentError == responseError) {
-                    //            this.errors[componentError] = data.erros[responseError][0];
-                    //        }
-                    //    });
-                    //});
-
-                    setTimeout(() => {
-                        this.errors.nome = '';
-                        this.errors.descricao = '';
-                        this.errors.codigo = '';
-                    }, 3000);
+                    console.log(res);
+                    for (const erro in res.data.erros) {
+                        console.log(erro);
+                        for (const error in this.errors) {
+                            console.log(error);
+                            if (erro == error) {
+                                this.error[erro] = res.data.erros[erro]
+                            }
+                        }
+                    }
                 });
+            
         },
         successAlert() {
             this.$swal({

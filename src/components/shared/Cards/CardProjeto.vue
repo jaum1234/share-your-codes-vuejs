@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         isUserProjectsPage() {
-            if (this.$route.name === 'MeusProjetos') {
+            if (this.$route.name === 'MyProjects') {
                 return true;
             }
         },
