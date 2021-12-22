@@ -11,9 +11,9 @@
             <div class="info descricao">
                 <h3 class="titulo descricao__titulo">SEU PROJETO</h3>
                 <small style="color: red">{{ errors.nome }}</small>
-                <div><Input @value="getNome" tipo="text" placeholder="Nome do projeto" v-model="form.nome"/></div>
+                <div><Input @value="getNome" tipo="text" :defaultValue="project.nome" placeholder="Nome do projeto"/></div>
                 <small style="color: red">{{ errors.descricao }}</small>
-                <Textarea @value="getDescricao" placeholder="Descricao do projeto" v-model="form.descricao"/>
+                <Textarea @value="getDescricao" placeholder="Descricao do projeto"/>
             </div>
             <div class="info personalizacao">
                 <h3 class="titulo personalizacao__titulo">PERSONALIZAÇAO</h3>
@@ -39,9 +39,10 @@ import { projectHttp } from '../../domain/Http/Controllers/ProjectController';
 export default {
     data() {
         return {
+            project: [],
             form: {
                 codigo: '',
-                nome: '',
+                nome: 'ola',
                 descricao: '',
                 cor: '#6BD1FF',
             },
@@ -59,6 +60,23 @@ export default {
         Input,
         Textarea,
         ColorInput
+    },
+    mounted() {
+        const id = this.$route.params.id;
+        if (id) {
+            projectHttp.show(id)
+                .then(res => {
+                    this.project.nome = res.data.projeto[0].nome;
+                });
+        }
+    },
+    activated() {
+        this.project.nome;
+    },
+    computed: {
+        projectName() {
+            return this.project.nome;
+        }
     },
     methods: {
         highlight() {
@@ -93,6 +111,7 @@ export default {
                 .catch(err => console.log(err));
             
         }, 
+        
     },
    
 }

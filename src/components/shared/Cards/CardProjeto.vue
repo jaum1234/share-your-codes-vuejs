@@ -10,8 +10,9 @@
             <p class="card__descricao">{{ projeto.descricao }}</p>
             <div v-if="isUserProjectsPage()">
                 <font-awesome-icon @click="remove" :icon="['fas', 'trash']" class="card__trash"/>
-                <router-link :to="{ name: 'CodeEditor' }"></router-link>
-                <font-awesome-icon @click="remove" :icon="['fas', 'trash']" class="card__trash"/>
+                <router-link :to="{ name: 'EditCode', params: {id: projeto.id} }">
+                    <font-awesome-icon :icon="['fas', 'edit']" class="card__edit"/>
+                </router-link>
 
             </div>
             <div v-else>
@@ -109,5 +110,10 @@ export default {
 .card__trash {
     color: red;
     cursor: pointer;
+    margin-right: 1rem;
+}
+
+.card__edit {
+    color: aquamarine;
 }
 </style>

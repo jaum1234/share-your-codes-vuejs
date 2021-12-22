@@ -33,6 +33,11 @@ const routes = [
     component: () => import('../views/ProjectPage/ProjectPage.vue')
   },
   {
+    path: '/editordecodigo/:id',
+    name: 'EditCode',
+    component: () => import('../views/EditorDeCodigo/EditorDeCodigo.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login/Login.vue')

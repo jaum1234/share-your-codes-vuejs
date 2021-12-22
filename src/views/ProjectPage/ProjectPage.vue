@@ -6,6 +6,7 @@
                 :savedCode="project.codigo"
                 height="400px"
                 :isActive="!active"/>
+                <h2>{{ project.nome }}</h2>
         </div>
     </div>
 </template>
@@ -39,6 +40,11 @@ export default {
 </script>
 
 <style scoped>
+h2 {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    text-align: start;
+}
 .project {
     width: 80%;
 }
