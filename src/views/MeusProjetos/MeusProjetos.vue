@@ -33,6 +33,7 @@ export default {
             var id = Cookies.get('user_id');
             userHttp.projetos(id, offset, this.limit)
                 .then(res => {
+                    console.log(res)
                     this.projetos = res.data.projetos;
                     this.total = res.data.total;
                 });

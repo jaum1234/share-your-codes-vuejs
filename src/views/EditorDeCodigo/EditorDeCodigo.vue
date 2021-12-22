@@ -80,30 +80,19 @@ export default {
             projectHttp.store(this.form)
                 .then(res => {
                     if (res.success) {
-                        this.successAlert();
+                        this.$swal({
+                            title: 'Projeto salvo com sucesso!',
+                            icon: 'success'
+                        });
                         return;
                     }
 
                     console.log(res);
-                    for (const erro in res.data.erros) {
-                        console.log(erro);
-                        for (const error in this.errors) {
-                            console.log(error);
-                            if (erro == error) {
-                                this.error[erro] = res.data.erros[erro]
-                            }
-                        }
-                    }
-                });
+                    
+                })
+                .catch(err => console.log(err));
             
-        },
-        successAlert() {
-            this.$swal({
-                title: 'Projeto salvo com sucesso!',
-                icon: 'success'
-            });
-        }
-        
+        }, 
     },
    
 }

@@ -28,13 +28,14 @@ class ProjectController extends HttpController
     {
         if (new Date().getTime() >= Cookies.get('token_expires_at')) {
             this.refreshToken();
+            return;
         }
             
         return await fetch(this.domain + 'projetos', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
+                'Authorization': 'Bearer ' + this.token
             },
             body: JSON.stringify(data)
         })

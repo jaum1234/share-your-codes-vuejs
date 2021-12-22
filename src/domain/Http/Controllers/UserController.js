@@ -12,6 +12,7 @@ class UserController extends HttpController
     {
         if (new Date().getTime() >= Cookies.get('token_expires_at')) {
             this.refreshToken();
+            return;
         }
 
         return await fetch(this.domain + 'users/' + id, {
@@ -30,6 +31,7 @@ class UserController extends HttpController
     {
         if (new Date().getTime() >= Cookies.get('token_expires_at')) {
             this.refreshToken();
+            return;
         }
 
         return await fetch(this.domain + 'users/' + id + '/projetos?page=' + page + '&limit=' + limit, {

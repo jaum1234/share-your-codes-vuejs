@@ -49,6 +49,7 @@ class AuthController extends HttpRequests
     {
         if (new Date().getTime() >= Cookies.get('token_expires_at')) {
             this.refreshToken();
+            return;
         }
 
         return await fetch(this.domain + 'logout', {
