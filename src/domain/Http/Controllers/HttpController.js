@@ -21,6 +21,7 @@ export default class HttpController
             console.log(res);
             Cookies.set('_myapp_token', res.data.token.access_token);
             Cookies.set('token_expires_at', new Date(new Date().getTime() + 1*60*1000).getTime());
+            this.token = res.data.token.access_token;
         });
     }
 }

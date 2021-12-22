@@ -10,6 +10,9 @@
             <p class="card__descricao">{{ projeto.descricao }}</p>
             <div v-if="isUserProjectsPage()">
                 <font-awesome-icon @click="remove" :icon="['fas', 'trash']" class="card__trash"/>
+                <router-link :to="{ name: 'CodeEditor' }"></router-link>
+                <font-awesome-icon @click="remove" :icon="['fas', 'trash']" class="card__trash"/>
+
             </div>
             <div v-else>
                 {{ projeto.user.nickname }}
