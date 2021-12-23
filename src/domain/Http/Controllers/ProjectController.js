@@ -42,6 +42,19 @@ class ProjectController extends HttpController
         .then(res => res.json());
     }
 
+    async update(data, id)
+    {
+        return await fetch(this.domain + 'projetos/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.token
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json());
+    }
+
     async search(data, page)
     {
         return await fetch(this.domain + 'pesquisar?q=' + data + '&page=' + page, {

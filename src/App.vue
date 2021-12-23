@@ -53,6 +53,46 @@ html, body {
   -webkit-appearance: none;
 }
 
+input[type="text"] {
+    background: #2D415B;
+    border-radius: 5px;
+    border-width: 0;
+    color: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+textarea {
+    background: #2D415B;
+    border-radius: 5px;
+    border-width: 0;
+    color: white;
+    height: 100px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    resize: none;
+}
+
+input[type="color"] {
+	-webkit-appearance: none;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    height: 55px;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    background: #051D3B;
+	padding: 0.5rem;
+    border-radius: 5px;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+    border-radius: 5px;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

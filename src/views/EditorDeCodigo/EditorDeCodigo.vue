@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="salvar" class="editor">
         <div class="projeto__editor">
-            <Editor @codigo-atualizado="getCodigo" height="350px" :borderColor="form.cor" :isActive="active"/>
+            <Editor @codigo-atualizado="getCodigo" height="350px" :savedCode="projectCode" :borderColor="form.cor" :isActive="active"/>
             <small style="color: red">{{ errors.codigo }}</small>
             <div class="botao__highlight">
                 <Botao @click="highlight" tipo="button" corLabel="white" background="#0B254A" label="Visualizar com highlight" />
@@ -11,13 +11,14 @@
             <div class="info descricao">
                 <h3 class="titulo descricao__titulo">SEU PROJETO</h3>
                 <small style="color: red">{{ errors.nome }}</small>
-                <div><Input @value="getNome" tipo="text" :defaultValue="project.nome" placeholder="Nome do projeto"/></div>
+                <input type="text" placeholder="Nome do projeto" v-model="form.nome">
+
                 <small style="color: red">{{ errors.descricao }}</small>
-                <Textarea @value="getDescricao" placeholder="Descricao do projeto"/>
+                <textarea placeholder="Descricao do projeto" v-model="form.descricao"></textarea>
             </div>
             <div class="info personalizacao">
                 <h3 class="titulo personalizacao__titulo">PERSONALIZAÇAO</h3>
-                <ColorInput @color="getColor"/>
+                <input type="color" v-model="form.cor">
             </div>
             <div class="botao__salvar">
                 <Botao background="#5081FB" label="Salvar projeto"/>
@@ -30,19 +31,17 @@
 import Editor from '../../components/shared/Editor/Editor.vue';
 //import { validator } from '../../domain/Errors/ValidationErrors.js';
 import Botao from '../../components/shared/Botao/Botao.vue';
-import Input from '../../components/shared/Form/Input.vue';
-import Textarea from '../../components/shared/Form/Textarea.vue';
-import ColorInput from '../../components/shared/Form/ColorInput.vue';
 import { projectHttp } from '../../domain/Http/Controllers/ProjectController';
 //import Cookies from 'js-cookie';
 
 export default {
     data() {
         return {
-            project: [],
+            id: this.$route.params.id,
+            savedCode: '',
             form: {
                 codigo: '',
-                nome: 'ola',
+                nome: '',
                 descricao: '',
                 cor: '#6BD1FF',
             },
@@ -57,42 +56,46 @@ export default {
     components: {
         Editor,
         Botao,
-        Input,
-        Textarea,
-        ColorInput
     },
     mounted() {
-        const id = this.$route.params.id;
-        if (id) {
-            projectHttp.show(id)
+        if (this.id) {
+            projectHttp.show(this.id)
                 .then(res => {
-                    this.project.nome = res.data.projeto[0].nome;
+                    console.log(res);
+                    this.form = res.data.projeto[0];
+                    console.log(this.form.codigo);
                 });
         }
     },
-    activated() {
-        this.project.nome;
-    },
     computed: {
-        projectName() {
-            return this.project.nome;
-        }
+        
     },
+    updated() {
+        this.projectCode();
+    },
+    
     methods: {
+        projectCode() {
+            return this.form.codigo;
+        },
         highlight() {
             this.active = !this.active;
         },
-        getCodigo(codigo) {
-            this.form.codigo = codigo;
-        },
-        getColor(color) {
-            this.form.cor = color;
-        },
-        getNome(nome) {
-            this.form.nome = nome;
-        },
-        getDescricao(descricao) {
-            this.form.descricao = descricao;
+        atualizar() {
+            projectHttp.update(this.form, this.id)
+                .then(res => {
+                    if (res.success) {
+                        this.$swal({
+                            title: 'Projeto atualizado com sucesso!',
+                            icon: 'success'
+                        });
+                        return;
+                    }
+
+                    console.log(res);
+                    
+                })
+                .catch(err => console.log(err));
         },
         salvar() {
             projectHttp.store(this.form)
