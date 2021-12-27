@@ -20,7 +20,10 @@
                 <h3 class="titulo personalizacao__titulo">PERSONALIZAÇAO</h3>
                 <input type="color" v-model="form.cor">
             </div>
-            <div class="botao__salvar">
+            <div class="botao__atualizar" v-if="id">
+                <Botao background="#5081FB" label="Atualizar projeto"/>
+            </div>
+            <div class="botao__salvar" v-else>
                 <Botao background="#5081FB" label="Salvar projeto"/>
             </div>
         </div>
@@ -75,6 +78,9 @@ export default {
     },
     
     methods: {
+        getCodigo(codigo) {
+            this.form.codigo = codigo;
+        },
         projectCode() {
             return this.form.codigo;
         },
@@ -137,6 +143,11 @@ small {
 }
 
 .botao__salvar {
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.botao__atualizar {
     margin-top: 1.5rem;
     width: 100%;
 }

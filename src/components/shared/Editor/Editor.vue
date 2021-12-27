@@ -1,5 +1,5 @@
 <template>
-    <pre v-highlightjs v-show="isActive" class="editor editor-highlight" :style="{ height: height, borderColor: borderColor }"><code class="javascript">{{ codeToBeUsed }}</code></pre>
+    <pre v-highlightjs v-show="isActive" class="editor editor-highlight" :style="{ height: height, borderColor: borderColor }"><code class="javascript">{{ savedCode ? savedCode : code }}</code></pre>
     <textarea
         class="editor"
         name="codigo"
@@ -25,11 +25,6 @@ export default {
     data() {
         return {
             code: this.savedCode ? this.savedCode : this.code,
-        }
-    },
-    computed: {
-        codeToBeUsed() {
-            return this.code ? this.code : this.savedCode;
         }
     },
     methods: {

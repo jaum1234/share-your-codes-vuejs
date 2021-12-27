@@ -6,18 +6,31 @@
                 :savedCode="project.codigo"
                 height="400px"
                 :isActive="!active"/>
-                <h2>{{ project.nome }}</h2>
+                <div>
+                    <h2>{{ project.nome }}</h2>
+                    <div>
+                        <Botao tipo="botao" background="green" @click="shareOnWpp()">
+                            <font-awesome-icon :icon="['fab', 'whatsapp']"/>
+                        </Botao>
+                        <Botao tipo="botao" background="white" @click="shareOnTwitter()">
+                            <font-awesome-icon :icon="['fab', 'twitter']"/>
+                        </Botao>
+                    </div>
+                </div>
         </div>
+        
     </div>
 </template>
 
 <script>
 import { projectHttp } from '../../domain/Http/Controllers/ProjectController.js';
 import Editor from '../../components/shared/Editor/Editor.vue';
+import Botao from '../../components/shared/Botao/Botao.vue';
 
 export default {
     components: {
-        Editor
+        Editor,
+        Botao
     },
     data() {
         return {
@@ -31,6 +44,12 @@ export default {
                     console.log(res.data.projeto)
                     this.project = res.data.projeto[0]
                 })
+        },
+        shareOnWpp() {
+            window.open('https://api.whatsapp.com/send?text=http://localhost:8080' +  this.$route.fullPath);
+        },
+        shareOnTwitter() {
+            window.open('https://twitter.com/intent/tweet?url=http://localhost:8080' + this.$route.fullPath);
         }
     },
     mounted() {
@@ -47,6 +66,12 @@ h2 {
 }
 .project {
     width: 80%;
+}
+
+.project__editor div:last-child {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
 }
 
 @media screen and (max-width: 1280px) {

@@ -40,10 +40,6 @@ export default {
                 return true;
             }
         },
-        toProjectPage() {
-            console.log('ola');
-            this.$router.push({ path: "/projeto/" + this.projeto.id})
-        },
         remove() {
             this.$swal({
                 title: 'Tem certeza que deseja excluir esse projeto?',
@@ -53,7 +49,7 @@ export default {
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Tem certeza que deseja excluir esse projeto?'
             }).then((result) => {
-            if (result.isConfirmed) {
+                if (result.isConfirmed) {
                 
                 projectHttp.delete(this.projeto.id)
                     .then(data => {

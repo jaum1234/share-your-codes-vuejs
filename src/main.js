@@ -11,9 +11,10 @@ import 'highlight.js/styles/kimbie.dark.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser, faCode, faUsers, faTrash, faSortDown, faBars, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faUser, faCode, faUsers, faTrash, faSortDown, faBars, faTimes, faEdit);
+library.add(faUser, faCode, faUsers, faTrash, faSortDown, faBars, faTimes, faEdit, faWhatsapp, faTwitter);
 
 //import { httpRequest } from './domain/Http/Controllers/HttpController'
 

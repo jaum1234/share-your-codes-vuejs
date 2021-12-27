@@ -5,7 +5,7 @@ export default class HttpController
 {
     constructor()
     {
-        this.domain = 'http://localhost:3000/api/';
+        this.domain = 'https://shareyourcodes.com/api/';
         this.token = Cookies.get('_myapp_token');
     }
 
@@ -20,7 +20,7 @@ export default class HttpController
         .then(res => {
             console.log(res);
             Cookies.set('_myapp_token', res.data.token.access_token);
-            Cookies.set('token_expires_at', new Date(new Date().getTime() + 1*60*1000).getTime());
+            Cookies.set('token_expires_at', new Date(new Date().getTime() + 60*60*1000).getTime());
             this.token = res.data.token.access_token;
         });
     }

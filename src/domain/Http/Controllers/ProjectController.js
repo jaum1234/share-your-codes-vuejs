@@ -64,13 +64,11 @@ class ProjectController extends HttpController
     }
 
     async delete(id) {
-        this.checkToken();
         
         return await fetch(this.domain + 'projetos/' + id, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
+                'Authorization': 'Bearer ' + this.token
             }
         })
         .then(res => res.json());
