@@ -13,7 +13,6 @@
                 <router-link :to="{ name: 'EditCode', params: {id: projeto.id} }">
                     <font-awesome-icon :icon="['fas', 'edit']" class="card__edit"/>
                 </router-link>
-
             </div>
             <div v-else>
                 {{ projeto.user.nickname }}

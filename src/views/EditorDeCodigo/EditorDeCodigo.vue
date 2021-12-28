@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="salvar" class="editor">
         <div class="projeto__editor">
-            <Editor @codigo-atualizado="getCodigo" height="350px" :savedCode="projectCode" :borderColor="form.cor" :isActive="active"/>
+            <Editor @codigo-atualizado="getCodigo" height="350px" :savedCode="form.codigo" :borderColor="form.cor" :isActive="active"/>
             <small style="color: red">{{ errors.codigo }}</small>
             <div class="botao__highlight">
                 <Botao @click="highlight" tipo="button" corLabel="white" background="#0B254A" label="Visualizar com highlight" />
@@ -69,20 +69,10 @@ export default {
                     console.log(this.form.codigo);
                 });
         }
-    },
-    computed: {
-        
-    },
-    updated() {
-        this.projectCode();
-    },
-    
+    }, 
     methods: {
         getCodigo(codigo) {
             this.form.codigo = codigo;
-        },
-        projectCode() {
-            return this.form.codigo;
         },
         highlight() {
             this.active = !this.active;
