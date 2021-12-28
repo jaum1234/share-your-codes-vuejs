@@ -7,14 +7,14 @@
                 height="400px"
                 :isActive="!active"/>
                 <div>
-                    <h2>{{ project.nome }}</h2>
+                    <h2>{{ project.nome }}</h2>                           
                     <div>
-                        <Botao tipo="botao" background="green" @click="shareOnWpp()">
+                        <button @click="shareOnWpp()" class="button--wpp">
                             <font-awesome-icon :icon="['fab', 'whatsapp']"/>
-                        </Botao>
-                        <Botao tipo="botao" background="white" @click="shareOnTwitter()">
+                        </button>
+                        <button @click="shareOnTwitter()" class="button--twitter">
                             <font-awesome-icon :icon="['fab', 'twitter']"/>
-                        </Botao>
+                        </button>
                     </div>
                 </div>
         </div>
@@ -24,13 +24,13 @@
 
 <script>
 import { projectHttp } from '../../domain/Http/Controllers/ProjectController.js';
+import { sharer } from '../../domain/Service/Sharer.js';
+
 import Editor from '../../components/shared/Editor/Editor.vue';
-import Botao from '../../components/shared/Botao/Botao.vue';
 
 export default {
     components: {
         Editor,
-        Botao
     },
     data() {
         return {
@@ -46,10 +46,10 @@ export default {
                 })
         },
         shareOnWpp() {
-            window.open('https://api.whatsapp.com/send?text=http://localhost:8080' +  this.$route.fullPath);
+            sharer.shareOnWpp(this.$route.fullPath)
         },
         shareOnTwitter() {
-            window.open('https://twitter.com/intent/tweet?url=http://localhost:8080' + this.$route.fullPath);
+            sharer.shareOntwitter(this.$route.fullPath);
         }
     },
     mounted() {
@@ -72,6 +72,26 @@ h2 {
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin: 0 0.4rem;
+
+    height: 35px;
+    width: 35px;
+}
+
+.button--wpp {
+    background: green;
+}
+
+.button--twitter {
+    background: rgb(114, 184, 207);
 }
 
 @media screen and (max-width: 1280px) {
