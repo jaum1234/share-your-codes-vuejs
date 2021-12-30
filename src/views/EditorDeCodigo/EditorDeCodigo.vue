@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="salvar" class="editor">
+    <form @submit.prevent="enviar" class="editor">
         <div class="projeto__editor">
             <Editor @codigo-atualizado="getCodigo" height="350px" :savedCode="form.codigo" :borderColor="form.cor" :isActive="active"/>
             <small style="color: red">{{ errors.codigo }}</small>
@@ -41,7 +41,6 @@ export default {
     data() {
         return {
             id: this.$route.params.id,
-            savedCode: '',
             form: {
                 codigo: '',
                 nome: '',
@@ -76,6 +75,14 @@ export default {
         },
         highlight() {
             this.active = !this.active;
+        },
+        enviar() {
+            if (this.id) {
+                this.atualizar();
+                return;
+            }
+
+            this.salvar();
         },
         atualizar() {
             projectHttp.update(this.form, this.id)

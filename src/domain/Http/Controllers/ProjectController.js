@@ -45,7 +45,7 @@ class ProjectController extends HttpController
     async update(data, id)
     {
         return await fetch(this.domain + 'projetos/' + id, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + this.token
@@ -71,7 +71,6 @@ class ProjectController extends HttpController
                 'Authorization': 'Bearer ' + this.token
             }
         })
-        .then(res => res.json());
     }
 }
 

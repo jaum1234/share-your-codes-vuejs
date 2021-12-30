@@ -51,9 +51,8 @@ export default {
                 if (result.isConfirmed) {
                 
                 projectHttp.delete(this.projeto.id)
-                    .then(data => {
-                        if (data.success) {
-                            this.$swal({
+                    .then(() => {
+                        this.$swal({
                                 title: 'Projeto excluido!',
                                 icon: 'success',
                                 showConfirmButton: false,
@@ -62,7 +61,6 @@ export default {
                             setInterval(() => {
                                 this.$router.go();  
                             }, 1000);
-                        }
                     });
             }
             })

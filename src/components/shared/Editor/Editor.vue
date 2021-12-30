@@ -4,7 +4,6 @@
         class="editor"
         name="codigo"
         @input="escreverCodigo"
-        @keydown.tab.prevent="whiteSpace"
         id="editor"
         v-model="code"
         :style="{height: height, borderColor: borderColor}"
@@ -30,29 +29,22 @@ export default {
     },
     methods: {
         escreverCodigo() {
+            
             this.$emit('codigo-atualizado', this.code);
         },
-        whiteSpace(event) {
-            const textarea = event.target;
-
-            console.log(textarea.value);
-            var start = this.selectionStart;
-            var end = this.selectionEnd;
-
-    // set textarea value to: text before caret + tab + text after caret
-    textarea.value = textarea.value.substring(0, start) +
-      "\t" + textarea.value.substring(end);
-
-    // put caret at right position again
-    this.selectionStart =
-      this.selectionEnd = start + 1;
-        }
+        currentCode() {
+            this.code = this.savedCode ? this.savedCode : this.code; 
+        }    
     },
-    mounted() {
-        if (this.savedCode) {
-            return this.code = this.savedCode;
-        }
-    }
+    
+    
+    created() {
+        console.log("Codigo atual:" + this.code);
+        console.log("Codigo salvo:" + this.savedCode);
+        this.currentCode();
+    },
+    
+    
 }
 </script>
 

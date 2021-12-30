@@ -18,7 +18,7 @@
                         </button>
                         <transition name="mobile-nav">
                             <ul class="nav__dropdown" v-show="nav">
-                                <li>
+                                <li class="nav__item">
                                     <div>
                                         <font-awesome-icon :icon="['fas', 'user']"/>
                                         <div>{{ nickname }}</div>
@@ -27,21 +27,21 @@
                                         <RemoveButton @click="toggleNav"/>
                                     </div>
                                 </li>
-                                <div v-if="mobile">
-                                    <li>
-                                        <router-link :to="{ name: 'CodeEditor' }">Editor de Código</router-link>
-                                    </li>
-                                    <li>
-                                        <router-link :to="{ name: 'Comunity' }">Comunidade</router-link>
-                                    </li>
-                                </div>
-                                <li>
+                               
+                                <li class="nav__item nav__item--editor" v-if="mobile">
+                                    <router-link :to="{ name: 'CodeEditor' }">Editor de Código</router-link>
+                                </li>
+                                <li class="nav__item nav__item--comunidade" v-if="mobile">
+                                    <router-link :to="{ name: 'Comunity' }">Comunidade</router-link>
+                                </li>
+                              
+                                <li class="nav__item">
                                     <router-link :to="{ name: 'MyProfile' }">Meu Perfil</router-link>
                                 </li>
-                                <li>
+                                <li class="nav__item">
                                     <router-link :to="{ name: 'MyProjects' }">Meus Projetos</router-link>
                                 </li>
-                                <li @click="logout">Logout</li>
+                                <li class="nav__item" @click="logout">Logout</li>
                             </ul>
                         </transition>
                     </div>
@@ -88,7 +88,7 @@ export default {
             this.nav = !this.nav;
         },
         checkScreen() {
-            if (window.innerWidth <= 800) {
+            if (window.innerWidth <= 1280) {
                 this.mobile = true;
                 return
             }
@@ -272,7 +272,7 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     
-    margin-bottom: 2rem;
+    margin-bottom: 2rem !important;
     width: 100%;
 }
 
@@ -294,7 +294,11 @@ export default {
     color: red;
     cursor: pointer;
     font-weight: bold;
-    margin-top: 1rem;
+    margin-top: 2rem !important;
+}
+
+.nav__dropdown .nav__item--comunidade {
+    font-weight: 400 !important;
 }
 
 .nav__dropdown li:first-child div {
