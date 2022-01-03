@@ -11,12 +11,6 @@ export default {
         'background',
         'corLabel'
     ],
-    computed: {
-        estilos()
-        {
-            return 'ola';
-        }
-    }
 }
 </script>
 

@@ -5,15 +5,15 @@
             <div>
                 <div class="fields">
                     <div class="field">
-                        <label>Email</label>
-                        <input type="text">
+                        <label>Nickname</label>
+                        <input type="text" v-model="form.nickname">
                         <small style="color: red">
                         
                         </small>
                     </div>
                     <div class="field">
                         <label>Nome</label>
-                        <input type="text">
+                        <input type="text" v-model="form.name">
                         <small style="color: red">
                         
                         </small>
@@ -37,14 +37,11 @@ export default {
     components: {
         Button
     },
+    mounted() {
+        this.form.nickname = Cookies.get('user_nickname');
+        this.form.name = Cookies.get('user_name');
+    },
     methods: {
-        getNickname(nickname) {
-            this.form.nickname = nickname;
-            console.log(this.form.nickname)
-        },
-        getName(name) {
-            this.form.name = name;
-        },
         update() {
             userHttp.update(Cookies.get('user_id'), this.form)
             .then(res => {
@@ -58,9 +55,6 @@ export default {
                     });
                     return;
                 }
-
-                
-
             });
         },
     },
@@ -84,6 +78,7 @@ export default {
 
 input {
     margin-top: 1rem;
+    text-align: center;
 }
 
 .my-profile__form {
