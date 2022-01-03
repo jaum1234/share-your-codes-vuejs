@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie';
+
 export default {
     props: [
         'height',
@@ -33,14 +35,12 @@ export default {
             this.$emit('codigo-atualizado', this.code);
         },
         currentCode() {
-            this.code = this.savedCode ? this.savedCode : this.code; 
+            return this.code = this.savedCode ? this.savedCode : this.code; 
         }    
     },
-    
-    
-    created() {
-        console.log("Codigo atual:" + this.code);
-        console.log("Codigo salvo:" + this.savedCode);
+   
+    mounted() {
+        Cookies.set('code', this.savedCode)
         this.currentCode();
     },
     

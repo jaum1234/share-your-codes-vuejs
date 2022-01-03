@@ -15,6 +15,9 @@ const routes = [
   {
     path: '/comunidade',
     name: 'Comunity',
+    meta: {
+      public : true
+    },
     component: () => import('../views/Comunidade/Comunidade.vue')
   },
   {
@@ -30,6 +33,9 @@ const routes = [
   {
     path: '/projeto/:id',
     name: 'ProjectPage',
+    meta: {
+      public : true
+    },
     component: () => import('../views/ProjectPage/ProjectPage.vue')
   },
   {
@@ -40,11 +46,17 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
+    meta: {
+      public : true
+    },
     component: () => import('../views/Login/Login.vue')
   },
   {
     path: '/register',
     name: 'Register',
+    meta: {
+      public : true
+    },
     component: () => import('../views/Register/Register.vue')
   },
   {
@@ -61,7 +73,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(!Cookies.get('_myapp_token') && (to.name == 'MeusProjetos' || to.name == 'MeuPerfil' || to.name == 'CodeEditor')) {
+  if(!Cookies.get('_myapp_token') && !to.meta.public) {
     next({name: 'Login'});
     return;
   }
