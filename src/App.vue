@@ -53,7 +53,7 @@ html, body {
   -webkit-appearance: none;
 }
 
-input[type="text"] {
+input[type="text"], input[type="email"], input[type="password"]  {
     background: #2D415B;
     border-radius: 5px;
     border-width: 0;

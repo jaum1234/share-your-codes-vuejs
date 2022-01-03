@@ -6,12 +6,42 @@
             </div>
             <h1 class="register__title">Cadastro</h1>
             <form @submit.prevent="register">
-                <div v-for="field in fields" :key="field" class="field" :class="field.class">
-                    <div class="register__label"><label>{{ field.label }}</label></div>
-                    <Input textAlign="center" @value="field.inputGetter" :tipo="field.inputType"/>
-                    <small style="color: red" v-for="error in field.errors" :key="error">
-                        {{ error }}
-                    </small>
+                <div class="fields" >
+                    <div class="field">
+                        <label>E-mail</label>
+                        <input type="email" v-model="form.email"/>
+                        <small style="color: red" >
+                        
+                        </small>
+                    </div>
+                    <div class="field">
+                        <label>Nome</label>
+                        <input type="text" v-model="form.name"/>
+                        <small style="color: red" >
+                        
+                        </small>
+                    </div>
+                    <div class="field">
+                        <label>Nickname</label>
+                        <input type="text" v-model="form.nickname"/>
+                        <small style="color: red" >
+                        
+                        </small>
+                    </div>
+                    <div class="field">
+                        <label>Senha</label>
+                        <input type="password" v-model="form.password"/>
+                        <small style="color: red" >
+                        
+                        </small>
+                    </div>
+                    <div class="field">
+                        <label>Confimar senha</label>
+                        <input type="password" v-model="form.password_confirmation"/>
+                        <small style="color: red" >
+                        
+                        </small>
+                    </div>
                 </div>
                 <div class="register__botao">
                     <Botao type="submit" label="Finalizar Cadastro" background="#5081FB"/>
@@ -23,60 +53,16 @@
 </template>
 
 <script>
-import Input from '../../components/shared/Form/Input.vue';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
 //import Cookies from 'js-cookie';
 
 export default {
     components: {
-        Input,
         Botao
     },
     data() {
         return {
-            fields: [
-                {
-                    label: 'E-mail',
-                    name: 'email',
-                    class: 'register__email', 
-                    inputGetter: this.getEmail, 
-                    inputType: 'email',
-                    errors: []
-                },
-                {
-                    label: 'Nome',
-                    name: 'name',
-                    class: 'register__name', 
-                    inputGetter: this.getName, 
-                    inputType: 'text',
-                    errors: []
-                },
-                {
-                    label: 'Nickname',
-                    name: 'nickname', 
-                    class: 'register__nickname', 
-                    inputGetter: this.getNickname, 
-                    inputType: 'text',
-                    errors: []
-                },
-                {
-                    label: 'Senha',
-                    name: 'password', 
-                    class: 'register__password', 
-                    inputGetter: this.getPassword, 
-                    inputType: 'password',
-                    errors: []
-                },
-                {
-                    label: 'Confirmar senha',
-                    name: 'password_confirmation', 
-                    class: 'register__confirm-password', 
-                    inputGetter: this.getConfirmPassword, 
-                    inputType: 'password',
-                    errors: []
-                }
-            ],
             form: {
                 email: '',
                 password: '',
@@ -93,26 +79,6 @@ export default {
         }
     },
     methods: {
-        getEmail(email) {
-            console.log("Email: " + email)
-            this.form.email = email;
-        },
-        getNickname(nickname) {
-            console.log("Nickname: " + nickname)
-            this.form.nickname = nickname;
-        },
-        getName(name) {
-            this.form.name = name;
-        },
-        getConfirmPassword(confirmPassword) {
-            console.log("Confirm password: " + confirmPassword);
-            this.form.password_confirmation = confirmPassword;
-        },
-        getPassword(password) {
-            console.log("Passoword: " + password)
-            this.form.password = password;
-        },
-
         register() {
             authHttp.register(this.form)
                 .then(res => {
@@ -122,19 +88,7 @@ export default {
                         return;
                     }
                     console.log(res)
-                    const responseErrorKeys = Object.keys(res.data.erros);
-                    responseErrorKeys.forEach((responseErrorKey) => {
                     
-                        this.fields.forEach(field => {
-                            if (responseErrorKey == field.name) {
-                                field.errors = res.data.erros[responseErrorKey];
-                            }
-
-                            setTimeout(() => {
-                                field.errors = [];
-                            }, 3000);
-                        })
-                    });
                 })
                 
         }
@@ -146,6 +100,11 @@ export default {
 h1 {
     font-size: 2rem;
     margin-bottom: 3.5rem;
+}
+
+input {
+    margin-top: 1rem;
+    text-align: center;
 }
 
 .register__label {

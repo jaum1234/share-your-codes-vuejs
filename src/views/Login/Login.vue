@@ -6,12 +6,23 @@
             </div>
             <h1 class="login__title">Login</h1>
             <form @submit.prevent="login">
-                <div v-for="field in fields" :key="field" class="field" :class="field.class">
-                    <div class="login__label"><label>{{ field.label }}</label></div>
-                    <Input textAlign="center" @value="field.inputGetter" :tipo="field.inputType"/>
-                    <small style="color: red" v-for="error in errors" :key="error">
-                        {{ error }}
-                    </small>
+                <div class="fields">
+                    <div class="field">
+                        <label class="login__label">E-mail</label>
+                        <input type="email" v-model="form.email" class="login__input login__email">
+                        <small style="color: red">
+                        
+                        </small>
+                    </div>
+
+                    <div class="field">
+                        <label class="login__label">Senha</label>
+                        <input type="password" v-model="form.password" class="login__input login__password">
+                        <small style="color: red">
+ 
+                        </small>
+                    </div>
+                       
                 </div>
                 <div class="login__botao">
                     <Botao type="submit" label="Fazer login" background="#5081FB"/>
@@ -23,34 +34,16 @@
 </template>
 
 <script>
-import Input from '../../components/shared/Form/Input.vue';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
 //import Cookies from 'js-cookie';
 
 export default {
     components: {
-        Input,
         Botao
     },
     data() {
         return {
-            fields: [
-                {
-                    label: 'Email', 
-                    name: 'email',
-                    class: 'login__email', 
-                    inputGetter: this.getEmail, 
-                    inputType: 'email',
-                },
-                {
-                    label: 'Senha', 
-                    name: 'password',
-                    class: 'login__password', 
-                    inputGetter: this.getPassword, 
-                    inputType: 'password',
-                },
-            ],
             form: {
                 email: '',
                 password: ''
@@ -62,45 +55,18 @@ export default {
         }
     },
     methods: {
-        getEmail(email) {
-            this.form.email = email;
-        },
-        getPassword(password) {
-            this.form.password = password;
-        },
-
         login() {
             authHttp.login(this.form)
                 .then((res) => {
                     if (res.success) {
                         authHttp.setCookies(res);
     
-                        //this.interval = setInterval(() => {
-                        //    var now = new Date();
-                        //    console.log(now);
-                        //    
-                        //    if (now.getTime() >= Cookies.get('token_expires_at')) {       
-    //
-                        //        authHttp.refreshToken();
-                        //    }
-    //
-                        //}, 1000);
-    
                         this.$router.push({name: 'CodeEditor'});
                         return;   
 
                     }
                     console.log(res.data.erros['email']);
-                    for (const error in this.errors) {
-                        for (const erro in res.data.erros) {
-                            if (erro == error) {
-                                if (this.errors[error] === '') {
-                                    console.log(this.errors[error]);
-                                    this.errors[error] = res.data.erros[erro][0];
-                                }
-                            }
-                        }
-                    }
+                    
                     console.log(res)
                     //
                     //const responseErrorKeys = Object.keys(res.data.erros);
@@ -128,8 +94,8 @@ h1 {
     margin-bottom: 3.5rem;
 }
 
-.login__label {
-    margin-bottom: 1rem;
+.login__input {
+    margin-top: 1rem;
 }
 
 .login {
@@ -144,8 +110,12 @@ h1 {
     color: white;
 }
 
-.field {
+.fields {
     margin-bottom: 1rem;
+}
+
+.field {
+    margin-top: 1rem;
 }
 
 .login__botao {
