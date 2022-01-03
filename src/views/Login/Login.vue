@@ -96,6 +96,7 @@ h1 {
 
 .login__input {
     margin-top: 1rem;
+    text-align: center;
 }
 
 .login {

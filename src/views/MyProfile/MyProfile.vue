@@ -3,20 +3,21 @@
         <form @submit.prevent="update" class="my-profile__form">
             <font-awesome-icon class="my-profile__profile-pic" :icon="['fas', 'user']"/>
             <div>
-                <div v-for="field in fields" :key="field" class="my-profile__field">
-                    <div class="my-profile__label">
-                        <label>{{ field.label }}</label>
+                <div class="fields">
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="text">
+                        <small style="color: red">
+                        
+                        </small>
                     </div>
-                    <Input
-                        :tipo="field.inputType"
-                        :placeholder="field.placeholder"
-                        textAlign="center"
-                        @value="field.inputGetter"
-                        :defaultValue="field.defaultValue"
-                        />
-                    <small v-for="error in field.errors" :key="error" style="color: red">
-                        {{ error }}
-                    </small>
+                    <div class="field">
+                        <label>Nome</label>
+                        <input type="text">
+                        <small style="color: red">
+                        
+                        </small>
+                    </div>
                 </div>
                 <div style="width: 150px; margin: 0 auto">
                     <Button label="Salvar alteraçoes" background="#5081FB"/>
@@ -27,14 +28,13 @@
 </template>
 
 <script>
-import Input from '../../components/shared/Form/Input.vue';
 import Button from '../../components/shared/Botao/Botao.vue';
-import { userHttp } from '../../domain/Http/Controllers/UserController.js';
 import Cookies from 'js-cookie';
+
+import { userHttp } from '../../domain/Http/Controllers/UserController.js';
 
 export default {
     components: {
-        Input,
         Button
     },
     methods: {
@@ -59,45 +59,13 @@ export default {
                     return;
                 }
 
-                const responseErrorKeys = Object.keys(res.data.erros);
-                responseErrorKeys.forEach((responseErrorKey) => {
-                    
-                    this.fields.forEach(field => {
-                        if (responseErrorKey == field.name) {
-                            field.errors = res.data.erros[responseErrorKey];
-                        }
-
-                        setTimeout(() => {
-                            field.errors = [];
-                        }, 3000);
-                    })
-                })
+                
 
             });
         },
     },
     data() {
         return {
-            fields: [
-                {
-                    label: 'Nickname',
-                    name: 'nickname',
-                    inputType: 'text', 
-                    placeholder: 'Seu nickname', 
-                    inputGetter: this.getNickname,
-                    defaultValue: Cookies.get('user_nickname'),
-                    errors: []
-                },
-                {
-                    label: 'Name',
-                    name: 'name',
-                    inputType: 'text', 
-                    placeholder: 'Seu nome', 
-                    inputGetter: this.getName,
-                    defaultValue: Cookies.get('user_name'),
-                    errors: []
-                },
-            ],
             form: {
                 nickname: '',
                 name: ''
@@ -114,6 +82,10 @@ export default {
     width: 80%;
 }
 
+input {
+    margin-top: 1rem;
+}
+
 .my-profile__form {
     margin: 0 auto;
     width: 500px;
@@ -124,7 +96,7 @@ export default {
     margin-bottom: 2rem;
 }
 
-.my-profile__field {
+.fields {
     margin-bottom: 2rem;
 }
 
