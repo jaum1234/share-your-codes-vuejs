@@ -8,14 +8,14 @@
                         <label>Nickname</label>
                         <input type="text" v-model="form.nickname">
                         <small style="color: red">
-                        
+                            {{ errors.nickname }}
                         </small>
                     </div>
                     <div class="field">
                         <label>Nome</label>
                         <input type="text" v-model="form.name">
                         <small style="color: red">
-                        
+                            {{ errors.name }}
                         </small>
                     </div>
                 </div>
@@ -32,6 +32,7 @@ import Button from '../../components/shared/Botao/Botao.vue';
 import Cookies from 'js-cookie';
 
 import { userHttp } from '../../domain/Http/Controllers/UserController.js';
+import { validator } from '../../domain/Service/Validator';
 
 export default {
     components: {
@@ -55,6 +56,7 @@ export default {
                     });
                     return;
                 }
+                validator.validate(this.errors, res.data.erros);
             });
         },
     },
@@ -64,7 +66,10 @@ export default {
                 nickname: '',
                 name: ''
             },
-            
+            errors: {
+                nickname: '',
+                name: ''
+            }
         }
     },
     

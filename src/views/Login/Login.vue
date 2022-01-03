@@ -11,7 +11,7 @@
                         <label class="login__label">E-mail</label>
                         <input type="email" v-model="form.email" class="login__input login__email">
                         <small style="color: red">
-                        
+                            {{ errors.email }}
                         </small>
                     </div>
 
@@ -19,7 +19,7 @@
                         <label class="login__label">Senha</label>
                         <input type="password" v-model="form.password" class="login__input login__password">
                         <small style="color: red">
- 
+                            {{ errors.password }}
                         </small>
                     </div>
                        
@@ -36,6 +36,7 @@
 <script>
 import Botao from '../../components/shared/Botao/Botao.vue';
 import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
+import { validator } from '../../domain/Service/Validator.js';
 //import Cookies from 'js-cookie';
 
 export default {
@@ -65,24 +66,10 @@ export default {
                         return;   
 
                     }
-                    console.log(res.data.erros['email']);
-                    
-                    console.log(res)
-                    //
-                    //const responseErrorKeys = Object.keys(res.data.erros);
-                    //responseErrorKeys.forEach((responseErrorKey) => {
-                    //
-                    //this.fields.forEach(field => {
-                    //    if (responseErrorKey == field.name) {
-                    //        field.errors = res.data.erros[responseErrorKey];
-                    //    }
-//
-                    //    setTimeout(() => {
-                    //        field.errors = [];
-                    //    }, 3000);
-                    //})
-                //})
-                });
+                    validator.validate(this.errors, res.data.erros);
+
+                })
+               
         }
     }
 }

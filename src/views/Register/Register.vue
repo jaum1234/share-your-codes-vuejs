@@ -11,35 +11,35 @@
                         <label>E-mail</label>
                         <input type="email" v-model="form.email"/>
                         <small style="color: red" >
-                        
+                            {{ errors.email }}
                         </small>
                     </div>
                     <div class="field">
                         <label>Nome</label>
                         <input type="text" v-model="form.name"/>
                         <small style="color: red" >
-                        
+                            {{ errors.name }}
                         </small>
                     </div>
                     <div class="field">
                         <label>Nickname</label>
                         <input type="text" v-model="form.nickname"/>
                         <small style="color: red" >
-                        
+                            {{ errors.nickname }}
                         </small>
                     </div>
                     <div class="field">
                         <label>Senha</label>
                         <input type="password" v-model="form.password"/>
                         <small style="color: red" >
-                        
+                            {{ errors.password }}
                         </small>
                     </div>
                     <div class="field">
                         <label>Confimar senha</label>
                         <input type="password" v-model="form.password_confirmation"/>
                         <small style="color: red" >
-                        
+                            {{ errors.password_confirmation }}
                         </small>
                     </div>
                 </div>
@@ -55,6 +55,7 @@
 <script>
 import Botao from '../../components/shared/Botao/Botao.vue';
 import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
+import { validator } from '../../domain/Service/Validator.js';
 //import Cookies from 'js-cookie';
 
 export default {
@@ -72,6 +73,7 @@ export default {
             },
             errors: {
                 email: '',
+                name: '',
                 password: '' ,
                 nickname: '',
                 confirmPassword: ''
@@ -87,7 +89,7 @@ export default {
                         this.$router.push({ name: 'Login' });
                         return;
                     }
-                    console.log(res)
+                    validator.validate(this.errors, res.data.erros);
                     
                 })
                 

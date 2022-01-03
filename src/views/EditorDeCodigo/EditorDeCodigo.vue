@@ -32,10 +32,9 @@
 
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
-//import { validator } from '../../domain/Errors/ValidationErrors.js';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import { projectHttp } from '../../domain/Http/Controllers/ProjectController';
-//import Cookies from 'js-cookie';
+import { validator } from '../../domain/Service/Validator';
 
 export default {
     data() {
@@ -95,10 +94,10 @@ export default {
                         return;
                     }
 
-                    console.log(res);
+                    validator.validate(this.errors, res.data.erros);
                     
                 })
-                .catch(err => console.log(err));
+               
         },
         salvar() {
             projectHttp.store(this.form)
@@ -111,10 +110,10 @@ export default {
                         return;
                     }
 
-                    console.log(res);
+                    validator.validate(this.errors, res.data.erros);
                     
                 })
-                .catch(err => console.log(err));
+                
             
         }, 
         
