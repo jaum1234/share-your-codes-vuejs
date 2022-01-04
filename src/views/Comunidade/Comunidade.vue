@@ -62,13 +62,11 @@ export default {
         changePage(data) {
             this.offset = data;
             if (Cookies.get('search')) {
-                console.log('true')
                 this.searchedProjects(this.offset);
             
                 return;
             }
             this.fetchProjetos(this.offset);
-            console.log(this.total)
         }
     },
     

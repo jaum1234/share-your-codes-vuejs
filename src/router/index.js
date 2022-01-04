@@ -73,7 +73,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(!Cookies.get('_myapp_token') && !to.meta.public) {
+
+  if (!Cookies.get('_myapp_token') && !to.meta.public) {
     next({name: 'Login'});
     return;
   }

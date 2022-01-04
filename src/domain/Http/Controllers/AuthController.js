@@ -23,14 +23,11 @@ class AuthController extends HttpRequests
 
     setCookies(res)
     {   
-        var inTwentyMinutes =  new Date(new Date().getTime() + 60*60*1000);    
-        console.log(res);              
-
         Cookies.set('_myapp_token', res.data.token.access_token);
         Cookies.set('user_id', res.data.user.id);
         Cookies.set('user_name', res.data.user.name);
         Cookies.set('user_nickname', res.data.user.nickname);
-        Cookies.set('token_expires_at', inTwentyMinutes.getTime());
+        Cookies.set('token_expires_at', new Date(new Date().getTime() + 1*60*1000).getTime());
     }
 
     async register(data)

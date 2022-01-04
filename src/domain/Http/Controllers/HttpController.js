@@ -5,11 +5,14 @@ export default class HttpController
 {
     constructor()
     {
-        this.domain = 'https://shareyourcodes.com/api/';
+        this.domain = 'http://localhost:3000/api/' /*'https://shareyourcodes.com/api/'*/;
+
         this.token = Cookies.get('_myapp_token');
+        this.tokenExpiresAt = Cookies.get('token_expires_at');
     }
 
-    async refreshToken() {
+    async refreshToken() 
+    {
         await fetch(this.domain + 'refreshtoken', {
             method: 'GET',
             headers: {
@@ -18,11 +21,16 @@ export default class HttpController
         })
         .then(res => res.json())
         .then(res => {
-            console.log(res);
             Cookies.set('_myapp_token', res.data.token.access_token);
-            Cookies.set('token_expires_at', new Date(new Date().getTime() + 60*60*1000).getTime());
+            Cookies.set('token_expires_at', new Date(new Date().getTime() + 1*60*1000).getTime());
+
             this.token = res.data.token.access_token;
         });
+    }
+
+    tokenExpired()
+    {
+        return new Date().getTime() >= Cookies.get('token_expires_at');
     }
 }
 

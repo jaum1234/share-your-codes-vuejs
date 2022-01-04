@@ -10,10 +10,10 @@ class UserController extends HttpController
 
     async update(id, data)
     {
-        //if (new Date().getTime() >= Cookies.get('token_expires_at')) {
-        //    this.refreshToken();
-        //    return;
-        //}
+        if (this.tokenExpired()) {
+            this.refreshToken();
+            return;
+        }
 
         return await fetch(this.domain + 'users/' + id, {
             method: 'PUT',
@@ -29,10 +29,10 @@ class UserController extends HttpController
 
     async projetos(id, page, limit)
     {
-        //if (new Date().getTime() >= Cookies.get('token_expires_at')) {
-        //    this.refreshToken();
-        //    return;
-        //}
+        if (this.tokenExpired()) {
+            this.refreshToken();
+            return;
+        }
 
         return await fetch(this.domain + 'users/' + id + '/projetos?page=' + page + '&limit=' + limit, {
             method: 'GET',

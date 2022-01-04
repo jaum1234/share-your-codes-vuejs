@@ -68,7 +68,7 @@ export default {
     data() {
         return {
             nomeProjetos: '',
-            logo: require('/static/img/logo.png'),
+            logo: require('/static/img/aluradev.png'),
             nickname: '',
             active: false,
             scrollPosition: null,

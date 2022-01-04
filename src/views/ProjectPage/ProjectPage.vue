@@ -41,7 +41,6 @@ export default {
         fetchProject() {
             projectHttp.show(this.$route.params.id)
                 .then(res => {
-                    console.log(res.data.projeto)
                     this.project = res.data.projeto[0]
                 })
         },

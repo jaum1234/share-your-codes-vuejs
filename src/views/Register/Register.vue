@@ -85,7 +85,6 @@ export default {
             authHttp.register(this.form)
                 .then(res => {
                     if (res.success) {
-                        console.log(res);
                         this.$router.push({ name: 'Login' });
                         return;
                     }

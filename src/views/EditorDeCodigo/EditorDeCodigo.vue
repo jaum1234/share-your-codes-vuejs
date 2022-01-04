@@ -62,9 +62,7 @@ export default {
         if (this.id) {
             projectHttp.show(this.id)
                 .then(res => {
-                    console.log(res);
                     this.form = res.data.projeto[0];
-                    console.log(this.form.codigo);
                 });
         }
     }, 

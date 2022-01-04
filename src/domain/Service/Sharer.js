@@ -1,5 +1,10 @@
 export default class Sharer
 {
+    constructor()
+    {
+        this.siteDomain = 'http://localhost:8080';
+    }
+
     share(baseShareUrl, linkToBeShared) 
     {
         window.open(baseShareUrl + linkToBeShared);
@@ -7,12 +12,12 @@ export default class Sharer
     
     shareOnWpp(linkToBeShared)
     {
-        window.open('https://api.whatsapp.com/send?text=http://localhost:8080' + linkToBeShared);
+        window.open('https://api.whatsapp.com/send?text=' + this.siteDomain + linkToBeShared);
     }
 
     shareOntwitter(linkToBeShared)
     {
-        window.open('https://twitter.com/intent/tweet?url=http://localhost:8080' + linkToBeShared);
+        window.open('https://twitter.com/intent/tweet?url=' + this.siteDomain + linkToBeShared);
     }
 }
 

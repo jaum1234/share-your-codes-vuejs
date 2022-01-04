@@ -1,5 +1,4 @@
 import HttpController from "./HttpController";
-import Cookies from "js-cookie";
 
 class ProjectController extends HttpController
 {
@@ -26,7 +25,7 @@ class ProjectController extends HttpController
 
     async store(data)
     {
-        if (new Date().getTime() >= Cookies.get('token_expires_at')) {
+        if (this.tokenExpired()) {
             this.refreshToken();
             return;
         }
@@ -44,6 +43,11 @@ class ProjectController extends HttpController
 
     async update(data, id)
     {
+        if (this.tokenExpired()) {
+            this.refreshToken();
+            return;
+        }
+
         return await fetch(this.domain + 'projetos/' + id, {
             method: 'PUT',
             headers: {
@@ -63,7 +67,12 @@ class ProjectController extends HttpController
         .then(res => res.json());
     }
 
-    async delete(id) {
+    async delete(id) 
+    {
+        if (this.tokenExpired()) {
+            this.refreshToken();
+            return;
+        }
         
         return await fetch(this.domain + 'projetos/' + id, {
             method: 'DELETE',
