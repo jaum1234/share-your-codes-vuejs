@@ -5,7 +5,7 @@ export default class HttpController
 {
     constructor()
     {
-        this.domain = 'http://localhost:3000/api/' /*'https://shareyourcodes.com/api/'*/;
+        this.domain = 'https://shareyourcodes.com/api/';
 
         this.token = Cookies.get('_myapp_token');
         this.tokenExpiresAt = Cookies.get('token_expires_at');

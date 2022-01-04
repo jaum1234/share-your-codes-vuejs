@@ -84,6 +84,7 @@ export default {
 input {
     margin-top: 1rem;
     text-align: center;
+    width: 100%;
 }
 
 .my-profile__form {
@@ -106,6 +107,10 @@ input {
 
 @media screen and (max-width: 1280px) {
     .my-profile {
+        width: 100%;
+    }
+
+    .my-profile__form {
         width: 100%;
     }
 }

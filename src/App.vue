@@ -11,6 +11,7 @@
 <script>
 import Nav from './components/shared/Navbar/Navbar.vue';
 import Sidebar from './components/shared/Sidebar/Sidebar.vue';
+import Cookies from 'js-cookie';
 
 export default {
   components: {
@@ -32,6 +33,13 @@ export default {
   },
   created() {
     this.isAuthPage();
+
+    if (Cookies.get('warning')) {
+      this.$swal({
+        title: Cookies.get('warning'),
+        icon: 'warning'
+      })
+    }
   },
 }
 </script>

@@ -28,6 +28,7 @@ class AuthController extends HttpRequests
         Cookies.set('user_name', res.data.user.name);
         Cookies.set('user_nickname', res.data.user.nickname);
         Cookies.set('token_expires_at', new Date(new Date().getTime() + 60*60*1000).getTime());
+        
     }
 
     async register(data)

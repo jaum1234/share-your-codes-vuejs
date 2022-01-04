@@ -63,6 +63,10 @@ export default {
                         authHttp.setCookies(res);
     
                         this.$router.push({name: 'CodeEditor'});
+                        this.$swal({
+                            title: 'Recarregue a página para garantir que tudo funcione normalmente. :)',
+                            icon: 'warning'
+                        });
                         return;   
 
                     }

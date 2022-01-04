@@ -2,7 +2,7 @@ export default class Sharer
 {
     constructor()
     {
-        this.siteDomain = 'http://localhost:8080';
+        this.siteDomain = 'https://shareyourcodes.com';
     }
 
     share(baseShareUrl, linkToBeShared) 
