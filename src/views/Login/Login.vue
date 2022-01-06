@@ -36,7 +36,7 @@
 <script>
 import Botao from '../../components/shared/Botao/Botao.vue';
 //import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
-//import { validator } from '../../domain/Service/Validator.js';
+import { validator } from '../../domain/Service/Validator.js';
 //import Cookies from 'js-cookie';
 
 export default {
@@ -57,7 +57,20 @@ export default {
     },
     methods: {
         login() {
-            this.$store.dispatch('login', this.form);
+            this.$store.dispatch('login', this.form)
+                .then(res => {
+                    if (res.success) {
+                        console.log(res);
+                        this.$router.push({name: 'CodeEditor'});
+                        this.$swal({
+                            title: 'Recarregue a página para garantir que tudo funcione normalmente. :)',
+                            icon: 'warning'
+                        });
+                        return;   
+                    }
+                    validator.validate(this.errors, res.data.erros);
+                });
+               
         }
     }
 }

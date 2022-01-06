@@ -35,6 +35,7 @@ import Editor from '../../components/shared/Editor/Editor.vue';
 import Botao from '../../components/shared/Botao/Botao.vue';
 import { projectHttp } from '../../domain/Http/Controllers/ProjectController';
 import { validator } from '../../domain/Service/Validator';
+import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -58,6 +59,9 @@ export default {
         Editor,
         Botao,
     },
+    computed: {
+        ...mapGetters(['userIsLogged'])
+    },
     mounted() {
         if (this.id) {
             projectHttp.show(this.id)
@@ -74,12 +78,15 @@ export default {
             this.active = !this.active;
         },
         enviar() {
+            if (this.userIsLogged) {
+                this.salvar();
+            }
+
             if (this.id) {
                 this.atualizar();
                 return;
             }
 
-            this.salvar();
         },
         atualizar() {
             projectHttp.update(this.form, this.id)

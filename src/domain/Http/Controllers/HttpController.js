@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-//import router from '../../../router/index.js';
+//import store from "../../../store";
 
 export default class HttpController
 {
@@ -10,7 +10,6 @@ export default class HttpController
         } else if (process.env.VUE_APP_ENV == 'local') {
             this.domain = 'http://localhost:3000/api/'
         }
-
         this.token = Cookies.get('_myapp_token');
         this.tokenExpiresAt = Cookies.get('token_expires_at');
     }

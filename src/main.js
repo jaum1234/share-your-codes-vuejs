@@ -16,5 +16,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faUser, faCode, faUsers, faTrash, faSortDown, faBars, faTimes, faEdit, faWhatsapp, faTwitter);
 
-createApp(App).use(store).use(VueSweetalert2).use(router).use(VueHighlightJS).component('font-awesome-icon', FontAwesomeIcon).mount('#app');
+createApp(App)
+    .use(store)
+    .use(VueSweetalert2)
+    .use(router)
+    .use(VueHighlightJS)
+    .component('font-awesome-icon', FontAwesomeIcon).mount('#app');
 

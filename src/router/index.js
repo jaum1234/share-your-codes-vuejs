@@ -1,10 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Cookies from 'js-cookie';
 
-//import Comunidade from '../views/Comunidade/Comunidade.vue';
-//import Login from '../views/Login/Login.vue';
-//import EditorDeCodigo from '../views/EditorDeCodigo/EditorDeCodigo.vue';
-//import MeusProjetos from '../views/MeusProjetos/MeusProjetos.vue';
+
 
 const routes = [
   {
