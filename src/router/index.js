@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Cookies from 'js-cookie';
-
-
+import { parseToken } from '../mixins';
 
 const routes = [
   {
@@ -71,7 +69,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-  if (!Cookies.get('_myapp_token') && !to.meta.public) {
+  const token = parseToken.methods.parse();
+
+  if (!token && !to.meta.public) {
     next({name: 'Login'});
     return;
   }

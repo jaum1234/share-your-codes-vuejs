@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-//import store from "../../../store";
+import { parseToken } from "../../../mixins";
 
 export default class HttpController
 {
@@ -10,7 +10,7 @@ export default class HttpController
         } else if (process.env.VUE_APP_ENV == 'local') {
             this.domain = 'http://localhost:3000/api/'
         }
-        this.token = Cookies.get('_myapp_token');
+        this.token = parseToken.methods.parse()//Cookies.get('vuex') ? JSON.parse(Cookies.get('vuex')).token.access_token : ''//Cookies.get('_myapp_token');
         this.tokenExpiresAt = Cookies.get('token_expires_at');
     }
 

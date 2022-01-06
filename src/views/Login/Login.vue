@@ -37,7 +37,7 @@
 import Botao from '../../components/shared/Botao/Botao.vue';
 //import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
 import { validator } from '../../domain/Service/Validator.js';
-//import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 
 export default {
     components: {
@@ -68,6 +68,9 @@ export default {
                         });
                         return;   
                     }
+                    //console.log(res)
+                    const parse = JSON.parse(Cookies.get('vuex')).token.access_token;
+                    console.log(parse);
                     validator.validate(this.errors, res.data.erros);
                 });
                

@@ -21,15 +21,15 @@ class AuthController extends HttpRequests
         .then(response => response.json())
     }
 
-    setCookies(res)
-    {   
-        Cookies.set('_myapp_token', res.data.token.access_token);
-        Cookies.set('user_id', res.data.user.id);
-        Cookies.set('user_name', res.data.user.name);
-        Cookies.set('user_nickname', res.data.user.nickname);
-        Cookies.set('token_expires_at', new Date(new Date().getTime() + 60*60*1000).getTime());
-        
-    }
+    //setCookies(res)
+    //{   
+    //    Cookies.set('_myapp_token', res.data.token.access_token);
+    //    Cookies.set('user_id', res.data.user.id);
+    //    Cookies.set('user_name', res.data.user.name);
+    //    Cookies.set('user_nickname', res.data.user.nickname);
+    //    Cookies.set('token_expires_at', new Date(new Date().getTime() + 60*60*1000).getTime());
+    //    
+    //}
 
     async register(data)
     {
@@ -53,7 +53,7 @@ class AuthController extends HttpRequests
         return await fetch(this.domain + 'logout', {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
+                'Authorization': 'Bearer ' + this.token
             }
         })
         .then(res => res.json())

@@ -1,6 +1,4 @@
 import HttpController from "./HttpController";
-import Cookies from "js-cookie";
-
 class UserController extends HttpController
 {
     constructor()
@@ -19,7 +17,7 @@ class UserController extends HttpController
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
+                'Authorization': 'Bearer ' + this.token
             },
             body: JSON.stringify(data)
         })
@@ -37,7 +35,7 @@ class UserController extends HttpController
         return await fetch(this.domain + 'users/' + id + '/projetos?page=' + page + '&limit=' + limit, {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + Cookies.get('_myapp_token')
+                'Authorization': 'Bearer ' + this.token
             },
         })
         .then(res => res.json());

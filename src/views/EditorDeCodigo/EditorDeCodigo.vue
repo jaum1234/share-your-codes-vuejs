@@ -63,6 +63,8 @@ export default {
         ...mapGetters(['userIsLogged'])
     },
     mounted() {
+       
+
         if (this.id) {
             projectHttp.show(this.id)
                 .then(res => {
@@ -78,15 +80,13 @@ export default {
             this.active = !this.active;
         },
         enviar() {
-            if (this.userIsLogged) {
-                this.salvar();
-            }
-
+            
             if (this.id) {
                 this.atualizar();
                 return;
             }
 
+            this.salvar();
         },
         atualizar() {
             projectHttp.update(this.form, this.id)
