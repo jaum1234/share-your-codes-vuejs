@@ -5,7 +5,11 @@ export default class HttpController
 {
     constructor()
     {
-        this.domain = 'https://shareyourcodes.com/api/';
+        if (process.env.VUE_APP_ENV == 'prod') {
+            this.domain = 'https://shareyourcodes.com/api/';
+        } else if (process.env.VUE_APP_ENV == 'local') {
+            this.domain = 'http://localhost:3000/api/'
+        }
 
         this.token = Cookies.get('_myapp_token');
         this.tokenExpiresAt = Cookies.get('token_expires_at');
