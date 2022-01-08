@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import router from "../../../router";
 import HttpRequests from "./HttpController";
 
+
 class AuthController extends HttpRequests
 {
     constructor()
@@ -11,6 +12,7 @@ class AuthController extends HttpRequests
 
     async login(data)
     {
+        console.log("Dadosd e login: ", data)
         return await fetch(this.domain + 'login', {
             method: 'POST',
             headers: {
@@ -18,7 +20,7 @@ class AuthController extends HttpRequests
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
+        .then(res => res.json())
     }
 
     //setCookies(res)
@@ -43,17 +45,17 @@ class AuthController extends HttpRequests
         .then(res => res.json())
     }
 
-   async logout()
+   async logout(token)
     {
-        if (new Date().getTime() >= Cookies.get('token_expires_at')) {
-            this.refreshToken();
+        if (this.tokenExpired()) {
+            this.refreshToken(token);
             return;
         }
 
         return await fetch(this.domain + 'logout', {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + this.token
+                'Authorization': 'Bearer ' + token
             }
         })
         .then(res => res.json())
@@ -66,6 +68,24 @@ class AuthController extends HttpRequests
             router.push({name: 'Login'});
         })
 
+    }
+
+    async refreshToken(token) 
+    {
+        
+        await fetch(this.domain + 'refreshtoken', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(res => res.json())
+        //.then(res => {
+        //    //Cookies.set('_myapp_token', res.data.token.access_token);
+        //    //Cookies.set('token_expires_at', new Date(new Date().getTime() + 60*60*1000).getTime());
+//
+        //    //this.token = res.data.token.access_token;
+        //});
     }
 }
 

@@ -1,4 +1,5 @@
 import HttpController from "./HttpController";
+
 class UserController extends HttpController
 {
     constructor()
@@ -6,7 +7,7 @@ class UserController extends HttpController
         super()
     }
 
-    async update(id, data)
+    async update(id, data, token)
     {
         if (this.tokenExpired()) {
             this.refreshToken();
@@ -17,7 +18,7 @@ class UserController extends HttpController
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.token
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(data)
         })
@@ -25,7 +26,7 @@ class UserController extends HttpController
         
     }
 
-    async projetos(id, page, limit)
+    async projetos(id, page, limit, token)
     {
         if (this.tokenExpired()) {
             this.refreshToken();
@@ -35,7 +36,7 @@ class UserController extends HttpController
         return await fetch(this.domain + 'users/' + id + '/projetos?page=' + page + '&limit=' + limit, {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + this.token
+                'Authorization': 'Bearer ' + token
             },
         })
         .then(res => res.json());

@@ -10,26 +10,11 @@ export default class HttpController
         } else if (process.env.VUE_APP_ENV == 'local') {
             this.domain = 'http://localhost:3000/api/'
         }
-        this.token = parseToken.methods.parse()//Cookies.get('vuex') ? JSON.parse(Cookies.get('vuex')).token.access_token : ''//Cookies.get('_myapp_token');
+        this.token = parseToken.methods.parse()
         this.tokenExpiresAt = Cookies.get('token_expires_at');
     }
-
-    async refreshToken() 
-    {
-        await fetch(this.domain + 'refreshtoken', {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + this.token
-            }
-        })
-        .then(res => res.json())
-        .then(res => {
-            Cookies.set('_myapp_token', res.data.token.access_token);
-            Cookies.set('token_expires_at', new Date(new Date().getTime() + 60*60*1000).getTime());
-
-            this.token = res.data.token.access_token;
-        });
-    }
+    
+    
 
     tokenExpired()
     {

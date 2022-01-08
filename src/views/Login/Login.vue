@@ -37,7 +37,6 @@
 import Botao from '../../components/shared/Botao/Botao.vue';
 //import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
 import { validator } from '../../domain/Service/Validator.js';
-import Cookies from 'js-cookie';
 
 export default {
     components: {
@@ -57,10 +56,10 @@ export default {
     },
     methods: {
         login() {
-            this.$store.dispatch('login', this.form)
+            this.$store.dispatch('authModule/login', this.form)
                 .then(res => {
                     if (res.success) {
-                        console.log(res);
+                        console.log("Resposta do login", res);
                         this.$router.push({name: 'CodeEditor'});
                         this.$swal({
                             title: 'Recarregue a página para garantir que tudo funcione normalmente. :)',
@@ -68,9 +67,7 @@ export default {
                         });
                         return;   
                     }
-                    //console.log(res)
-                    const parse = JSON.parse(Cookies.get('vuex')).token.access_token;
-                    console.log(parse);
+                    
                     validator.validate(this.errors, res.data.erros);
                 });
                

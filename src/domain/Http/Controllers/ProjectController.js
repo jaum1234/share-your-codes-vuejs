@@ -1,3 +1,4 @@
+//import { store } from "@/store";
 import HttpController from "./HttpController";
 
 class ProjectController extends HttpController
@@ -5,6 +6,7 @@ class ProjectController extends HttpController
     constructor()
     {
         super();
+        //this.token = store.getters.token;
     }
 
     async index(page, limit)
@@ -23,28 +25,29 @@ class ProjectController extends HttpController
         .then(res => res.json());
     }
 
-    async store(data)
+    async store(data, token)
     {
+        console.log("dados do projeto:  ", data)
         if (this.tokenExpired()) {
-            this.refreshToken();
+            this.refreshToken(token);
             return;
         }
-            
+           
         return await fetch(this.domain + 'projetos', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.token
+                'Authorization': 'Bearer ' + token//this.token
             },
             body: JSON.stringify(data)
         })
         .then(res => res.json());
     }
 
-    async update(data, id)
+    async update(data, id, token)
     {
         if (this.tokenExpired()) {
-            this.refreshToken();
+            this.refreshToken(token);
             return;
         }
 
@@ -52,7 +55,7 @@ class ProjectController extends HttpController
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.token
+                'Authorization': 'Bearer ' + token//this.token
             },
             body: JSON.stringify(data)
         })
@@ -67,17 +70,17 @@ class ProjectController extends HttpController
         .then(res => res.json());
     }
 
-    async delete(id) 
+    async delete(id, token) 
     {
         if (this.tokenExpired()) {
-            this.refreshToken();
+            this.refreshToken(token);
             return;
         }
         
         return await fetch(this.domain + 'projetos/' + id, {
             method: 'DELETE',
             headers: {
-                'Authorization': 'Bearer ' + this.token
+                'Authorization': 'Bearer ' + token//this.token
             }
         })
     }

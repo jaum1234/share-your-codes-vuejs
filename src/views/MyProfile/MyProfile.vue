@@ -31,7 +31,7 @@
 import Button from '../../components/shared/Botao/Botao.vue';
 import Cookies from 'js-cookie';
 
-import { userHttp } from '../../domain/Http/Controllers/UserController.js';
+//import { userHttp } from '../../domain/Http/Controllers/UserController.js';
 import { validator } from '../../domain/Service/Validator';
 
 export default {
@@ -39,12 +39,15 @@ export default {
         Button
     },
     mounted() {
-        this.form.nickname = Cookies.get('user_nickname');
-        this.form.name = Cookies.get('user_name');
+        const user = this.$store.getters['usersModule/user'];
+
+        this.form.nickname = user.nickname;
+        this.form.name = user.name;
     },
     methods: {
         update() {
-            userHttp.update(Cookies.get('user_id'), this.form)
+            var userId = this.$store.getters['usersModule/user'].id;
+            this.$store.dispatch('usersModule/update', {id: userId, data: this.form})
             .then(res => {
                 if (res.success) {
                     Cookies.set('user_nickname', res.data.new_nickname);

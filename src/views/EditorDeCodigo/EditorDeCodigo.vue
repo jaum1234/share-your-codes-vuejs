@@ -89,7 +89,7 @@ export default {
             this.salvar();
         },
         atualizar() {
-            projectHttp.update(this.form, this.id)
+            this.$store.dispatch('projectsModule/update', this.form, this.id)
                 .then(res => {
                     if (res.success) {
                         this.$swal({
@@ -105,8 +105,9 @@ export default {
                
         },
         salvar() {
-            projectHttp.store(this.form)
+            this.$store.dispatch('projectsModule/store', this.form)
                 .then(res => {
+                    console.log("Deixa eu ver aqui: ", res)
                     if (res.success) {
                         this.$swal({
                             title: 'Projeto salvo com sucesso!',
@@ -114,10 +115,21 @@ export default {
                         });
                         return;
                     }
-
                     validator.validate(this.errors, res.data.erros);
-                    
                 })
+            //projectHttp.store(this.form)
+            //    .then(res => {
+            //        if (res.success) {
+            //            this.$swal({
+            //                title: 'Projeto salvo com sucesso!',
+            //                icon: 'success'
+            //            });
+            //            return;
+            //        }
+//
+            //        validator.validate(this.errors, res.data.erros);
+            //        
+            //    })
                 
             
         }, 

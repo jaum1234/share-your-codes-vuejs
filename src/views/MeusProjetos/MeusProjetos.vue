@@ -11,8 +11,8 @@
 
 <script>
 import CardProjeto from '../../components/shared/Cards/CardProjeto.vue';
-import { userHttp } from '../../domain/Http/Controllers/UserController.js';
-import Cookies from 'js-cookie';
+//import { userHttp } from '../../domain/Http/Controllers/UserController.js';
+//import Cookies from 'js-cookie';
 import Pagination from '../../components/shared/Pagination/Pagination.vue';
 
 export default {
@@ -30,8 +30,8 @@ export default {
     },
     methods: {
         fetchProjetos(offset) {
-            var id = Cookies.get('user_id');
-            userHttp.projetos(id, offset, this.limit)
+            var userId = this.$store.getters['usersModule/user'].id;
+            this.$store.dispatch('usersModule/projects', {id: userId, page: offset, limit: this.limit})
                 .then(res => {
                     this.projetos = res.data.projetos;
                     this.total = res.data.total;
@@ -42,6 +42,7 @@ export default {
             this.fetchProjetos(data)
         }
     },
+    
     mounted() {
         this.fetchProjetos(this.offset);
     }

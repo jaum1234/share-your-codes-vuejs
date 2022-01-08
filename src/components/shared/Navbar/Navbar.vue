@@ -97,7 +97,7 @@ export default {
             return;
         },
         logout() {
-            this.$store.dispatch('logout')
+            this.$store.dispatch('authModule/logout')
         },
         searchProject() {
             Cookies.set('search', this.nomeProjetos);
