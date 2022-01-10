@@ -1,29 +1,37 @@
 import { projectHttp } from '../../domain/Http/Controllers/ProjectController';
 
-import auth from './auth';
+import users from './users';
 
-
-
-//const state = {
-//    token: auth.getters.token()
-//}
-
+const getters = {
+    token: () => users.getters.token()
+}
 
 const actions = {
-    store({ state }, data) {
-        console.log(state.token)
-        
+    store({ getters }, data) { 
         return new Promise(resolve => {
-            projectHttp.store(data, auth.getters.token())
+            projectHttp.store(data, getters.token)
                 .then(res => {
                     resolve(res);
                 })
         })
     },
 
-    update(data) {
+    
+
+    update({ getters }, { id, data }) {
         return new Promise(resolve => {
-            projectHttp.update(data, auth.getters.token())
+            
+            projectHttp.update(id, data, getters.token)
+                .then(res => {
+                    resolve(res);
+                })
+        })
+    },
+
+    destroy({ getters }, id) {
+        return new Promise(resolve => {
+
+            projectHttp.delete(id, getters.token)
                 .then(res => {
                     resolve(res);
                 })
@@ -34,5 +42,5 @@ const actions = {
 export default {
     namespaced: true,
     actions,
-    //state
+    getters
 }

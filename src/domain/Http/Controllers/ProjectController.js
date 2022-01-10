@@ -1,4 +1,3 @@
-//import { store } from "@/store";
 import HttpController from "./HttpController";
 
 class ProjectController extends HttpController
@@ -6,7 +5,6 @@ class ProjectController extends HttpController
     constructor()
     {
         super();
-        //this.token = store.getters.token;
     }
 
     async index(page, limit)
@@ -27,7 +25,6 @@ class ProjectController extends HttpController
 
     async store(data, token)
     {
-        console.log("dados do projeto:  ", data)
         if (this.tokenExpired()) {
             this.refreshToken(token);
             return;
@@ -37,14 +34,14 @@ class ProjectController extends HttpController
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token//this.token
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(data)
         })
         .then(res => res.json());
     }
 
-    async update(data, id, token)
+    async update(id, data, token)
     {
         if (this.tokenExpired()) {
             this.refreshToken(token);
@@ -55,7 +52,7 @@ class ProjectController extends HttpController
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token//this.token
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(data)
         })
@@ -80,7 +77,7 @@ class ProjectController extends HttpController
         return await fetch(this.domain + 'projetos/' + id, {
             method: 'DELETE',
             headers: {
-                'Authorization': 'Bearer ' + token//this.token
+                'Authorization': 'Bearer ' + token
             }
         })
     }

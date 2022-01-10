@@ -54,9 +54,9 @@
 
 <script>
 import Botao from '../../components/shared/Botao/Botao.vue';
+
 import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
 import { validator } from '../../domain/Service/Validator.js';
-//import Cookies from 'js-cookie';
 
 export default {
     components: {

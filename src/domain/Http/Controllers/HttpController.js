@@ -1,5 +1,4 @@
-import Cookies from "js-cookie";
-import { parseToken } from "../../../mixins";
+import { tokenParser } from "../../../mixins";
 
 export default class HttpController
 {
@@ -10,16 +9,13 @@ export default class HttpController
         } else if (process.env.VUE_APP_ENV == 'local') {
             this.domain = 'http://localhost:3000/api/'
         }
-        this.token = parseToken.methods.parse()
-        this.tokenExpiresAt = Cookies.get('token_expires_at');
     }
     
-    
-
     tokenExpired()
     {
-        return new Date().getTime() >= Cookies.get('token_expires_at');
+        return new Date().getTime() >= tokenParser.methods.parseTokenExpirationTime();
     }
+    
 }
 
 const httpRequest = new HttpController();

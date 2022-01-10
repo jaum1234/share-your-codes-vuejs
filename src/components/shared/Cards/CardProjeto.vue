@@ -10,7 +10,7 @@
             <p class="card__descricao">{{ projeto.descricao }}</p>
             <div v-if="isUserProjectsPage()">
                 <font-awesome-icon @click="remove" :icon="['fas', 'trash']" class="card__trash"/>
-                <router-link :to="{ name: 'EditCode', params: {id: projeto.id} }">
+                <router-link :to="{ name: 'EditCode', params: { id: projeto.id } }">
                     <font-awesome-icon :icon="['fas', 'edit']" class="card__edit"/>
                 </router-link>
             </div>
@@ -23,7 +23,7 @@
 
 <script>
 import Editor from '../Editor/Editor.vue';
-import { projectHttp } from '../../../domain/Http/Controllers/ProjectController.js';
+//import { projectHttp } from '../../../domain/Http/Controllers/ProjectController.js';
 
 export default {
     props: [
@@ -50,7 +50,7 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                 
-                projectHttp.delete(this.projeto.id)
+                this.$store.dispatch('projectsModule/destroy', this.projeto.id)
                     .then(() => {
                         this.$swal({
                                 title: 'Projeto excluido!',

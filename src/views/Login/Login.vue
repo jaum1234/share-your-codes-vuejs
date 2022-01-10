@@ -35,7 +35,7 @@
 
 <script>
 import Botao from '../../components/shared/Botao/Botao.vue';
-//import { authHttp } from '../../domain/Http/Controllers/AuthController.js';
+
 import { validator } from '../../domain/Service/Validator.js';
 
 export default {
@@ -59,7 +59,6 @@ export default {
             this.$store.dispatch('authModule/login', this.form)
                 .then(res => {
                     if (res.success) {
-                        console.log("Resposta do login", res);
                         this.$router.push({name: 'CodeEditor'});
                         this.$swal({
                             title: 'Recarregue a página para garantir que tudo funcione normalmente. :)',

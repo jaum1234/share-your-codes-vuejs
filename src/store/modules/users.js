@@ -1,33 +1,62 @@
 import Cookies from "js-cookie";
 import { userHttp } from "../../domain/Http/Controllers/UserController";
 
-import auth from "./auth";
+const state = {
+    token: {
+        access_token: '',
+        token_expires_at: ''
+    },
+    user: {
+        id: null,
+        nickname: '',
+    }
+  }
+  
+const mutations = {
+    SET_USER (state, {token, expirationTime, userNick, userId, userName}) {
+        state.token.access_token = token;
+        state.token.token_expires_at = expirationTime;
+        state.user.nickname = userNick;
+        state.user.name = userName
+        state.user.id = userId
+    },
+    UNSET_USER(state) {
+        state.token = {},
+        state.user = {}
+    },
+    SET_TOKEN(state, {token, expirationTime}) {
+        state.token.access_token = token;
+        state.token.token_expires_at = expirationTime;
+    },
+    UPDATE_USER(state, { newNickname, newName }) {
+        state.user.nickname = newNickname;
+        state.user.name = newName
+    }
+}
 
 const getters = {
-    user: () => JSON.parse(Cookies.get('vuex')).authModule.user
+    token: () => JSON.parse(Cookies.get('vuex')).usersModule.token.access_token,
+    user: () => JSON.parse(Cookies.get('vuex')).usersModule.user
 }
 
 const actions = {
-    update({ commit }, {id, data}) {
+    update({ commit, getters }, { id, data }) {
         return new Promise(resolve => {
-            userHttp.update(id, data, auth.getters.token())
+            userHttp.update(id, data, getters.token)
                 .then(res => {
-                    console.log(res)
                     if (res.success) {
-                        commit('authModule/UPDATE_USER', {
+                        commit('UPDATE_USER', {
                             newNickname: res.data.new_nickname,
                             newName: res.data.new_name
-                        }, { root: true })
+                        })
                     }
                     resolve(res)
                 })
         })
     },
-    projects({state}, {id, page, limit}) {
-        console.log("ID: ", id)
+    projects({ getters }, { id, page, limit }) {
         return new Promise(resolve => {
-            console.log(state)
-            userHttp.projetos(id, page, limit, auth.getters.token())
+            userHttp.projetos(id, page, limit, getters.token)
                 .then(res => {
                     resolve(res);
                 })
@@ -40,4 +69,6 @@ export default {
     namespaced: true,
     actions,
     getters,
+    mutations, 
+    state
 }

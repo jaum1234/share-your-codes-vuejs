@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { parseToken } from '../mixins';
+import { tokenParser } from '../mixins';
 
 const routes = [
   {
@@ -69,7 +69,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-  const token = parseToken.methods.parse();
+  const token = tokenParser.methods.parseAccessToken();
 
   if (!token && !to.meta.public) {
     next({name: 'Login'});

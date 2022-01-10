@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import router from "../../../router";
 import HttpRequests from "./HttpController";
 
@@ -12,7 +11,6 @@ class AuthController extends HttpRequests
 
     async login(data)
     {
-        console.log("Dadosd e login: ", data)
         return await fetch(this.domain + 'login', {
             method: 'POST',
             headers: {
@@ -22,16 +20,6 @@ class AuthController extends HttpRequests
         })
         .then(res => res.json())
     }
-
-    //setCookies(res)
-    //{   
-    //    Cookies.set('_myapp_token', res.data.token.access_token);
-    //    Cookies.set('user_id', res.data.user.id);
-    //    Cookies.set('user_name', res.data.user.name);
-    //    Cookies.set('user_nickname', res.data.user.nickname);
-    //    Cookies.set('token_expires_at', new Date(new Date().getTime() + 60*60*1000).getTime());
-    //    
-    //}
 
     async register(data)
     {
@@ -59,12 +47,7 @@ class AuthController extends HttpRequests
             }
         })
         .then(res => res.json())
-        .then(() => {
-            Cookies.remove('_myapp_token');
-            Cookies.remove('token_expires_at');
-            Cookies.remove('user_name');
-            Cookies.remove('user_nickname');
-            
+        .then(() => {  
             router.push({name: 'Login'});
         })
 
@@ -80,13 +63,8 @@ class AuthController extends HttpRequests
             }
         })
         .then(res => res.json())
-        //.then(res => {
-        //    //Cookies.set('_myapp_token', res.data.token.access_token);
-        //    //Cookies.set('token_expires_at', new Date(new Date().getTime() + 60*60*1000).getTime());
-//
-        //    //this.token = res.data.token.access_token;
-        //});
     }
+
 }
 
 const authHttp = new AuthController();

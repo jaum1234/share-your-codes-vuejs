@@ -31,7 +31,6 @@
 import Button from '../../components/shared/Botao/Botao.vue';
 import Cookies from 'js-cookie';
 
-//import { userHttp } from '../../domain/Http/Controllers/UserController.js';
 import { validator } from '../../domain/Service/Validator';
 
 export default {

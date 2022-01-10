@@ -60,9 +60,9 @@
 import Cookies from 'js-cookie';
 import RemoveButton from '../Botao/Remove/RemoveButton.vue';
 //import { authHttp } from '../../../domain/Http/Controllers/AuthController.js';
-import { parseToken } from '../../../mixins';
+import { tokenParser } from '../../../mixins';
 export default {
-    mixins: [parseToken],
+    mixins: [tokenParser],
     components: {
         RemoveButton
     },
@@ -79,7 +79,7 @@ export default {
     },
     methods: {
         isLogged() {
-            if (this.parse()) {
+            if (this.parseAccessToken()) {
                 this.nickname = Cookies.get('user_nickname');
                 return true;
             }

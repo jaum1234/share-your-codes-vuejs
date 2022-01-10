@@ -11,8 +11,6 @@
 
 <script>
 import CardProjeto from '../../components/shared/Cards/CardProjeto.vue';
-//import { userHttp } from '../../domain/Http/Controllers/UserController.js';
-//import Cookies from 'js-cookie';
 import Pagination from '../../components/shared/Pagination/Pagination.vue';
 
 export default {

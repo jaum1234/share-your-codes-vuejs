@@ -33,9 +33,9 @@
 <script>
 import Editor from '../../components/shared/Editor/Editor.vue';
 import Botao from '../../components/shared/Botao/Botao.vue';
+
 import { projectHttp } from '../../domain/Http/Controllers/ProjectController';
 import { validator } from '../../domain/Service/Validator';
-import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -59,12 +59,7 @@ export default {
         Editor,
         Botao,
     },
-    computed: {
-        ...mapGetters(['userIsLogged'])
-    },
     mounted() {
-       
-
         if (this.id) {
             projectHttp.show(this.id)
                 .then(res => {
@@ -89,7 +84,7 @@ export default {
             this.salvar();
         },
         atualizar() {
-            this.$store.dispatch('projectsModule/update', this.form, this.id)
+            this.$store.dispatch('projectsModule/update', { data: this.form, id: this.id })
                 .then(res => {
                     if (res.success) {
                         this.$swal({
@@ -107,7 +102,6 @@ export default {
         salvar() {
             this.$store.dispatch('projectsModule/store', this.form)
                 .then(res => {
-                    console.log("Deixa eu ver aqui: ", res)
                     if (res.success) {
                         this.$swal({
                             title: 'Projeto salvo com sucesso!',
@@ -117,21 +111,6 @@ export default {
                     }
                     validator.validate(this.errors, res.data.erros);
                 })
-            //projectHttp.store(this.form)
-            //    .then(res => {
-            //        if (res.success) {
-            //            this.$swal({
-            //                title: 'Projeto salvo com sucesso!',
-            //                icon: 'success'
-            //            });
-            //            return;
-            //        }
-//
-            //        validator.validate(this.errors, res.data.erros);
-            //        
-            //    })
-                
-            
         }, 
         
     },

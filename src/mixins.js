@@ -1,11 +1,16 @@
 import Cookies from "js-cookie"
 
-
-export const parseToken = {
+export const tokenParser = {
     methods: {
-        parse() {
+        parseAccessToken() {
             if (Cookies.get('vuex'))
-                return JSON.parse(Cookies.get('vuex')).authModule.token.access_token;
+                return JSON.parse(Cookies.get('vuex')).usersModule.token.access_token;
+            
+            return;
+        },
+        parseTokenExpirationTime() {
+            if (Cookies.get('vuex'))
+                return JSON.parse(Cookies.get('vuex')).usersModule.token.token_expires_at;
             
             return;
         }
