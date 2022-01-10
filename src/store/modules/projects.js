@@ -7,8 +7,15 @@ const getters = {
 }
 
 const actions = {
-    store({ getters }, data) { 
+    async store({ getters, dispatch }, data) { 
+        if (projectHttp.tokenExpired()) {
+            await dispatch('authModule/refreshToken', null, { root: true })
+        }
         return new Promise(resolve => {
+            if (projectHttp.tokenExpired()) {
+                dispatch('authModule/refreshToken', null, { root: true })
+            }
+
             projectHttp.store(data, getters.token)
                 .then(res => {
                     resolve(res);
@@ -16,11 +23,13 @@ const actions = {
         })
     },
 
-    
-
-    update({ getters }, { id, data }) {
+    async update({ getters, dispatch }, { id, data }) {
+        if (projectHttp.tokenExpired()) {
+            await dispatch('authModule/refreshToken', null, { root: true })
+        }
         return new Promise(resolve => {
             
+
             projectHttp.update(id, data, getters.token)
                 .then(res => {
                     resolve(res);
@@ -28,8 +37,12 @@ const actions = {
         })
     },
 
-    destroy({ getters }, id) {
+    async destroy({ getters, dispatch }, id) {
+        if (projectHttp.tokenExpired()) {
+            await dispatch('authModule/refreshToken', null, { root: true })
+        }
         return new Promise(resolve => {
+            
 
             projectHttp.delete(id, getters.token)
                 .then(res => {

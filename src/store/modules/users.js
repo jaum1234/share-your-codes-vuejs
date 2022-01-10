@@ -40,8 +40,14 @@ const getters = {
 }
 
 const actions = {
-    update({ commit, getters }, { id, data }) {
+    async update({ commit, getters, dispatch }, { id, data }) {
+        if (userHttp.tokenExpired()) {
+            await dispatch('authModule/refreshToken', null, { root: true })
+        }
+
         return new Promise(resolve => {
+            
+
             userHttp.update(id, data, getters.token)
                 .then(res => {
                     if (res.success) {
@@ -54,8 +60,13 @@ const actions = {
                 })
         })
     },
-    projects({ getters }, { id, page, limit }) {
+    async projects({ getters, dispatch }, { id, page, limit }) {
+        if (userHttp.tokenExpired()) {
+            await dispatch('authModule/refreshToken', null, { root: true })
+        }
         return new Promise(resolve => {
+            
+
             userHttp.projetos(id, page, limit, getters.token)
                 .then(res => {
                     resolve(res);

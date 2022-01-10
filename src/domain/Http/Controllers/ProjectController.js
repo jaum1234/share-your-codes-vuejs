@@ -25,10 +25,10 @@ class ProjectController extends HttpController
 
     async store(data, token)
     {
-        if (this.tokenExpired()) {
-            this.refreshToken(token);
-            return;
-        }
+        //if (this.tokenExpired()) {
+        //    this.refreshToken(token);
+        //    return;
+        //}
            
         return await fetch(this.domain + 'projetos', {
             method: 'POST',

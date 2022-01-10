@@ -10,6 +10,18 @@ export default class HttpController
             this.domain = 'http://localhost:3000/api/'
         }
     }
+
+    async refreshToken(token) 
+    {
+        console.log('ok3');
+        return await fetch(this.domain + 'refreshtoken', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(res => res.json())
+    }
     
     tokenExpired()
     {

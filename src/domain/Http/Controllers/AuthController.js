@@ -35,10 +35,10 @@ class AuthController extends HttpRequests
 
    async logout(token)
     {
-        if (this.tokenExpired()) {
-            this.refreshToken(token);
-            return;
-        }
+        //if (this.tokenExpired()) {
+        //    this.refreshToken(token);
+        //    return;
+        //}
 
         return await fetch(this.domain + 'logout', {
             method: 'GET',
@@ -53,17 +53,7 @@ class AuthController extends HttpRequests
 
     }
 
-    async refreshToken(token) 
-    {
-        
-        await fetch(this.domain + 'refreshtoken', {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-        .then(res => res.json())
-    }
+    
 
 }
 
