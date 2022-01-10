@@ -86,6 +86,10 @@ export default {
                 .then(res => {
                     if (res.success) {
                         this.$router.push({ name: 'Login' });
+                        this.$swal({
+                            title: 'Cadastro realizado com sucesso!',
+                            icon: 'success'
+                        })
                         return;
                     }
                     validator.validate(this.errors, res.data.erros);
