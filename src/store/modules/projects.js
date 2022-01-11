@@ -28,8 +28,6 @@ const actions = {
             await dispatch('authModule/refreshToken', null, { root: true })
         }
         return new Promise(resolve => {
-            
-
             projectHttp.update(id, data, getters.token)
                 .then(res => {
                     resolve(res);
@@ -42,8 +40,6 @@ const actions = {
             await dispatch('authModule/refreshToken', null, { root: true })
         }
         return new Promise(resolve => {
-            
-
             projectHttp.delete(id, getters.token)
                 .then(res => {
                     resolve(res);

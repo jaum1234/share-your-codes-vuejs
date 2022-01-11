@@ -46,8 +46,6 @@ const actions = {
         }
 
         return new Promise(resolve => {
-            
-
             userHttp.update(id, data, getters.token)
                 .then(res => {
                     if (res.success) {

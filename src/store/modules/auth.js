@@ -42,7 +42,6 @@ const actions = {
 
     refreshToken({ commit, getters }) {
         return new Promise(resolve => {
-            console.log('ok2');
             httpRequest.refreshToken(getters.token)
                 .then(res => {
                     console.log(res)
