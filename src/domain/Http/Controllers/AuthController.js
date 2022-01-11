@@ -35,10 +35,6 @@ class AuthController extends HttpRequests
 
    async logout(token)
     {
-        //if (this.tokenExpired()) {
-        //    this.refreshToken(token);
-        //    return;
-        //}
 
         return await fetch(this.domain + 'logout', {
             method: 'GET',

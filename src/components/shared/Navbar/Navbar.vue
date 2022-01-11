@@ -59,7 +59,6 @@
 <script>
 import Cookies from 'js-cookie';
 import RemoveButton from '../Botao/Remove/RemoveButton.vue';
-//import { authHttp } from '../../../domain/Http/Controllers/AuthController.js';
 import { tokenParser } from '../../../mixins';
 export default {
     mixins: [tokenParser],

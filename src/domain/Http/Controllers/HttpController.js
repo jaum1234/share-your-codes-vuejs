@@ -13,7 +13,6 @@ export default class HttpController
 
     async refreshToken(token) 
     {
-        console.log('ok3');
         return await fetch(this.domain + 'refreshtoken', {
             method: 'GET',
             headers: {

@@ -44,8 +44,6 @@ const actions = {
         return new Promise(resolve => {
             httpRequest.refreshToken(getters.token)
                 .then(res => {
-                    console.log(res)
-                    console.log('ok')
                     commit('usersModule/SET_TOKEN', {
                         token: res.data.token.access_token,
                         expirationTime: new Date(new Date().getTime() + res.data.token.expires_in*60*1000).getTime()
