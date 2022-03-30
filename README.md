@@ -1,22 +1,14 @@
-# VueJS Interface - Share Your Codes
-[Página Principal](https://github.com/jaum1234/share-your-codes)
-## Consumindo a [API](https://github.com/jaum1234/editor-de-codigo)
-Apesar dos pacotes já existentes, optei por consumir a API utilizando a api [Fetch](https://github.com/jaum1234/editor-de-codigo) do Javascript. 
+# Share Your Codes
+## [Live site](https://share-your-codes-vuejs.vercel.app/comunidade)
+Web platform that allows users to write and post their own code snippets, besides being able to share it with the comunity or in other social medias.
 
-Cada recurso possui seu próprio "controller" responsável por enviar e ler dados da API quando requisitados.
+<img src='https://i.gyazo.com/0e03605a56b546c7fe1c244eeb5315c9.png' width='600px'/>
 
-## Validaçao e compartilhamento
-Novamente, optei por nao utilizar nenhum pacote e implementar minhas próprias classes.
+## Some technologies used: 
+- Vue JS
+- Laravel, for the API
+- JWT Token
 
-Foram criadas duas classes de serviço. Uma contem a lógica necessária para compartilhamento dos projetos na redes sociais, restritas, até o momento, ao twitter e Wpp Web. A outra é responsável por receber os erros de validaçao enviados na resposta da requisiçao e exibi-los na tela para o usuário.
-
-## Token
-Até o momento, o token do usuário está sendo armazenado em cookies. Para facilitar essa tarefa, foi utilizado o pacote [js-cookie](https://github.com/js-cookie/js-cookie).
-
-## Principais pacotes utilizados
-- [SweetAlert](https://sweetalert2.github.io/#examples)
-- [Fontawesome](https://www.npmjs.com/package/@fortawesome/vue-fontawesome)
-- [HighlightJS](https://www.npmjs.com/package/vue-highlightjs)
 
 
 
