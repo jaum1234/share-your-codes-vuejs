@@ -14,7 +14,7 @@ Web platform that allows users to write and post their own code snippets, beside
 ## Features
 - Sign in
 - Sign up
-- CRUD a code snippet
+- CRUD of code snippet
 - Change the border color of a code snippet
 - Share your code snippets on social medias
 
