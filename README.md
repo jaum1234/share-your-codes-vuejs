@@ -8,9 +8,15 @@ Web platform that allows users to write and post their own code snippets, beside
 
 ## Some technologies I used: 
 - Vue JS
-- Laravel, for the API
+- Laravel
 - JWT Token
  
+## Features
+- Sign in
+- Sign up
+- CRUD a code snippet
+- Change the border color of a code snippet
+- Share your code snippets on social medias
 
 
 
